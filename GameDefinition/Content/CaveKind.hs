@@ -2,7 +2,7 @@
 -- cave kind.
 module Content.CaveKind
   ( -- * Group name patterns
-    pattern CAVE_ROGUE, pattern CAVE_ARENA, pattern CAVE_SMOKING, pattern CAVE_LABORATORY, pattern CAVE_NOISE, pattern CAVE_MINE, pattern CAVE_EMPTY, pattern CAVE_SHALLOW_ROGUE, pattern CAVE_OUTERMOST, pattern CAVE_RAID, pattern CAVE_BRAWL, pattern CAVE_SHOOTOUT, pattern CAVE_HUNT, pattern CAVE_FLIGHT, pattern CAVE_ZOO, pattern CAVE_AMBUSH, pattern CAVE_BATTLE, pattern CAVE_SAFARI_1, pattern CAVE_SAFARI_2, pattern CAVE_SAFARI_3
+    pattern CAVE_MINI, pattern CAVE_ROGUE, pattern CAVE_ARENA, pattern CAVE_SMOKING, pattern CAVE_LABORATORY, pattern CAVE_NOISE, pattern CAVE_MINE, pattern CAVE_EMPTY, pattern CAVE_SHALLOW_ROGUE, pattern CAVE_OUTERMOST, pattern CAVE_RAID, pattern CAVE_BRAWL
   , groupNamesSingleton, groupNames
   , -- * Content
     content
@@ -33,10 +33,11 @@ groupNamesSingleton = []
 
 groupNames :: [GroupName CaveKind]
 groupNames =
-       [CAVE_ROGUE, CAVE_ARENA, CAVE_SMOKING, CAVE_LABORATORY, CAVE_NOISE, CAVE_MINE, CAVE_EMPTY, CAVE_SHALLOW_ROGUE, CAVE_OUTERMOST, CAVE_RAID, CAVE_BRAWL, CAVE_SHOOTOUT, CAVE_HUNT, CAVE_FLIGHT, CAVE_ZOO, CAVE_AMBUSH, CAVE_BATTLE, CAVE_SAFARI_1, CAVE_SAFARI_2, CAVE_SAFARI_3]
+       [CAVE_MINI, CAVE_ROGUE, CAVE_ARENA, CAVE_SMOKING, CAVE_LABORATORY, CAVE_NOISE, CAVE_MINE, CAVE_EMPTY, CAVE_SHALLOW_ROGUE, CAVE_OUTERMOST, CAVE_RAID, CAVE_BRAWL]
 
-pattern CAVE_ROGUE, CAVE_ARENA, CAVE_SMOKING, CAVE_LABORATORY, CAVE_NOISE, CAVE_MINE, CAVE_EMPTY, CAVE_SHALLOW_ROGUE, CAVE_OUTERMOST, CAVE_RAID, CAVE_BRAWL, CAVE_SHOOTOUT, CAVE_HUNT, CAVE_FLIGHT, CAVE_ZOO, CAVE_AMBUSH, CAVE_BATTLE, CAVE_SAFARI_1, CAVE_SAFARI_2, CAVE_SAFARI_3 :: GroupName CaveKind
+pattern CAVE_MINI, CAVE_ROGUE, CAVE_ARENA, CAVE_SMOKING, CAVE_LABORATORY, CAVE_NOISE, CAVE_MINE, CAVE_EMPTY, CAVE_SHALLOW_ROGUE, CAVE_OUTERMOST, CAVE_RAID, CAVE_BRAWL :: GroupName CaveKind
 
+pattern CAVE_MINI = GroupName "caveMini"
 pattern CAVE_ROGUE = GroupName "caveRogue"
 pattern CAVE_ARENA = GroupName "caveArena"
 pattern CAVE_SMOKING = GroupName "caveSmoking"
@@ -48,23 +49,14 @@ pattern CAVE_SHALLOW_ROGUE = GroupName "caveShallowRogue"
 pattern CAVE_OUTERMOST = GroupName "caveOutermost"
 pattern CAVE_RAID = GroupName "caveRaid"
 pattern CAVE_BRAWL = GroupName "caveBrawl"
-pattern CAVE_SHOOTOUT = GroupName "caveShootout"
-pattern CAVE_HUNT = GroupName "caveHunt"
-pattern CAVE_FLIGHT = GroupName "caveFlight"
-pattern CAVE_ZOO = GroupName "caveZoo"
-pattern CAVE_AMBUSH = GroupName "caveAmbush"
-pattern CAVE_BATTLE = GroupName "caveBattle"
-pattern CAVE_SAFARI_1 = GroupName "caveSafari1"
-pattern CAVE_SAFARI_2 = GroupName "caveSafari2"
-pattern CAVE_SAFARI_3 = GroupName "caveSafari3"
 
 -- * Content
 
 content :: [CaveKind]
 content =
-  [rogue, arena, smoking, laboratory, noise, mine, empty, outermost, shallowRogue, raid, brawl, shootout, hunt, flight, zoo, ambush, battle, safari1, safari2, safari3]
+  [mini, rogue, arena, smoking, laboratory, noise, mine, empty, outermost, shallowRogue, raid, brawl]
 
-rogue,    arena, smoking, laboratory, noise, mine, empty, outermost, shallowRogue, raid, brawl, shootout, hunt, flight, zoo, ambush, battle, safari1, safari2, safari3 :: CaveKind
+mini, rogue, arena, smoking, laboratory, noise, mine, empty, outermost, shallowRogue, raid, brawl :: CaveKind
 
 -- * Underground caves; most of mediocre height and size
 
@@ -311,6 +303,31 @@ raid = rogue
   , cstairAllowed = []
   , cdesc         = "Mold spreads across the walls and scuttling sounds can be heard in the distance."
   }
+
+mini = rogue
+  { cname = "MiNI parking lot"
+  , cfreq = [(CAVE_MINI, 1)]
+  , cdesc = "Although it's supposed to be a parking lot, it doesn't look like one" 
+  , cXminSize     = 50
+  , cYminSize     = 21
+  , ccellSize     = DiceXY (2 `d` 4 + 6) 6
+  , cminPlaceSize = DiceXY (2 `d` 2 + 4) 5
+  , cmaxPlaceSize = DiceXY 16 20
+  , cdarkOdds     = 0  -- all rooms lit, for a gentle start
+  , cmaxVoid      = 1%10
+  , cdoorChance   = 1  -- make sure enemies not seen on turn 1
+  , copenChance   = 0  -- make sure enemies not seen on turn 1
+  , cactorCoeff   = 300  -- deep level with no kit, so slow spawning
+  , cactorFreq    = [(ANIMAL, 100)]
+  , citemNum      = 18  -- first tutorial mode, so make it consistent
+  , citemFreq     = [ (IK.COMMON_ITEM, 100), (IK.S_CURRENCY, 500)
+                    , (STARTING_WEAPON, 100) ]
+  , cmaxStairsNum = 0
+  , cescapeFreq   = [(INDOOR_ESCAPE_UP, 1)]
+  , cstairFreq    = []
+  , cstairAllowed = []
+  }
+
 brawl = rogue  -- many random solid tiles, to break LOS, since it's a day
                -- and this scenario is not focused on ranged combat;
                -- also, sanctuaries against missiles in shadow under trees
@@ -342,237 +359,4 @@ brawl = rogue  -- many random solid tiles, to break LOS, since it's a day
   , cfenceTileW   = OUTDOOR_OUTER_FENCE
   , cmaxStairsNum = 0
   , cdesc         = "Sunlight falls through the trees and dapples on the ground."
-  }
-shootout = rogue  -- a scenario with strong missiles;
-                  -- few solid tiles, but only translucent tiles or walkable
-                  -- opaque tiles, to make scouting and sniping more interesting
-                  -- and to avoid obstructing view too much, since this
-                  -- scenario is about ranged combat at long range
-  { cname         = "Misty meadow"
-  , cfreq         = [(CAVE_SHOOTOUT, 1)]
-  , ccellSize     = DiceXY (1 `d` 2 + 6) 6
-  , cminPlaceSize = DiceXY 3 3
-  , cmaxPlaceSize = DiceXY 4 4
-  , cdarkOdds     = 51
-  , cnightOdds    = 0
-  , cauxConnects  = 1%10
-  , cdoorChance   = 1
-  , copenChance   = 0
-  , chidden       = 0
-  , cactorFreq    = []
-  , citemNum      = 5 `d` 16
-                      -- less items in inventory, more to be picked up,
-                      -- to reward explorer and aggressor and punish camper
-  , citemFreq     = [ (IK.COMMON_ITEM, 30)
-                    , (ANY_ARROW, 400), (HARPOON, 300), (IK.EXPLOSIVE, 50) ]
-                      -- Many consumable buffs are needed in symmetric maps
-                      -- so that aggressor prepares them in advance and camper
-                      -- needs to waste initial turns to buff for the defence.
-  , cplaceFreq    = [(SHOOTOUT, 1)]
-  , cpassable     = True
-  , cdefTile      = SHOOTOUT_SET_LIT
-  , cdarkCorTile  = DIRT_LIT
-  , clitCorTile   = DIRT_LIT
-  , cstairFreq    = []
-  , cfenceTileN   = OUTDOOR_OUTER_FENCE
-  , cfenceTileE   = OUTDOOR_OUTER_FENCE
-  , cfenceTileS   = OUTDOOR_OUTER_FENCE
-  , cfenceTileW   = OUTDOOR_OUTER_FENCE
-  , cmaxStairsNum = 0
-  , cdesc         = "The warmth has released fog and the wind brooms it away."
-  }
-hunt = rogue  -- a scenario with strong missiles for ranged and shade for melee
-  { cname         = "Afternoon swamp"
-  , cfreq         = [(CAVE_HUNT, 1)]
-  , ccellSize     = DiceXY (1 `d` 2 + 6) 6
-  , cminPlaceSize = DiceXY 3 3
-  , cmaxPlaceSize = DiceXY 4 4
-  , cdarkOdds     = 51
-  , cnightOdds    = 0
-  , cauxConnects  = 1%10
-  , cdoorChance   = 1
-  , copenChance   = 0
-  , chidden       = 0
-  , cactorCoeff   = 400  -- spawn slowly
-  , cactorFreq    = [(INSECT, 100)]
-  , citemNum      = 5 `d` 10
-  , citemFreq     = [ (IK.COMMON_ITEM, 30)
-                    , (ANY_ARROW, 400), (HARPOON, 300), (IK.EXPLOSIVE, 50) ]
-  , cplaceFreq    = [(BRAWL, 50), (SHOOTOUT, 100)]
-  , cpassable     = True
-  , cdefTile      = SHOOTOUT_SET_LIT
-  , cdarkCorTile  = DIRT_LIT
-  , clitCorTile   = DIRT_LIT
-  , cstairFreq    = []
-  , cfenceTileN   = OUTDOOR_OUTER_FENCE
-  , cfenceTileE   = OUTDOOR_OUTER_FENCE
-  , cfenceTileS   = OUTDOOR_OUTER_FENCE
-  , cfenceTileW   = OUTDOOR_OUTER_FENCE
-  , cmaxStairsNum = 0
-  , cdesc         = "Tired after the day's heat, the insects gather strength in their hiding places."
-  }
-flight = rogue  -- a scenario with weak missiles, because heroes don't depend
-                -- on them; dark, so solid obstacles are to hide from missiles,
-                -- not view; obstacles are not lit, to frustrate the AI;
-                -- lots of small lights to cross, to have some risks
-  { cname         = "Metropolitan park at dusk"  -- "night" didn't fit
-  , cfreq         = [(CAVE_FLIGHT, 1)]
-  , ccellSize     = DiceXY (1 `d` 3 + 7) 6
-  , cminPlaceSize = DiceXY 5 3
-  , cmaxPlaceSize = DiceXY 9 9  -- bias towards larger lamp areas
-  , cdarkOdds     = 51  -- rooms always dark so that fence not visible from afar
-  , cnightOdds    = 51  -- always night
-  , cauxConnects  = 2  -- many lit trails, so easy to aim
-  , cmaxVoid      = 1%100
-  , chidden       = 0
-  , cactorFreq    = []
-  , citemNum      = 6 `d` 8
-  , citemFreq     = [ (IK.COMMON_ITEM, 30), (GEM, 500)
-                    , (WEAK_ARROW, 500), (HARPOON, 400)
-                    , (IK.EXPLOSIVE, 100) ]
-  , cplaceFreq    = [(FLIGHT, 1)]
-  , cpassable     = True
-  , cdefTile      = FLIGHT_SET_DARK  -- unlike in ambush, tiles not burning yet
-  , cdarkCorTile  = SAFE_TRAIL_LIT  -- let trails give off light
-  , clitCorTile   = SAFE_TRAIL_LIT
-  , cfenceTileN   = OUTDOOR_OUTER_FENCE
-  , cfenceTileE   = OUTDOOR_OUTER_FENCE
-  , cfenceTileS   = OUTDOOR_OUTER_FENCE
-  , cfenceTileW   = OUTDOOR_OUTER_FENCE
-  , cmaxStairsNum = 0
-  , cescapeFreq   = [(OUTDOOR_ESCAPE_DOWN, 1)]
-  , cstairFreq    = []
-  , cskip         = []
-  , cdesc         = "The darkening greyness is settling into silence."
-  }
-zoo = rogue  -- few lights and many solids, to help the less numerous heroes
-  { cname         = "Menagerie in flames"
-  , cfreq         = [(CAVE_ZOO, 1)]
-  , ccellSize     = DiceXY (1 `d` 3 + 7) 6
-  , cminPlaceSize = DiceXY 4 4
-  , cmaxPlaceSize = DiceXY 12 5
-  , cdarkOdds     = 51  -- rooms always dark so that fence not visible from afar
-  , cnightOdds    = 51  -- always night
-  , cauxConnects  = 1%4
-  , cmaxVoid      = 1%20
-  , cdoorChance   = 7%10
-  , copenChance   = 9%10
-  , chidden       = 0
-  , cactorFreq    = []
-  , citemNum      = 7 `d` 8
-  , citemFreq     = [ (IK.COMMON_ITEM, 100), (LIGHT_ATTENUATOR, 1000)
-                    , (STARTING_WEAPON, 1000) ]
-  , cplaceFreq    = [(ZOO, 1)]
-  , cpassable     = True
-  , cdefTile      = ZOO_SET_DARK
-  , cdarkCorTile  = SAFE_TRAIL_LIT  -- let trails give off light
-  , clitCorTile   = SAFE_TRAIL_LIT
-  , cstairFreq    = []
-  , cfenceTileN   = OUTDOOR_OUTER_FENCE
-  , cfenceTileE   = OUTDOOR_OUTER_FENCE
-  , cfenceTileS   = OUTDOOR_OUTER_FENCE
-  , cfenceTileW   = OUTDOOR_OUTER_FENCE
-  , cmaxStairsNum = 0
-  , cdesc         = "The night is filled with animal calls."
-  }
-ambush = rogue  -- a scenario with strong missiles;
-                -- dark, so solid obstacles are to hide from missiles,
-                -- not view, and they are all lit, because stopped missiles
-                -- are frustrating, while a few LOS-only obstacles are not lit;
-                -- few small lights to cross, giving a chance to snipe;
-                -- crucial difference wrt shootout and hunt is that trajectories
-                -- of missiles are usually not seen, so enemy can't be guessed;
-                -- camping doesn't pay off, because enemies can sneak and only
-                -- active scouting, throwing flares and shooting discovers them
-  { cname         = "Burning metropolitan park"
-  , cfreq         = [(CAVE_AMBUSH, 1)]
-  , ccellSize     = DiceXY (1 `d` 4 + 7) 6
-  , cminPlaceSize = DiceXY 5 3
-  , cmaxPlaceSize = DiceXY 9 9  -- bias towards larger lamp areas
-  , cdarkOdds     = 51  -- rooms always dark so that fence not visible from afar
-  , cnightOdds    = 51  -- always night
-  , cauxConnects  = 1%10  -- few lit trails, so hard to aim
-  , chidden       = 0
-  , cactorFreq    = []
-  , citemNum      = 5 `d` 8
-  , citemFreq     = [ (IK.COMMON_ITEM, 30)
-                    , (ANY_ARROW, 400), (HARPOON, 300), (IK.EXPLOSIVE, 50) ]
-  , cplaceFreq    = [(AMBUSH, 1)]
-  , cpassable     = True
-  , cdefTile      = AMBUSH_SET_DARK
-  , cdarkCorTile  = TRAIL_LIT  -- let trails give off light
-  , clitCorTile   = TRAIL_LIT
-  , cstairFreq    = []
-  , cfenceTileN   = OUTDOOR_OUTER_FENCE
-  , cfenceTileE   = OUTDOOR_OUTER_FENCE
-  , cfenceTileS   = OUTDOOR_OUTER_FENCE
-  , cfenceTileW   = OUTDOOR_OUTER_FENCE
-  , cmaxStairsNum = 0
-  , cdesc         = "Fires have reached into the city, glowing in darkness."
-  }
-
--- * Other caves; testing, Easter egg, future work
-
-battle = rogue  -- few lights and many solids, to help the less numerous heroes
-  { cname         = "Old battle ground"
-  , cfreq         = [(CAVE_BATTLE, 1)]
-  , ccellSize     = DiceXY (5 `d` 3 + 11) 5  -- cfenceApart results in 2 rows
-  , cminPlaceSize = DiceXY 4 4
-  , cmaxPlaceSize = DiceXY 9 7
-  , cdarkOdds     = 0
-  , cnightOdds    = 51  -- always night
-  , cauxConnects  = 1%4
-  , cmaxVoid      = 1%20
-  , cdoorChance   = 2%10
-  , copenChance   = 9%10
-  , chidden       = 0
-  , cactorFreq    = []
-  , citemNum      = 5 `d` 8
-  , citemFreq     = [(IK.COMMON_ITEM, 100), (LIGHT_ATTENUATOR, 200)]
-  , cplaceFreq    = [(BATTLE, 50), (ROGUE, 50)]
-  , cpassable     = True
-  , cdefTile      = BATTLE_SET_DARK
-  , cdarkCorTile  = SAFE_TRAIL_LIT  -- let trails give off light
-  , clitCorTile   = SAFE_TRAIL_LIT
-  , cfenceTileN   = OUTDOOR_OUTER_FENCE
-  , cfenceTileE   = OUTDOOR_OUTER_FENCE
-  , cfenceTileS   = OUTDOOR_OUTER_FENCE
-  , cfenceTileW   = OUTDOOR_OUTER_FENCE
-  , cfenceApart   = True  -- ensures no cut-off parts from collapsed
-  , cmaxStairsNum = 0
-  , cstairFreq    = []
-  , cdesc         = "Eroded walls, rusted weapons and unidentifiable bones cruch underfoot all alike."
-  }
-safari1 = brawl
-  { cname         = "Hunam habitat"
-  , cfreq         = [(CAVE_SAFARI_1, 1)]
-  , cminPlaceSize = DiceXY 5 3
-  , cmaxStairsNum = 1
-  , cstairFreq    = [ (OUTDOOR_WALLED_STAIRCASE, 20)
-                    , (OUTDOOR_CLOSED_STAIRCASE, 80)
-                    , (OUTDOOR_TINY_STAIRCASE, 1) ]
-  , cskip         = [0]
-  , cdesc         = "\"Act 1. Hunams scavenge in a forest in their usual disgusting way.\""
-  }
-safari2 = flight  -- lamps instead of trees, but ok, it's only a simulation
-  { cname         = "Deep into the jungle"
-  , cfreq         = [(CAVE_SAFARI_2, 1)]
-  , cmaxStairsNum = 1
-  , cescapeFreq   = []
-  , cstairFreq    = [ (OUTDOOR_WALLED_STAIRCASE, 20)
-                    , (OUTDOOR_CLOSED_STAIRCASE, 80)
-                    , (OUTDOOR_TINY_STAIRCASE, 1) ]
-  , cskip         = [0]
-  , cdesc         = "\"Act 2. In the dark pure heart of the jungle noble animals roam freely.\""
-  }
-safari3 = zoo  -- glass rooms, but ok, it's only a simulation
-  { cname         = "Jungle in flames"
-  , cfreq         = [(CAVE_SAFARI_3, 1)]
-  , cminPlaceSize = DiceXY 5 4
-  , cescapeFreq   = [(OUTDOOR_ESCAPE_DOWN, 1)]
-  , cmaxStairsNum = 1
-  , cstairFreq    = [ (OUTDOOR_WALLED_STAIRCASE, 20)
-                    , (OUTDOOR_CLOSED_STAIRCASE, 80)
-                    , (OUTDOOR_TINY_STAIRCASE, 1) ]
-  , cdesc         = "\"Act 3. Jealous hunams set jungle on fire and flee.\""
   }
