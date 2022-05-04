@@ -2,12 +2,11 @@
 module Content.ItemKindActor
   ( -- * Group name patterns
     pattern S_WOODEN_TORCH, pattern S_SANDSTONE_ROCK
-  , pattern HERO, pattern SCOUT_HERO, pattern RANGER_HERO, pattern ESCAPIST_HERO, pattern AMBUSHER_HERO, pattern BRAWLER_HERO, pattern SOLDIER_HERO, pattern CIVILIAN, pattern MONSTER, pattern MOBILE_MONSTER, pattern SCOUT_MONSTER, pattern ANIMAL, pattern MOBILE_ANIMAL, pattern IMMOBILE_ANIMAL, pattern INSECT, pattern GEOPHENOMENON
+  , pattern HERO, pattern SCOUT_HERO, pattern RANGER_HERO, pattern ESCAPIST_HERO, pattern AMBUSHER_HERO, pattern BRAWLER_HERO, pattern SOLDIER_HERO, pattern CIVILIAN, pattern MONSTER, pattern MOBILE_MONSTER, pattern SCOUT_MONSTER, pattern ANIMAL, pattern CAR, pattern MOBILE_ANIMAL, pattern IMMOBILE_ANIMAL, pattern INSECT, pattern GEOPHENOMENON
   , pattern ADD_SIGHT, pattern ARMOR_RANGED, pattern ADD_NOCTO_1, pattern WEAK_ARROW, pattern LIGHT_ATTENUATOR, pattern FIREPROOF_CLOTH, pattern RING_OF_OPPORTUNITY_SNIPER, pattern ANY_ARROW, pattern STARTING_ARMOR, pattern STARTING_WEAPON, pattern GEM
   , actorsGN, actorsGNSingleton
   , -- * Content
-    actors
-  ) where
+    actors) where
 
 import Prelude ()
 
@@ -32,10 +31,10 @@ pattern S_WOODEN_TORCH, S_SANDSTONE_ROCK :: GroupName ItemKind
 
 actorsGN :: [GroupName ItemKind]
 actorsGN =
-       [HERO, SCOUT_HERO, RANGER_HERO, ESCAPIST_HERO, AMBUSHER_HERO, BRAWLER_HERO, SOLDIER_HERO, CIVILIAN, MONSTER, MOBILE_MONSTER, SCOUT_MONSTER, ANIMAL, MOBILE_ANIMAL, IMMOBILE_ANIMAL, INSECT, GEOPHENOMENON]
+       [HERO, SCOUT_HERO, RANGER_HERO, ESCAPIST_HERO, AMBUSHER_HERO, BRAWLER_HERO, SOLDIER_HERO, CIVILIAN, MONSTER, MOBILE_MONSTER, SCOUT_MONSTER, ANIMAL, CAR, MOBILE_ANIMAL, IMMOBILE_ANIMAL, INSECT, GEOPHENOMENON]
     ++ [ADD_SIGHT, ARMOR_RANGED, ADD_NOCTO_1, WEAK_ARROW, LIGHT_ATTENUATOR, FIREPROOF_CLOTH, RING_OF_OPPORTUNITY_SNIPER, ANY_ARROW, STARTING_ARMOR, STARTING_WEAPON, GEM]
 
-pattern HERO, SCOUT_HERO, RANGER_HERO, ESCAPIST_HERO, AMBUSHER_HERO, BRAWLER_HERO, SOLDIER_HERO, CIVILIAN, MONSTER, MOBILE_MONSTER, SCOUT_MONSTER, ANIMAL, MOBILE_ANIMAL, IMMOBILE_ANIMAL, INSECT, GEOPHENOMENON :: GroupName ItemKind
+pattern HERO, SCOUT_HERO, RANGER_HERO, ESCAPIST_HERO, AMBUSHER_HERO, BRAWLER_HERO, SOLDIER_HERO, CIVILIAN, MONSTER, MOBILE_MONSTER, SCOUT_MONSTER, ANIMAL, CAR, MOBILE_ANIMAL, IMMOBILE_ANIMAL, INSECT, GEOPHENOMENON :: GroupName ItemKind
 
 pattern ADD_SIGHT, ARMOR_RANGED, ADD_NOCTO_1, WEAK_ARROW, LIGHT_ATTENUATOR, FIREPROOF_CLOTH, RING_OF_OPPORTUNITY_SNIPER, ANY_ARROW, STARTING_ARMOR, STARTING_WEAPON, GEM :: GroupName ItemKind
 
@@ -51,6 +50,7 @@ pattern MONSTER = GroupName "monstrosity"
 pattern MOBILE_MONSTER = GroupName "mobile monstrosity"
 pattern SCOUT_MONSTER = GroupName "scout monstrosity"
 pattern ANIMAL = GroupName "animal"
+pattern CAR = GroupName "car"
 pattern MOBILE_ANIMAL = GroupName "mobile animal"
 pattern IMMOBILE_ANIMAL = GroupName "immobile animal"
 pattern INSECT = GroupName "insect"
@@ -75,11 +75,11 @@ pattern GEM = GroupName "gem"
 
 actors :: [ItemKind]
 actors =
-  [warrior, warrior2, warrior3, warrior4, warrior5, scout, ranger, escapist, ambusher, brawler, soldier, civilian, civilian2, civilian3, civilian4, civilian5, eye, fastEye, nose, elbow, torsor, goldenJackal, griffonVulture, skunk, armadillo, gilaMonster, rattlesnake, hyena, komodoDragon, alligator, rhinoceros, beeSwarm, hornetSwarm, thornbush]
+  [warrior, warrior2, warrior3, warrior4, warrior5, scout, ranger, escapist, ambusher, brawler, soldier, civilian, civilian2, civilian3, civilian4, civilian5, eye, fastEye, nose, elbow, torsor, goldenJackal, toyota, griffonVulture, skunk, armadillo, gilaMonster, rattlesnake, hyena, komodoDragon, alligator, rhinoceros, beeSwarm, hornetSwarm, thornbush]
   -- LH-specific
   ++ [geyserBoiling, geyserArsenic, geyserSulfur]
 
-warrior,    warrior2, warrior3, warrior4, warrior5, scout, ranger, escapist, ambusher, brawler, soldier, civilian, civilian2, civilian3, civilian4, civilian5, eye, fastEye, nose, elbow, torsor, goldenJackal, griffonVulture, skunk, armadillo, gilaMonster, rattlesnake, hyena, komodoDragon, alligator, rhinoceros, beeSwarm, hornetSwarm, thornbush :: ItemKind
+warrior,    warrior2, warrior3, warrior4, warrior5, scout, ranger, escapist, ambusher, brawler, soldier, civilian, civilian2, civilian3, civilian4, civilian5, eye, fastEye, nose, elbow, torsor, goldenJackal, toyota, griffonVulture, skunk, armadillo, gilaMonster, rattlesnake, hyena, komodoDragon, alligator, rhinoceros, beeSwarm, hornetSwarm, thornbush :: ItemKind
 -- LH-specific
 geyserBoiling, geyserArsenic, geyserSulfur :: ItemKind
 
@@ -345,7 +345,25 @@ torsor = ItemKind
 
 -- They need rather strong melee, because they don't use items.
 -- They have dull colors, except for yellow, because there is no dull variant.
-
+--
+toyota = ItemKind  -- basically a much smaller, slower and nosy hyena
+  { isymbol  = toContentSymbol 'T'
+  , iname    = "toyota"
+  , ifreq    = [ (CAR, 100) ]
+  , iflavour = zipPlain [BrRed]
+  , icount   = 1
+  , irarity  = [(1, 4), (10, 2)]
+  , iverbHit = "brum brum"
+  , iweight  = 13000
+  , idamage  = 0
+  , iaspects = [ AddSkill SkMaxHP 15, AddSkill SkMaxCalm 70
+               , AddSkill SkSpeed 24, AddSkill SkNocto 2
+               , AddSkill SkAggression 2  -- scout
+               , SetFlag Durable ]
+  , ieffects = []
+  , idesc    = "A mystical automobile, who knows who is sitting behind the wheel?"
+  , ikit     = [ (S_TIRE, COrgan) ]
+  }
 goldenJackal = ItemKind  -- basically a much smaller, slower and nosy hyena
   { isymbol  = toContentSymbol 'j'
   , iname    = "golden jackal"

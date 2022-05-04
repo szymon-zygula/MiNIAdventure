@@ -175,7 +175,7 @@ screensaverCrawl = crawl
 
 rosterMini, rosterRaid, rosterBrawl, rosterCrawl :: Roster
 
-rosterMini = 
+rosterMini =
   [ ( ANIMAL_REPRESENTATIVE  -- starting over escape
     , [(-2, 2, ANIMAL)] )
   , ( EXPLORER_SHORT
@@ -214,7 +214,7 @@ rosterCrawl =
 
 cavesMini, cavesRaid, cavesBrawl, cavesCrawl :: Caves
 
-cavesMini = [([-2], [CAVE_MINI])] -- Tablica to numery poziomow
+cavesMini = [([-2], [CAVE_MINI])]
 
 cavesRaid = [([-2], [CAVE_RAID])]
 

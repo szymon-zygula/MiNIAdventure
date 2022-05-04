@@ -555,7 +555,7 @@ toOrganNoTimer grp = CreateItem Nothing COrgan grp TimerNone
 
 -- | Catch invalid item kind definitions.
 validateSingle :: ItemSymbolsUsedInEngine -> ItemKind -> [Text]
-validateSingle itemSymbols ik@ItemKind{..} =
+validateSingle _ ik@ItemKind{..} =
   ["iname longer than 23" | T.length iname > 23]
   ++ ["icount < 0" | Dice.infDice icount < 0]
   ++ validateRarity irarity
@@ -572,18 +572,8 @@ validateSingle itemSymbols ik@ItemKind{..} =
           ts = filter f iaspects
           equipable = SetFlag Ability.Equipable `elem` iaspects
           meleeable = SetFlag Ability.Meleeable `elem` iaspects
-          likelyTemplate = case ifreq of
-            [(grp, 1)] -> "unknown" `T.isSuffixOf` fromGroupName grp
-            _ -> False
-          likelyException = isymbol `elem` [ rsymbolFood itemSymbols
-                                           , rsymbolNecklace itemSymbols
-                                           , rsymbolWand itemSymbols ]
-                            || likelyTemplate
       in [ "EqpSlot specified but not Equipable nor Meleeable"
          | length ts == 1 && not equipable && not meleeable ]
-         ++ [ "EqpSlot not specified but Equipable or Meleeable and not a likely organ or necklace or template"
-            | not likelyException
-              && null ts && (equipable || meleeable) ]
          ++ [ "More than one EqpSlot specified"
             | length ts > 1 ] )
   ++ [ "Redundant Equipable or Meleeable"
