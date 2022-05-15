@@ -37,38 +37,72 @@ import Content.RuleKind
 
 groupNamesSingleton :: [GroupName ItemKind]
 groupNamesSingleton =
-       [S_FRAGRANCE, S_SINGLE_SPARK, S_SPARK]
-    ++ [FLASK_UNKNOWN, POTION_UNKNOWN, EDIBLE_PLANT_UNKNOWN, SCROLL_UNKNOWN, NECKLACE_UNKNOWN, RING_UNKNOWN, HAMMER_UNKNOWN, GEM_UNKNOWN, CURRENCY_UNKNOWN]
+    [ S_FRAGRANCE
+    , S_SINGLE_SPARK
+    , S_SPARK
+    , FLASK_UNKNOWN
+    , POTION_UNKNOWN
+    , EDIBLE_PLANT_UNKNOWN
+    , SCROLL_UNKNOWN
+    , NECKLACE_UNKNOWN
+    , RING_UNKNOWN
+    , HAMMER_UNKNOWN
+    , GEM_UNKNOWN
+    , CURRENCY_UNKNOWN]
     ++ actorsGNSingleton ++ organsGNSingleton
     ++ blastsGNSingleton ++ temporariesGNSingleton
 
-pattern FLASK_UNKNOWN, POTION_UNKNOWN, EDIBLE_PLANT_UNKNOWN, SCROLL_UNKNOWN, NECKLACE_UNKNOWN, RING_UNKNOWN, HAMMER_UNKNOWN, GEM_UNKNOWN, CURRENCY_UNKNOWN :: GroupName ItemKind
-
 groupNames :: [GroupName ItemKind]
 groupNames =
-       [TREASURE, ANY_SCROLL, ANY_GLASS, ANY_POTION, ANY_FLASK, EXPLOSIVE, ANY_JEWELRY, VALUABLE, UNREPORTED_INVENTORY]
-    ++ [HARPOON, EDIBLE_PLANT, RING_OF_OPPORTUNITY_GRENADIER, ARMOR_LOOSE, CLOTHING_MISC, CHIC_GEAR]
+    [ TREASURE
+    , ANY_SCROLL
+    , ANY_GLASS
+    , ANY_POTION
+    , ANY_FLASK
+    , EXPLOSIVE
+    , ANY_JEWELRY
+    , VALUABLE
+    , UNREPORTED_INVENTORY
+    , HARPOON
+    , EDIBLE_PLANT
+    , RING_OF_OPPORTUNITY_GRENADIER
+    , ARMOR_LOOSE
+    , CLOTHING_MISC
+    , CHIC_GEAR]
     ++ embedsGN ++ actorsGN ++ organsGN ++ blastsGN
-
-pattern HARPOON, EDIBLE_PLANT, RING_OF_OPPORTUNITY_GRENADIER, ARMOR_LOOSE, CLOTHING_MISC, CHIC_GEAR :: GroupName ItemKind
 
 -- The @UNKNOWN@ patterns don't need to be exported. Used internally.
 -- They also represent singleton groups.
+pattern FLASK_UNKNOWN :: GroupName c
 pattern FLASK_UNKNOWN = GroupName "flask unknown"
+pattern POTION_UNKNOWN :: GroupName c
 pattern POTION_UNKNOWN = GroupName "potion unknown"
+pattern EDIBLE_PLANT_UNKNOWN :: GroupName c
 pattern EDIBLE_PLANT_UNKNOWN = GroupName "edible plant unknown"
+pattern SCROLL_UNKNOWN :: GroupName c
 pattern SCROLL_UNKNOWN = GroupName "scroll unknown"
+pattern NECKLACE_UNKNOWN :: GroupName c
 pattern NECKLACE_UNKNOWN = GroupName "necklace unknown"
+pattern RING_UNKNOWN :: GroupName c
 pattern RING_UNKNOWN = GroupName "ring unknown"
+pattern HAMMER_UNKNOWN :: GroupName c
 pattern HAMMER_UNKNOWN = GroupName "hammer unknown"
+pattern GEM_UNKNOWN :: GroupName c
 pattern GEM_UNKNOWN = GroupName "gem unknown"
+pattern CURRENCY_UNKNOWN :: GroupName c
 pattern CURRENCY_UNKNOWN = GroupName "currency unknown"
 
+pattern HARPOON :: GroupName c
 pattern HARPOON = GroupName "harpoon"
+pattern EDIBLE_PLANT :: GroupName c
 pattern EDIBLE_PLANT = GroupName "edible plant"
+pattern RING_OF_OPPORTUNITY_GRENADIER :: GroupName c
 pattern RING_OF_OPPORTUNITY_GRENADIER = GroupName "ring of grenadier"
+pattern ARMOR_LOOSE :: GroupName c
 pattern ARMOR_LOOSE = GroupName "loose armor"
+pattern CLOTHING_MISC :: GroupName c
 pattern CLOTHING_MISC = GroupName "miscellaneous clothing"
+pattern CHIC_GEAR :: GroupName c
 pattern CHIC_GEAR = GroupName "chic gear"
 
 -- * Content
@@ -81,9 +115,143 @@ otherItemContent = embeds ++ actors ++ organs ++ blasts ++ temporaries
 
 items :: [ItemKind]
 items =
-  [sandstoneRock, dart, spike, spike2, slingStone, slingBullet, paralizingProj, harpoon, harpoon2, net, fragmentationBomb, concussionBomb, flashBomb, firecrackerBomb, flaskTemplate, flask1, flask2, flask3, flask4, flask5, flask6, flask7, flask8, flask9, flask10, flask11, flask12, flask13, flask14, flask15, potionTemplate, potion1, potion2, potion3, potion4, potion5, potion6, potion7, potion8, potion9, potion10, potion11, potion12, potion13, potion14, potion15, scrollTemplate, scroll1, scroll2, scroll3, scroll4, scroll5, scroll6, scroll7, scroll8, scroll9, scroll10, scroll11, scroll12, scroll13, ediblePlantTemplate, ediblePlant1, ediblePlant2, ediblePlant3, ediblePlant4, ediblePlant5, ediblePlant6, ediblePlant7, light1, light2, light3, blanket, gorget, necklaceTemplate, necklace1, necklace2, necklace3, necklace4, necklace5, necklace6, necklace7, necklace8, necklace9, necklace10, motionScanner, imageItensifier, sightSharpening, ringTemplate, ring1, ring2, ring3, ring4, ring5, ring6, ring7, ring8, ring9, ring10, armorLeather, armorMail, meleeEnhancement, gloveFencing, gloveGauntlet, gloveJousting, hatUshanka, capReinforced, helmArmored, smokingJacket, buckler, shield, shield2, shield3, hammerTemplate, hammer1, hammer2, hammer3, hammerParalyze, hammerSpark, knife, daggerDischarge, sword, swordImpress, swordNullify, halberd, halberd2, halberd3, halberdPushActor, gemTemplate, gem1, gem2, gem3, gem4, gem5, currencyTemplate, currency, jumpingPole, seeingItem]
-
-sandstoneRock,    dart, spike, spike2, slingStone, slingBullet, paralizingProj, harpoon, harpoon2, net, fragmentationBomb, concussionBomb, flashBomb, firecrackerBomb, flaskTemplate, flask1, flask2, flask3, flask4, flask5, flask6, flask7, flask8, flask9, flask10, flask11, flask12, flask13, flask14, flask15, potionTemplate, potion1, potion2, potion3, potion4, potion5, potion6, potion7, potion8, potion9, potion10, potion11, potion12, potion13, potion14, potion15, scrollTemplate, scroll1, scroll2, scroll3, scroll4, scroll5, scroll6, scroll7, scroll8, scroll9, scroll10, scroll11, scroll12, scroll13, ediblePlantTemplate, ediblePlant1, ediblePlant2, ediblePlant3, ediblePlant4, ediblePlant5, ediblePlant6, ediblePlant7, light1, light2, light3, blanket, gorget, necklaceTemplate, necklace1, necklace2, necklace3, necklace4, necklace5, necklace6, necklace7, necklace8, necklace9, necklace10, motionScanner, imageItensifier, sightSharpening, ringTemplate, ring1, ring2, ring3, ring4, ring5, ring6, ring7, ring8, ring9, ring10, armorLeather, armorMail, meleeEnhancement, gloveFencing, gloveGauntlet, gloveJousting, hatUshanka, capReinforced, helmArmored, smokingJacket, buckler, shield, shield2, shield3, hammerTemplate, hammer1, hammer2, hammer3, hammerParalyze, hammerSpark, knife, daggerDischarge, sword, swordImpress, swordNullify, halberd, halberd2, halberd3, halberdPushActor, gemTemplate, gem1, gem2, gem3, gem4, gem5, currencyTemplate, currency, jumpingPole, seeingItem :: ItemKind
+    [ sandstoneRock
+    , dart
+    , spike
+    , spike2
+    , slingStone
+    , slingBullet
+    , paralizingProj
+    , harpoon
+    , harpoon2
+    , net
+    , fragmentationBomb
+    , concussionBomb
+    , flashBomb
+    , firecrackerBomb
+    , flaskTemplate
+    , flask1
+    , flask2
+    , flask3
+    , flask4
+    , flask5
+    , flask6
+    , flask7
+    , flask8
+    , flask9
+    , flask10
+    , flask11
+    , flask12
+    , flask13
+    , flask14
+    , flask15
+    , potionTemplate
+    , potion1
+    , potion2
+    , potion3
+    , potion4
+    , potion5
+    , potion6
+    , potion7
+    , potion8
+    , potion9
+    , potion10
+    , potion11
+    , potion12
+    , potion13
+    , potion14
+    , potion15
+    , scrollTemplate
+    , scroll1
+    , scroll2
+    , scroll3
+    , scroll4
+    , scroll5
+    , scroll6
+    , scroll7
+    , scroll8
+    , scroll9
+    , scroll10
+    , scroll11
+    , scroll12
+    , scroll13
+    , ediblePlantTemplate
+    , ediblePlant1
+    , ediblePlant2
+    , ediblePlant3
+    , ediblePlant4
+    , ediblePlant5
+    , ediblePlant6
+    , ediblePlant7
+    , light1
+    , light2
+    , light3
+    , blanket
+    , gorget
+    , necklaceTemplate
+    , necklace1
+    , necklace2
+    , necklace3
+    , necklace4
+    , necklace5
+    , necklace6
+    , necklace7
+    , necklace8
+    , necklace9
+    , necklace10
+    , motionScanner
+    , imageItensifier
+    , sightSharpening
+    , ringTemplate
+    , ring1
+    , ring2
+    , ring3
+    , ring4
+    , ring5
+    , ring6
+    , ring7
+    , ring8
+    , ring9
+    , ring10
+    , armorLeather
+    , armorMail
+    , meleeEnhancement
+    , gloveFencing
+    , gloveGauntlet
+    , gloveJousting
+    , hatUshanka
+    , capReinforced
+    , helmArmored
+    , smokingJacket
+    , buckler
+    , shield
+    , shield2
+    , shield3
+    , hammerTemplate
+    , hammer1
+    , hammer2
+    , hammer3
+    , hammerParalyze
+    , hammerSpark
+    , knife
+    , daggerDischarge
+    , sword
+    , swordImpress
+    , swordNullify
+    , halberd
+    , halberd2
+    , halberd3
+    , halberdPushActor
+    , gemTemplate
+    , gem1
+    , gem2
+    , gem3
+    , gem4
+    , gem5
+    , currencyTemplate
+    , currency
+    , jumpingPole
+    , seeingItem]
 
 -- Keep the dice rolls and sides in aspects small so that not too many
 -- distinct items are generated (for display in item lore and for narrative
@@ -99,32 +267,52 @@ sandstoneRock,    dart, spike, spike2, slingStone, slingBullet, paralizingProj, 
 
 -- * Item group symbols, partially from Nethack
 
-symbolProjectile, _symbolLauncher, symbolLight, symbolTool, symbolSpecial, symbolGold, symbolNecklace, symbolRing, symbolPotion, symbolFlask, symbolScroll, symbolTorsoArmor, symbolMiscArmor, symbolClothes, symbolShield, symbolPolearm, symbolEdged, symbolHafted, symbolWand, _symbolStaff, symbolFood :: ContentSymbol ItemKind
-
+symbolProjectile :: ContentSymbol ItemKind
 symbolProjectile = rsymbolProjectile $ ritemSymbols standardRules
+_symbolLauncher :: ContentSymbol c
 _symbolLauncher  = toContentSymbol '}'
+symbolLight :: ContentSymbol c
 symbolLight      = rsymbolLight $ ritemSymbols standardRules
+symbolTool :: ContentSymbol c
 symbolTool       = rsymbolTool $ ritemSymbols standardRules
+symbolSpecial :: ContentSymbol c
 symbolSpecial    = rsymbolSpecial $ ritemSymbols standardRules
+symbolGold :: ContentSymbol c
 symbolGold       = rsymbolGold $ ritemSymbols standardRules
+symbolNecklace :: ContentSymbol c
 symbolNecklace   = rsymbolNecklace $ ritemSymbols standardRules
+symbolRing :: ContentSymbol c
 symbolRing       = rsymbolRing $ ritemSymbols standardRules
+symbolPotion :: ContentSymbol c
 symbolPotion     = rsymbolPotion $ ritemSymbols standardRules
+symbolFlask :: ContentSymbol c
 symbolFlask      = rsymbolFlask $ ritemSymbols standardRules
+symbolScroll :: ContentSymbol c
 symbolScroll     = rsymbolScroll $ ritemSymbols standardRules
+symbolTorsoArmor :: ContentSymbol c
 symbolTorsoArmor = rsymbolTorsoArmor $ ritemSymbols standardRules
+symbolMiscArmor :: ContentSymbol c
 symbolMiscArmor  = rsymbolMiscArmor $ ritemSymbols standardRules
+symbolClothes :: ContentSymbol c
 symbolClothes    = rsymbolClothes $ ritemSymbols standardRules
+symbolShield :: ContentSymbol c
 symbolShield     = rsymbolShield $ ritemSymbols standardRules
+symbolPolearm :: ContentSymbol c
 symbolPolearm    = rsymbolPolearm $ ritemSymbols standardRules
+symbolEdged :: ContentSymbol c
 symbolEdged      = rsymbolEdged $ ritemSymbols standardRules
+symbolHafted :: ContentSymbol c
 symbolHafted     = rsymbolHafted $ ritemSymbols standardRules
+symbolWand :: ContentSymbol c
 symbolWand       = rsymbolWand $ ritemSymbols standardRules
+_symbolStaff :: ContentSymbol c
 _symbolStaff     = toContentSymbol '_'
+symbolFood :: ContentSymbol c
 symbolFood       = rsymbolFood $ ritemSymbols standardRules
 
 -- ** Thrown weapons
 
+sandstoneRock :: ItemKind
 sandstoneRock = ItemKind
   { isymbol  = symbolProjectile
   , iname    = "sandstone rock"
@@ -143,6 +331,7 @@ sandstoneRock = ItemKind
   , idesc    = "A lump of brittle sandstone rock."
   , ikit     = []
   }
+dart :: ItemKind
 dart = ItemKind
   { isymbol  = symbolProjectile
   , iname    = "dart"
@@ -159,6 +348,7 @@ dart = ItemKind
   , idesc    = "A sharp delicate dart with fins."
   , ikit     = []
   }
+spike :: ItemKind
 spike = ItemKind
   { isymbol  = symbolProjectile
   , iname    = "spike"
@@ -180,6 +370,7 @@ spike = ItemKind
   , idesc    = "A cruel long nail with small head."  -- "Much inferior to arrows though, especially given the contravariance problems."  -- funny, but destroy the suspension of disbelief; this is supposed to be a Lovecraftian horror and any hilarity must ensue from the failures in making it so and not from actively trying to be funny; also, mundane objects are not supposed to be scary or transcendental; the scare is in horrors from the abstract dimension visiting our ordinary reality; without the contrast there's no horror and no wonder, so also the magical items must be contrasted with ordinary XIX century and antique items
   , ikit     = []
   }
+spike2 :: ItemKind
 spike2 = spike
   { ifreq    = [(COMMON_ITEM, 2), (ANY_ARROW, 1), (WEAK_ARROW, 1)]
   , iflavour = zipPlain [Cyan]
@@ -192,6 +383,7 @@ spike2 = spike
                    -- at deep levels sometimes even don't limit velocity
   , idesc    = "A jagged skewer of rusty metal."
   }
+slingStone :: ItemKind
 slingStone = ItemKind
   { isymbol  = symbolProjectile
   , iname    = "sling stone"
@@ -211,6 +403,7 @@ slingStone = ItemKind
   , idesc    = "A round stone, carefully sized and smoothed to fit the pouch of a standard string and cloth sling."
   , ikit     = []
   }
+slingBullet :: ItemKind
 slingBullet = ItemKind
   { isymbol  = symbolProjectile
   , iname    = "sling bullet"
@@ -240,6 +433,7 @@ slingBullet = ItemKind
 -- except @SkWait@, so that the player can switch leader and not be
 -- helpless nor experience instadeath (unless his party is 1-person
 -- or the actor is isolated, but that's usually player's fault).
+paralizingProj :: ItemKind
 paralizingProj = ItemKind
   { isymbol  = symbolProjectile
   , iname    = "bolas set"
@@ -255,6 +449,7 @@ paralizingProj = ItemKind
   , idesc    = "Wood balls tied with hemp rope. The foe is unlikely to use its main weapon while fighting for balance."
   , ikit     = []
   }
+harpoon :: ItemKind
 harpoon = ItemKind
   { isymbol  = symbolProjectile
   , iname    = "harpoon"
@@ -271,6 +466,7 @@ harpoon = ItemKind
   , idesc    = "The cruel, barbed head lodges in its victim so painfully that the weakest tug of the thin line sends the victim flying."
   , ikit     = []
   }
+harpoon2 :: ItemKind
 harpoon2 = harpoon
   { iname    = "The whaling Harpoon"
   , ifreq    = [(COMMON_ITEM, 10), (HARPOON, 2)]
@@ -280,6 +476,7 @@ harpoon2 = harpoon
   , iaspects = SetFlag Unique : delete (SetFlag Durable) (iaspects harpoon)
   , idesc    = "With a brittle, barbed head and thick cord, this ancient weapon is designed for formidable prey. The age has made the edge thinner and sharper, but brittle and splintering, so it won't last beyond a single hit. "
   }
+net :: ItemKind
 net = ItemKind
   { isymbol  = symbolProjectile
   , iname    = "net"
@@ -302,6 +499,7 @@ net = ItemKind
 
 -- ** Explosives, with the only effect being @Explode@
 
+fragmentationBomb :: ItemKind
 fragmentationBomb = ItemKind
   { isymbol  = symbolProjectile
   , iname    = "clay pot"
@@ -323,6 +521,7 @@ fragmentationBomb = ItemKind
   , idesc    = "The practical application of science."
   , ikit     = []
   }
+concussionBomb :: ItemKind
 concussionBomb = fragmentationBomb
   { iname    = "satchel"
       -- slightly stabilized nitroglycerine in a soft satchel, hence
@@ -343,6 +542,7 @@ concussionBomb = fragmentationBomb
 -- to manufacture (requires an oxidizer and steel canister with holes).
 -- The bang would also paralyze and/or lower the movement skill
 -- (out of balance due to ear trauma).
+flashBomb :: ItemKind
 flashBomb = fragmentationBomb
   { iname    = "magnesium ribbon"  -- filled with magnesium flash powder
   , iflavour = zipPlain [BrYellow]  -- avoid @BrWhite@; looks wrong in dark
@@ -353,6 +553,7 @@ flashBomb = fragmentationBomb
   , ieffects = [Explode S_FOCUSED_FLASH, OnSmash (Explode S_VIOLENT_FLASH)]
   , idesc    = "For dramatic entrances and urgent exits."
   }
+firecrackerBomb :: ItemKind
 firecrackerBomb = fragmentationBomb
   { iname = "roll"  -- not fireworks, as they require outdoors
   , iflavour = zipPlain [BrMagenta]
@@ -381,6 +582,7 @@ firecrackerBomb = fragmentationBomb
 -- There is no flask nor condition that only does Calm or max Calm depletion,
 -- because Calm reduced often via combat, etc.
 
+flaskTemplate :: ItemKind
 flaskTemplate = ItemKind
   { isymbol  = symbolFlask
   , iname    = "flask"
@@ -398,6 +600,7 @@ flaskTemplate = ItemKind
   , idesc    = "A flask of oily liquid of a suspect color. Something seems to be moving inside. Double dose causes twice longer effect. Triple dose is not advisable, since the active substance is never without unhealty side-efects and often dissolved in large volumes of alcohol."
   , ikit     = []
   }
+flask1 :: ItemKind
 flask1 = flaskTemplate
   { ifreq    = [ (COMMON_ITEM, 100), (ANY_FLASK, 100), (EXPLOSIVE, 100)
                , (ANY_GLASS, 100) ]
@@ -408,6 +611,7 @@ flask1 = flaskTemplate
   , ieffects = [ toOrganGood S_STRENGTHENED (20 + 1 `d` 5)
                , OnSmash (Explode S_DENSE_SHOWER) ]
   }
+flask2 :: ItemKind
 flask2 = flaskTemplate
   { ifreq    = [ (COMMON_ITEM, 100), (ANY_FLASK, 100), (EXPLOSIVE, 100)
                , (ANY_GLASS, 100) ]
@@ -416,6 +620,7 @@ flask2 = flaskTemplate
   , ieffects = [ toOrganBad S_WEAKENED (20 + 1 `d` 5)
                , OnSmash (Explode S_SPARSE_SHOWER) ]
   }
+flask3 :: ItemKind
 flask3 = flaskTemplate
   { ifreq    = [ (COMMON_ITEM, 100), (ANY_FLASK, 100), (EXPLOSIVE, 100)
                , (ANY_GLASS, 100) ]
@@ -424,6 +629,7 @@ flask3 = flaskTemplate
   , ieffects = [ toOrganGood S_PROTECTED_FROM_MELEE (20 + 1 `d` 5)
                , OnSmash (Explode S_MELEE_PROTECTIVE_BALM) ]
   }
+flask4 :: ItemKind
 flask4 = flaskTemplate
   { ifreq    = [ (COMMON_ITEM, 100), (ANY_FLASK, 100), (EXPLOSIVE, 100)
                , (ANY_GLASS, 100) ]
@@ -432,6 +638,7 @@ flask4 = flaskTemplate
   , ieffects = [ toOrganGood S_PROTECTED_FROM_RANGED (20 + 1 `d` 5)
                , OnSmash (Explode S_RANGE_PROTECTIVE_BALM) ]
   }
+flask5 :: ItemKind
 flask5 = flaskTemplate
   { ifreq    = [ (COMMON_ITEM, 100), (ANY_FLASK, 100), (EXPLOSIVE, 100)
                , (ANY_GLASS, 100) ]
@@ -442,6 +649,7 @@ flask5 = flaskTemplate
                , Detect DetectExit 20
                , OnSmash (Explode S_DEFENSELESSNESS_RUNOUT) ]
   }
+flask6 :: ItemKind
 flask6 = flaskTemplate
   { ifreq    = [ (COMMON_ITEM, 100), (ANY_FLASK, 100), (EXPLOSIVE, 100)
                , (ANY_GLASS, 100) ]
@@ -452,6 +660,7 @@ flask6 = flaskTemplate
                , RefillCalm 100  -- not to make it a drawback, via @calmEnough@
                , OnSmash (Explode S_RESOLUTION_DUST) ]
   }
+flask7 :: ItemKind
 flask7 = flaskTemplate
   { ifreq    = [ (COMMON_ITEM, 100), (ANY_FLASK, 100), (EXPLOSIVE, 100)
                , (ANY_GLASS, 100) ]
@@ -461,6 +670,7 @@ flask7 = flaskTemplate
   , ieffects = [ toOrganGood S_HASTED (20 + 1 `d` 5)
                , OnSmash (Explode S_HASTE_SPRAY) ]
   }
+flask8 :: ItemKind
 flask8 = flaskTemplate
   { ifreq    = [ (COMMON_ITEM, 100), (ANY_FLASK, 100), (EXPLOSIVE, 100)
                , (ANY_GLASS, 100) ]
@@ -469,6 +679,7 @@ flask8 = flaskTemplate
   , ieffects = [ toOrganGood S_FAR_SIGHTED (40 + 1 `d` 10)
                , OnSmash (Explode S_EYE_DROP) ]
   }
+flask9 :: ItemKind
 flask9 = flaskTemplate
   { ifreq    = [ (COMMON_ITEM, 100), (ANY_FLASK, 100), (EXPLOSIVE, 100)
                , (ANY_GLASS, 100) ]
@@ -479,6 +690,7 @@ flask9 = flaskTemplate
                , Detect DetectActor 10  -- make it at least slightly useful
                , OnSmash (Explode S_SMELLY_DROPLET) ]
   }
+flask10 :: ItemKind
 flask10 = flaskTemplate
   { ifreq    = [ (COMMON_ITEM, 100), (ANY_FLASK, 100), (EXPLOSIVE, 100)
                , (ANY_GLASS, 100) ]
@@ -488,6 +700,7 @@ flask10 = flaskTemplate
   , ieffects = [ toOrganGood S_SHINY_EYED (40 + 1 `d` 10)
                , OnSmash (Explode S_EYE_SHINE) ]
   }
+flask11 :: ItemKind
 flask11 = flaskTemplate
   { iname    = "bottle"
   , ifreq    = [ (COMMON_ITEM, 100), (ANY_FLASK, 100), (EXPLOSIVE, 100)
@@ -499,6 +712,7 @@ flask11 = flaskTemplate
                , Burn 10, RefillHP 10, Yell
                , OnSmash (Explode S_WHISKEY_SPRAY) ]
   }
+flask12 :: ItemKind
 flask12 = flaskTemplate
   { ifreq    = [ (COMMON_ITEM, 100), (ANY_FLASK, 100), (EXPLOSIVE, 100)
                , (ANY_GLASS, 100) ]
@@ -511,6 +725,7 @@ flask12 = flaskTemplate
                , OnSmash Impress  -- mildly useful when thrown
                , OnSmash (Explode S_WASTE) ]
   }
+flask13 :: ItemKind
 flask13 = flaskTemplate
   { ifreq    = [ (COMMON_ITEM, 100), (ANY_FLASK, 100), (EXPLOSIVE, 100)
                , (ANY_GLASS, 100) ]
@@ -519,6 +734,7 @@ flask13 = flaskTemplate
   , ieffects = [ toOrganNoTimer S_POISONED, toOrganNoTimer S_POISONED  -- x2
                , OnSmash (Explode S_POISON_CLOUD) ]
   }
+flask14 :: ItemKind
 flask14 = flaskTemplate
   { ifreq    = [ (COMMON_ITEM, 100), (ANY_FLASK, 100), (EXPLOSIVE, 100)
                , (ANY_GLASS, 100) ]
@@ -529,6 +745,7 @@ flask14 = flaskTemplate
                , toOrganBad S_DEFENSELESS (20 + 1 `d` 5)
                , OnSmash (Explode S_GLASS_HAIL) ]  -- enough glass to cause that
   }
+flask15 :: ItemKind
 flask15 = flaskTemplate
   { ifreq    = [ (COMMON_ITEM, 100), (ANY_FLASK, 100), (EXPLOSIVE, 100)
                , (ANY_GLASS, 100) ]
@@ -545,6 +762,7 @@ flask15 = flaskTemplate
 -- A different class of effects is on scrolls and mechanical items.
 -- Some are shared.
 
+potionTemplate :: ItemKind
 potionTemplate = ItemKind
   { isymbol  = symbolPotion
   , iname    = "potion"
@@ -561,6 +779,7 @@ potionTemplate = ItemKind
   , idesc    = "A vial of bright, frothing concoction. The best medicine that nature has to offer for wounds, ailments and mood swings."
   , ikit     = []
   }
+potion1 :: ItemKind
 potion1 = potionTemplate
   { iname    = "vial"
   , ifreq    = [(COMMON_ITEM, 100), (ANY_POTION, 100), (ANY_GLASS, 100)]
@@ -570,6 +789,7 @@ potion1 = potionTemplate
   , ieffects = [ Impress, toOrganGood S_ROSE_SMELLING (50 + 1 `d` 10)
                , OnSmash ApplyPerfume, OnSmash (Explode S_FRAGRANCE) ]
   }
+potion2 :: ItemKind
 potion2 = potionTemplate
   { iname    = "the Potion"
   , ifreq    = [(TREASURE, 100), (ANY_GLASS, 100)]
@@ -583,11 +803,13 @@ potion2 = potionTemplate
                , OnSmash (Explode S_HASTE_SPRAY) ]
   , idesc    = "The liquid fizzes with energy."
   }
+potion3 :: ItemKind
 potion3 = potionTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_POTION, 100), (ANY_GLASS, 100)]
   , ieffects = [ RefillHP 5, DropItem 1 maxBound COrgan S_POISONED
                , OnSmash (Explode S_HEALING_MIST) ]
   }
+potion4 :: ItemKind
 potion4 = potionTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_POTION, 100), (ANY_GLASS, 100)]
   , irarity  = [(1, 6), (10, 10)]
@@ -595,6 +817,7 @@ potion4 = potionTemplate
                , DropItem maxBound maxBound COrgan CONDITION
                , OnSmash (Explode S_HEALING_MIST_2) ]
   }
+potion5 :: ItemKind
 potion5 = potionTemplate
   { iname    = "ampoule"  -- probably filled with nitroglycerine, but let's
                           -- not mix fantasy with too much technical jargon
@@ -604,6 +827,7 @@ potion5 = potionTemplate
                , OnSmash (Explode S_VIOLENT_CONCUSSION) ]
       -- not fragmentation nor glass hail, because not enough glass
   }
+potion6 :: ItemKind
 potion6 = potionTemplate
   -- needs to be common to show at least a portion of effects
   { ifreq    = [(COMMON_ITEM, 100), (ANY_POTION, 100), (ANY_GLASS, 100)]
@@ -619,6 +843,7 @@ potion6 = potionTemplate
                                 , Explode S_RANGE_PROTECTIVE_BALM
                                 , Explode S_DEFENSELESSNESS_RUNOUT ]) ]
   }
+potion7 :: ItemKind
 potion7 = potionTemplate
   -- needs to be common to show at least a portion of effects
   { ifreq    = [(COMMON_ITEM, 100), (ANY_POTION, 100), (ANY_GLASS, 100)]
@@ -638,6 +863,7 @@ potion7 = potionTemplate
                                 , Explode S_FRAGRANCE
                                 , Explode S_VIOLENT_FLASH ]) ]
   }
+potion8 :: ItemKind
 potion8 = potionTemplate
   { iname    = "the Potion"
   , ifreq    = [(TREASURE, 100), (ANY_GLASS, 100)]
@@ -651,6 +877,7 @@ potion8 = potionTemplate
                , OnSmash (Explode S_DISTRESSING_ODOR) ]
   , idesc    = "Perplexing swirls of intense, compelling colour."
   }
+potion9 :: ItemKind
 potion9 = potionTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_POTION, 100), (ANY_GLASS, 100)]
   , irarity  = [(10, 5)]
@@ -664,6 +891,7 @@ potion9 = potionTemplate
                , OnSmash (Explode $ blastNoStatOf S_PACIFIED) ]
   , idesc    = "Thick, sluggish fluid with violently-bursting bubbles."
   }
+potion10 :: ItemKind
 potion10 = potionTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_POTION, 100), (ANY_GLASS, 100)]
   , irarity  = [(10, 8)]
@@ -677,6 +905,7 @@ potion10 = potionTemplate
                , OnSmash (Explode $ blastNoStatOf S_RETAINING)    -- more
                , OnSmash (Explode $ blastNoStatOf S_RETAINING) ]  -- explosion
   }
+potion11 :: ItemKind
 potion11 = potionTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_POTION, 100), (ANY_GLASS, 100)]
   , irarity  = [(10, 8)]
@@ -690,6 +919,7 @@ potion11 = potionTemplate
                , OnSmash (Explode S_SPARSE_SHOWER)
                , OnSmash (Explode $ blastNoStatOf S_WITHHOLDING) ]
   }
+potion12 :: ItemKind
 potion12 = potionTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_POTION, 100), (ANY_GLASS, 100)]
   , irarity  = [(10, 8)]
@@ -702,6 +932,7 @@ potion12 = potionTemplate
                , OnSmash (Explode S_IRON_FILING)
                , OnSmash (Explode $ blastNoStatOf S_IMMOBILE) ]
   }
+potion13 :: ItemKind
 potion13 = potionTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_POTION, 100), (ANY_GLASS, 100)]
   , irarity  = [(10, 4)]
@@ -710,6 +941,7 @@ potion13 = potionTemplate
   , ieffects = [ toOrganNoTimer S_SLOW_RESISTANT
                , OnSmash (Explode S_ANTI_SLOW_MIST) ]
   }
+potion14 :: ItemKind
 potion14 = potionTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_POTION, 100), (ANY_GLASS, 100)]
   , irarity  = [(10, 4)]
@@ -722,6 +954,7 @@ potion14 = potionTemplate
 -- so he can milk the explosion, so it has to be much weaker, so a weak
 -- healing effect is enough. OTOH, throwing a harmful flask at many enemies
 -- at once is not easy to arrange, so these explosions can stay powerful.
+potion15 :: ItemKind
 potion15 = potionTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_POTION, 100), (ANY_GLASS, 100)]
   , irarity  = [(1, 2), (10, 12)]
@@ -738,6 +971,7 @@ potion15 = potionTemplate
 -- Readable or otherwise communicating consumables require high apply skill
 -- to be consumed.
 
+scrollTemplate :: ItemKind
 scrollTemplate = ItemKind
   { isymbol  = symbolScroll
   , iname    = "scroll"
@@ -754,6 +988,7 @@ scrollTemplate = ItemKind
   , idesc    = "Scraps of haphazardly scribbled mysteries from beyond. Is this equation an alchemical recipe? Is this diagram an extradimensional map? Is this formula a secret call sign?"
   , ikit     = []
   }
+scroll1 :: ItemKind
 scroll1 = scrollTemplate
   { iname    = "the Scroll"
   , ifreq    = [(TREASURE, 100), (ANY_SCROLL, 100)]
@@ -764,11 +999,13 @@ scroll1 = scrollTemplate
   , ieffects = [Summon HERO 1, Summon MOBILE_ANIMAL (2 + 1 `d` 2)]
   , idesc    = "The bright flame and sweet-smelling smoke of this heavily infused scroll should attract natural creatures inhabiting the area, including human survivors, if any."
   }
+scroll2 :: ItemKind
 scroll2 = scrollTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_SCROLL, 100)]
   , irarity  = [(1, 6), (10, 2)]
   , ieffects = [Ascend False]
   }
+scroll3 :: ItemKind
 scroll3 = scrollTemplate
   -- needs to be common to show at least a portion of effects
   { ifreq    = [(COMMON_ITEM, 100), (ANY_SCROLL, 100)]
@@ -777,6 +1014,7 @@ scroll3 = scrollTemplate
   , ieffects = [OneOf [ Teleport 5, Paralyze 10, InsertMove 30
                       , Detect DetectEmbed 12, Detect DetectHidden 20 ]]
   }
+scroll4 :: ItemKind
 scroll4 = scrollTemplate
   -- needs to be common to show at least a portion of effects
   { ifreq    = [(COMMON_ITEM, 100), (ANY_SCROLL, 100)]
@@ -789,16 +1027,19 @@ scroll4 = scrollTemplate
                        , Detect DetectLoot 20  -- the most useful of detections
                        , CreateItem Nothing CGround COMMON_ITEM timerNone ] ]
   }
+scroll5 :: ItemKind
 scroll5 = scrollTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_SCROLL, 100)]
   , irarity  = [(1, 6)]  -- powerful, but low counts at the depths it appears on
   , ieffects = [InsertMove $ 20 + 1 `dL` 20]
   }
+scroll6 :: ItemKind
 scroll6 = scrollTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_SCROLL, 100)]
   , irarity  = [(10, 11)]
   , ieffects = [PullActor (ThrowMod 800 75 1)]  -- 6 steps, 1.5 turns
   }
+scroll7 :: ItemKind
 scroll7 = scrollTemplate
   { iname    = "the Scroll"
   , ifreq    = [(TREASURE, 100), (ANY_SCROLL, 100)]
@@ -809,17 +1050,20 @@ scroll7 = scrollTemplate
   , ieffects = [Summon HERO 1]
   , idesc    = "A survivor of past exploration missions is found that enjoys, apparently, complete physiological integrity. We can pronounce him a comrade in arms and let him join our party."
   }
+scroll8 :: ItemKind
 scroll8 = scrollTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_SCROLL, 100)]
   , irarity  = [(10, 4)]  -- powerful, even if not ideal; scares newbies
   , ieffects = [Detect DetectAll 20]
   }
+scroll9 :: ItemKind
 scroll9 = scrollTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_SCROLL, 100)]
   , iaspects = ELabel "of cue interpretation"
                : iaspects scrollTemplate
   , ieffects = [Detect DetectActor 20]
   }
+scroll10 :: ItemKind
 scroll10 = scrollTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_SCROLL, 100)]
   , icount   = 3 `dL` 1
@@ -829,6 +1073,7 @@ scroll10 = scrollTemplate
   , ieffects = [Identify `AndEffect` RefillCalm 10]
   , idesc    = "The most pressing existential concerns are met with a deeply satisfying scientific answer."
   }
+scroll11 :: ItemKind
 scroll11 = scrollTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_SCROLL, 100)]
   , irarity  = [(10, 20)]  -- at gameover a crucial item may be missing
@@ -836,6 +1081,7 @@ scroll11 = scrollTemplate
                : iaspects scrollTemplate
   , ieffects = [PolyItem `AndEffect` Explode S_FIRECRACKER]
   }
+scroll12 :: ItemKind
 scroll12 = scrollTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_SCROLL, 100)]
   , irarity  = [(10, 15)]
@@ -843,6 +1089,7 @@ scroll12 = scrollTemplate
                : iaspects scrollTemplate
   , ieffects = [RerollItem]
   }
+scroll13 :: ItemKind
 scroll13 = scrollTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_SCROLL, 100)]
   , irarity  = [(10, 15)]
@@ -853,6 +1100,7 @@ scroll13 = scrollTemplate
 
 -- Foods require only minimal apply skill to consume. Many animals can eat them.
 
+ediblePlantTemplate :: ItemKind
 ediblePlantTemplate = ItemKind
   { isymbol  = symbolFood
   , iname    = "edible plant"
@@ -869,26 +1117,31 @@ ediblePlantTemplate = ItemKind
   , idesc    = "Withered but fragrant bits of a colorful plant. Taste tolerably and break down easily, but only eating may reveal the full effects."
   , ikit     = []
   }
+ediblePlant1 :: ItemKind
 ediblePlant1 = ediblePlantTemplate
   { iname    = "overripe berry"
   , ifreq    = [(COMMON_ITEM, 100), (EDIBLE_PLANT, 100)]
   , ieffects = [RefillHP 1, toOrganBad S_IMMOBILE (5 + 1 `d` 5)]
   }
+ediblePlant2 :: ItemKind
 ediblePlant2 = ediblePlantTemplate
   { iname    = "frayed fungus"
   , ifreq    = [(COMMON_ITEM, 100), (EDIBLE_PLANT, 100)]
   , ieffects = [toOrganNoTimer S_POISONED]
   }
+ediblePlant3 :: ItemKind
 ediblePlant3 = ediblePlantTemplate
   { iname    = "thick leaf"
   , ifreq    = [(COMMON_ITEM, 100), (EDIBLE_PLANT, 100)]
   , ieffects = [DropItem 1 maxBound COrgan S_POISONED]
   }
+ediblePlant4 :: ItemKind
 ediblePlant4 = ediblePlantTemplate
   { iname    = "shrunk fruit"
   , ifreq    = [(COMMON_ITEM, 100), (EDIBLE_PLANT, 100)]
   , ieffects = [toOrganBad S_BLIND (10 + 1 `d` 10)]
   }
+ediblePlant5 :: ItemKind
 ediblePlant5 = ediblePlantTemplate
   { iname    = "fragrant herb"
   , ifreq    = [(COMMON_ITEM, 100), (EDIBLE_PLANT, 100)]
@@ -901,11 +1154,13 @@ ediblePlant5 = ediblePlantTemplate
                , toOrganNoTimer S_REGENERATING  -- x2
                , RefillCalm 5 ]
   }
+ediblePlant6 :: ItemKind
 ediblePlant6 = ediblePlantTemplate
   { iname    = "dull flower"
   , ifreq    = [(COMMON_ITEM, 100), (EDIBLE_PLANT, 100)]
   , ieffects = [PutToSleep]
   }
+ediblePlant7 :: ItemKind
 ediblePlant7 = ediblePlantTemplate
   { iname    = "spicy bark"
   , ifreq    = [(COMMON_ITEM, 100), (EDIBLE_PLANT, 100)]
@@ -914,6 +1169,7 @@ ediblePlant7 = ediblePlantTemplate
 
 -- ** Lights
 
+light1 :: ItemKind
 light1 = ItemKind
   { isymbol  = symbolLight
   , iname    = "wooden torch"
@@ -933,6 +1189,7 @@ light1 = ItemKind
   , idesc    = "A heavy smoking wooden torch, improvised using a cloth soaked in tar, burning in an unsteady glow."
   , ikit     = []
   }
+light2 :: ItemKind
 light2 = ItemKind
   { isymbol  = symbolLight
   , iname    = "oil lamp"
@@ -951,6 +1208,7 @@ light2 = ItemKind
   , idesc    = "A small clay lamp filled with plant oil feeding a tiny wick."
   , ikit     = []
   }
+light3 :: ItemKind
 light3 = ItemKind
   { isymbol  = symbolLight
   , iname    = "brass lantern"
@@ -969,6 +1227,7 @@ light3 = ItemKind
   , idesc    = "Very bright and very heavy brass lantern."
   , ikit     = []
   }
+blanket :: ItemKind
 blanket = ItemKind
   { isymbol  = symbolLight
   , iname    = "wool blanket"
@@ -996,6 +1255,7 @@ blanket = ItemKind
 
 -- This looks like a necklace, but is not periodic. Instead, it auto-activates
 -- when under melee attack.
+gorget :: ItemKind
 gorget = necklaceTemplate
   { iname    = "Old Gorget"
   , ifreq    = [(COMMON_ITEM, 25), (TREASURE, 25)]
@@ -1020,6 +1280,7 @@ iaspects_necklaceTemplate =
   , SetFlag Periodic, SetFlag Precious, SetFlag Equipable
   , toVelocity 50 ]  -- not dense enough
 -- Not identified, because id by use, e.g., via periodic activations. Fun.
+necklaceTemplate :: ItemKind
 necklaceTemplate = ItemKind
   { isymbol  = symbolNecklace
   , iname    = "necklace"
@@ -1041,6 +1302,7 @@ necklaceTemplate = ItemKind
   , idesc    = "Menacing Greek symbols shimmer with increasing speed along a chain of fine encrusted links. After a tense build-up, a prismatic arc shoots towards the ground and the iridescence subdues, becomes ordered and resembles a harmless ornament again, for a time."
   , ikit     = []
   }
+necklace1 :: ItemKind
 necklace1 = necklaceTemplate
   { iname    = "the Necklace"
   , ifreq    = [(TREASURE, 100), (ANY_JEWELRY, 100)]
@@ -1054,6 +1316,7 @@ necklace1 = necklaceTemplate
                , When (TriggeredBy ActivationPeriodic) $ RefillHP 1 ]
   , idesc    = "A cord of freshly dried herbs and healing berries."
   }
+necklace2 :: ItemKind
 necklace2 = necklaceTemplate
   { iname    = "the Necklace"
   , ifreq    = [(TREASURE, 100), (ANY_JEWELRY, 100)]
@@ -1071,6 +1334,7 @@ necklace2 = necklaceTemplate
                    , Explode S_WASTE ] ]
   , idesc    = "A cord hung with lumps of decaying meat. It's better not to think about the source."
   }
+necklace3 :: ItemKind
 necklace3 = necklaceTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_JEWELRY, 100)]
   , iaspects = [ ELabel "of fearful listening"
@@ -1082,6 +1346,7 @@ necklace3 = necklaceTemplate
   , ieffects = [ Detect DetectActor 20  -- can be applied; destroys the item
                , When (TriggeredBy ActivationPeriodic) $ RefillCalm (-30) ]
   }
+necklace4 :: ItemKind
 necklace4 = necklaceTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_JEWELRY, 100)]
   , iaspects = [ ELabel "of escape"
@@ -1092,6 +1357,7 @@ necklace4 = necklaceTemplate
                , Yell ]  -- drawback when used for quick exploring
   , idesc    = "A supple chain that slips through your fingers."
   }
+necklace5 :: ItemKind
 necklace5 = necklaceTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_JEWELRY, 100)]
   , iaspects = [ ELabel "of greed"
@@ -1101,12 +1367,14 @@ necklace5 = necklaceTemplate
                , toOrganBad S_PARSIMONIOUS (5 + 1 `d` 3)  -- hard to flee
                , When (TriggeredBy ActivationPeriodic) $ Teleport 40 ]  -- risky
   }
+necklace6 :: ItemKind
 necklace6 = necklaceTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_JEWELRY, 100)]
   , iaspects = Timeout ((3 + 1 `d` 3 - 1 `dL` 3) * 2)
                : iaspects_necklaceTemplate  -- OP if Durable; free blink
   , ieffects = [Teleport $ 3 `d` 2]
   }
+necklace7 :: ItemKind
 necklace7 = necklaceTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_JEWELRY, 100)]
   , iaspects = Timeout ((1 `d` 3) * 2)
@@ -1114,6 +1382,7 @@ necklace7 = necklaceTemplate
   , ieffects = [PushActor (ThrowMod 100 50 1)]  -- 1 step, slow
                   -- the @50@ is only for the case of very light actor, etc.
   }
+necklace8 :: ItemKind
 necklace8 = necklaceTemplate
   { iname    = "the Necklace"
   , ifreq    = [(TREASURE, 100), (ANY_JEWELRY, 100)]
@@ -1129,6 +1398,7 @@ necklace8 = necklaceTemplate
                  -- as well as unlimited accumulation of the duration.
   , idesc    = "A string of beads in various colours, with no discernable pattern."
   }
+necklace9 :: ItemKind
 necklace9 = necklaceTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_JEWELRY, 100)]
   , irarity  = [(4, 3)]  -- entirely optional
@@ -1136,6 +1406,7 @@ necklace9 = necklaceTemplate
                : iaspects_necklaceTemplate
   , ieffects = [Explode S_SPARK]
   }
+necklace10 :: ItemKind
 necklace10 = necklaceTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_JEWELRY, 100)]
   , iaspects = Timeout ((3 + 1 `d` 3) * 10)
@@ -1145,6 +1416,7 @@ necklace10 = necklaceTemplate
                    -- projectiles caused by own necklace when walking
   , ieffects = [Explode S_FRAGRANCE]
   }
+motionScanner :: ItemKind
 motionScanner = necklaceTemplate
   { iname    = "draft detector"
   , ifreq    = [(COMMON_ITEM, 100), (ADD_NOCTO_1, 20)]
@@ -1163,6 +1435,7 @@ motionScanner = necklaceTemplate
 
 -- ** Non-periodic jewelry
 
+imageItensifier :: ItemKind
 imageItensifier = ItemKind
   { isymbol  = symbolRing
   , iname    = "light cone"
@@ -1181,6 +1454,7 @@ imageItensifier = ItemKind
   , idesc    = "Contraption of lenses and mirrors on a polished brass headband for capturing and strengthening light in dark environment. Hampers vision in daylight. Stackable."
   , ikit     = []
   }
+sightSharpening :: ItemKind
 sightSharpening = ringTemplate  -- small and round, so mistaken for a ring
   { iname    = "sharp monocle"
   , ifreq    = [(TREASURE, 20), (ADD_SIGHT, 1)]
@@ -1203,6 +1477,7 @@ sightSharpening = ringTemplate  -- small and round, so mistaken for a ring
 -- them by observing the effect, rings are identified on pickup.
 -- That's unlike necklaces, which provide the fun of id-by-use, because they
 -- have effects and when the effects are triggered, they get identified.
+ringTemplate :: ItemKind
 ringTemplate = ItemKind
   { isymbol  = symbolRing
   , iname    = "ring"
@@ -1218,6 +1493,7 @@ ringTemplate = ItemKind
   , idesc    = "It looks like an ordinary object, but it's in fact a generator of exceptional effects: adding to some of your natural qualities and subtracting from others."
   , ikit     = []
   }
+ring1 :: ItemKind
 ring1 = ringTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_JEWELRY, 100)]
   , irarity  = [(8, 4)]
@@ -1226,6 +1502,7 @@ ring1 = ringTemplate
                , EqpSlot EqpSlotSpeed ]
                ++ iaspects ringTemplate
   }
+ring2 :: ItemKind
 ring2 = ringTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_JEWELRY, 100)]
   , irarity  = [(8, 4)]
@@ -1234,6 +1511,7 @@ ring2 = ringTemplate
                , EqpSlot EqpSlotSpeed ]
                ++ iaspects ringTemplate
   }
+ring3 :: ItemKind
 ring3 = ringTemplate
   { iname    = "the Ring"
   , ifreq    = [(TREASURE, 100), (ANY_JEWELRY, 100)]
@@ -1245,6 +1523,7 @@ ring3 = ringTemplate
                ++ iaspects ringTemplate
   , idesc    = "Roughly-shaped metal with shallow scratches marking it."
   }
+ring4 :: ItemKind
 ring4 = ringTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_JEWELRY, 100)]
   , irarity  = [(3, 4), (10, 8)]
@@ -1253,6 +1532,7 @@ ring4 = ringTemplate
                , EqpSlot EqpSlotHurtMelee ]
                ++ iaspects ringTemplate
   }
+ring5 :: ItemKind
 ring5 = ringTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_JEWELRY, 100)]
   , iaspects = [ AddSkill SkHurtMelee $ (4 + 1 `d` 3 + (1 `dL` 2) * 2 ) * 3
@@ -1260,6 +1540,7 @@ ring5 = ringTemplate
                , EqpSlot EqpSlotHurtMelee ]
                ++ iaspects ringTemplate
   }
+ring6 :: ItemKind
 ring6 = ringTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_JEWELRY, 100)]
   , irarity  = [(10, 8)]
@@ -1268,6 +1549,7 @@ ring6 = ringTemplate
                , EqpSlot EqpSlotMaxHP ]
                ++ iaspects ringTemplate
   }
+ring7 :: ItemKind
 ring7 = ringTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_JEWELRY, 100)]
   , irarity  = [(5, 1), (10, 9)]  -- needed after other items drop Calm
@@ -1277,6 +1559,7 @@ ring7 = ringTemplate
                ++ iaspects ringTemplate
   , idesc    = "Cold, solid to the touch, perfectly round, engraved with solemn, strangely comforting, worn out words."
   }
+ring8 :: ItemKind
 ring8 = ringTemplate  -- weak skill per eqp slot, so can be without drawbacks
   { ifreq    = [(COMMON_ITEM, 100), (ANY_JEWELRY, 100)]
   , irarity  = [(10, 3)]
@@ -1285,6 +1568,7 @@ ring8 = ringTemplate  -- weak skill per eqp slot, so can be without drawbacks
                ++ iaspects ringTemplate
   , idesc    = "A sturdy ring with a large, shining stone."
   }
+ring9 :: ItemKind
 ring9 = ringTemplate
   { ifreq    = [(RING_OF_OPPORTUNITY_SNIPER, 1) ]  -- only for scenarios
   , irarity  = [(1, 1)]
@@ -1293,6 +1577,7 @@ ring9 = ringTemplate
                , EqpSlot EqpSlotProject ]
                ++ iaspects ringTemplate
   }
+ring10 :: ItemKind
 ring10 = ringTemplate
   { ifreq    = [(RING_OF_OPPORTUNITY_GRENADIER, 1) ]  -- only for scenarios
   , irarity  = [(1, 1)]
@@ -1304,6 +1589,7 @@ ring10 = ringTemplate
 
 -- ** Armor
 
+armorLeather :: ItemKind
 armorLeather = ItemKind
   { isymbol  = symbolTorsoArmor
   , iname    = "leather armor"
@@ -1323,6 +1609,7 @@ armorLeather = ItemKind
   , idesc    = "A stiff jacket formed from leather boiled in bee wax, padded linen and horse hair. Protects from anything that is not too sharp. Smells much better than the rest of your garment."
   , ikit     = []
   }
+armorMail :: ItemKind
 armorMail = armorLeather
   { iname    = "ring armor"
   , ifreq    = [ (COMMON_ITEM, 100), (ARMOR_LOOSE, 1), (ARMOR_RANGED, 50)
@@ -1340,6 +1627,7 @@ armorMail = armorLeather
   , ieffects = []
   , idesc    = "A long shirt with tiny iron rings sewn into it. Discourages foes from attacking your torso, especially with ranged weapons, which can't pierce the rings nor aim between them. The stiff fabric is hard to wash, though."
   }
+meleeEnhancement :: ItemKind
 meleeEnhancement = ItemKind
   { isymbol  = symbolTool
   , iname    = "whetstone"
@@ -1357,6 +1645,7 @@ meleeEnhancement = ItemKind
   , idesc    = "A portable sharpening stone for keeping your weapons keen and true, without the need to set up camp, fish out tools and assemble a proper sharpening workshop. Provides an extra polish to amor, as well."
   , ikit     = []
   }
+gloveFencing :: ItemKind
 gloveFencing = ItemKind
   { isymbol  = symbolMiscArmor
   , iname    = "leather glove"
@@ -1377,6 +1666,7 @@ gloveFencing = ItemKind
   , idesc    = "A fencing glove from rough leather ensuring a good grip. Also quite effective in averting or even catching slow projectiles."
   , ikit     = []
   }
+gloveGauntlet :: ItemKind
 gloveGauntlet = gloveFencing
   { iname    = "steel gauntlet"
   , ifreq    = [(COMMON_ITEM, 100), (ARMOR_MISC, 1), (STARTING_ARMOR, 50)]
@@ -1391,6 +1681,7 @@ gloveGauntlet = gloveFencing
                , toVelocity 50 ]  -- flaps and flutters
   , idesc    = "Long leather gauntlet covered in overlapping steel plates."
   }
+gloveJousting :: ItemKind
 gloveJousting = gloveFencing
   { iname    = "Tournament Gauntlet"
   , ifreq    = [(COMMON_ITEM, 100), (ARMOR_MISC, 1)]
@@ -1410,6 +1701,7 @@ gloveJousting = gloveFencing
                , toVelocity 50 ]  -- flaps and flutters
   , idesc    = "Rigid, steel jousting handgear. If only you had a lance. And a horse to carry it all."
   }
+hatUshanka :: ItemKind
 hatUshanka = ItemKind
   { isymbol  = symbolMiscArmor
   , iname    = "ushanka hat"
@@ -1430,6 +1722,7 @@ hatUshanka = ItemKind
   , idesc    = "Soft and warm fur. It keeps your ears warm."
   , ikit     = []
   }
+capReinforced :: ItemKind
 capReinforced = ItemKind
   { isymbol  = symbolMiscArmor
   , iname    = "leather cap"
@@ -1449,6 +1742,7 @@ capReinforced = ItemKind
   , idesc    = "Boiled leather with a wide brim. It might soften a blow."
   , ikit     = []
   }
+helmArmored :: ItemKind
 helmArmored = ItemKind
   { isymbol  = symbolMiscArmor
   , iname    = "bucket helm"
@@ -1469,6 +1763,7 @@ helmArmored = ItemKind
   , idesc    = "Blocks out everything, including your senses."
   , ikit     = []
   }
+smokingJacket :: ItemKind
 smokingJacket = ItemKind
   { isymbol  = symbolClothes
   , iname    = "smoking jacket"
@@ -1496,6 +1791,7 @@ smokingJacket = ItemKind
 -- Note that AI will pick them up but never wear and will use them at most
 -- as a way to push itself. Despite being @Meleeable@, they will not be used
 -- as weapons either. This is OK, using shields smartly is totally beyond AI.
+buckler :: ItemKind
 buckler = ItemKind
   { isymbol  = symbolShield
   , iname    = "buckler"
@@ -1517,6 +1813,7 @@ buckler = ItemKind
   , idesc    = "Heavy and unwieldy. Absorbs a percentage of melee damage, both dealt and sustained. Too small to intercept projectiles with. May serve as a counterweight to suddenly push forth."
   , ikit     = []
   }
+shield :: ItemKind
 shield = buckler
   { iname    = "shield"
   , irarity  = [(8, 4)]  -- the stronger variants add to total probability
@@ -1534,12 +1831,14 @@ shield = buckler
   , ieffects = [PushActor (ThrowMod 400 50 1)]  -- 2 steps, fast
   , idesc    = "Large and unwieldy. Absorbs a percentage of melee damage, both dealt and sustained. Too heavy to intercept projectiles with. Useful to push foes out of the way."
   }
+shield2 :: ItemKind
 shield2 = shield
   { ifreq    = [(COMMON_ITEM, 3 * 3)]  -- very low base rarity
   , iweight  = 5000
   , idamage  = 8 `d` 1
   , idesc    = "A relic of long-past wars, heavy and with a central spike."
   }
+shield3 :: ItemKind
 shield3 = shield2
   { ifreq    = [(COMMON_ITEM, 1 * 3)]  -- very low base rarity
   , iweight  = 6000
@@ -1548,6 +1847,7 @@ shield3 = shield2
 
 -- ** Weapons
 
+knife :: ItemKind
 knife = ItemKind
   { isymbol  = symbolEdged
   , iname    = "dagger"
@@ -1569,6 +1869,7 @@ knife = ItemKind
   , idesc    = "A short dagger for thrusting and parrying blows. Does not penetrate deeply, but is quick to move and hard to block. Especially useful in conjunction with a larger weapon."
   , ikit     = []
   }
+daggerDischarge :: ItemKind
 daggerDischarge = knife
   { iname    = "The Double Dagger"
   , ifreq    = [(TREASURE, 20)]
@@ -1579,6 +1880,7 @@ daggerDischarge = knife
                                        -- and no effect if no weapons charged
   , idesc    = "A double dagger that a focused fencer can use to catch and twist away an opponent's blade."
   }
+hammerTemplate :: ItemKind
 hammerTemplate = ItemKind
   { isymbol  = symbolHafted
   , iname    = "war hammer"
@@ -1598,11 +1900,13 @@ hammerTemplate = ItemKind
   , idesc    = "It may not cause extensive wounds, but neither does it harmlessly glance off heavy armour as blades and polearms tend to. There are so many shapes and types, some looking more like tools than weapons, that at a glance you can't tell what a particular specimen does. It's obvious, though, that any of them requires some time to recover after a swing."  -- if it's really the average kind, the weak kind, the description stays; if not, it's replaced with one of the descriptions below at identification time
   , ikit     = []
   }
+hammer1 :: ItemKind
 hammer1 = hammerTemplate
   { ifreq    = [(COMMON_ITEM, 100), (STARTING_WEAPON, 70)]
   , iaspects = [Timeout 5, EqpSlot EqpSlotWeaponBig]
                ++ iaspects hammerTemplate
   }
+hammer2 :: ItemKind
 hammer2 = hammerTemplate
   { ifreq    = [(COMMON_ITEM, 20), (STARTING_WEAPON, 7)]
   , iverbHit = "gouge"
@@ -1610,6 +1914,7 @@ hammer2 = hammerTemplate
                ++ iaspects hammerTemplate
   , idesc    = "Upon closer inspection, this hammer turns out particularly handy and well balanced, with one thick and sturdy and two long and sharp points compensating the modest size."
   }
+hammer3 :: ItemKind
 hammer3 = hammerTemplate
   { ifreq    = [(COMMON_ITEM, 3), (STARTING_WEAPON, 1)]
   , iverbHit = "puncture"
@@ -1621,6 +1926,7 @@ hammer3 = hammerTemplate
                ++ iaspects hammerTemplate
   , idesc    = "This hammer sports a long metal handle that increases the momentum of the sharpened head's swing, at the cost of long recovery."
   }
+hammerParalyze :: ItemKind
 hammerParalyze = hammerTemplate
   { iname    = "The Brute Hammer"
   , ifreq    = [(TREASURE, 20)]
@@ -1632,6 +1938,7 @@ hammerParalyze = hammerTemplate
   , ieffects = [Paralyze 10]
   , idesc    = "A huge shapeless lump of meteorite iron alloy on a sturdy pole. Nobody remains standing when this head connects."
   }
+hammerSpark :: ItemKind
 hammerSpark = hammerTemplate
   { iname    = "The Grand Smithhammer"
   , ifreq    = [(TREASURE, 20)]
@@ -1649,6 +1956,7 @@ hammerSpark = hammerTemplate
       -- wielder as well, unlike this one
   , idesc    = "Smiths of old wielded this heavy hammer and its sparks christened many a potent blade."
   }
+sword :: ItemKind
 sword = ItemKind
   { isymbol  = symbolEdged
   , iname    = "sword"
@@ -1667,6 +1975,7 @@ sword = ItemKind
   , idesc    = "Difficult to master; deadly when used effectively. The steel is particularly hard and keen, but rusts quickly without regular maintenance."
   , ikit     = []
   }
+swordImpress :: ItemKind
 swordImpress = sword
   { iname    = "The Master's Sword"
   , ifreq    = [(TREASURE, 20)]
@@ -1676,6 +1985,7 @@ swordImpress = sword
   , ieffects = [Impress]
   , idesc    = "A particularly well-balance blade, lending itself to impressive shows of fencing skill."
   }
+swordNullify :: ItemKind
 swordNullify = sword
   { iname    = "The Gutting Sword"
   , ifreq    = [(TREASURE, 20)]
@@ -1688,6 +1998,7 @@ swordNullify = sword
                , Yell ]
   , idesc    = "Cold, thin blade that pierces deeply and sends its victim into abrupt, sobering shock."
   }
+halberd :: ItemKind
 halberd = ItemKind
   { isymbol  = symbolPolearm
   , iname    = "war scythe"
@@ -1709,6 +2020,7 @@ halberd = ItemKind
   , idesc    = "An improvised weapon made of scythe's blade attached to a long pole. Not often one succeeds in making enough space to swing it freely, but even when stuck between terrain obstacles it blocks approaches effectively and makes using other weapons difficult, both by friends and foes."
   , ikit     = []
   }
+halberd2 :: ItemKind
 halberd2 = halberd
   { iname    = "halberd"
   , ifreq    = [(COMMON_ITEM, 3 * 2), (STARTING_WEAPON, 1)]
@@ -1721,6 +2033,7 @@ halberd2 = halberd
   , idamage  = 18 `d` 1
   , idesc    = "A long haft with a sharp blade. Designed and refined for war."
   }
+halberd3 :: ItemKind
 halberd3 = halberd2
   { iname    = "bardiche"
   , ifreq    = [(COMMON_ITEM, 1 * 2)]  -- compensating for low base rarity
@@ -1729,6 +2042,7 @@ halberd3 = halberd2
   , idamage  = 24 `d` 1
   , idesc    = "The reach of a spear but the edge of an axe."
   }
+halberdPushActor :: ItemKind
 halberdPushActor = halberd
   { iname    = "The Swiss Halberd"
   , ifreq    = [(TREASURE, 20)]
@@ -1741,6 +2055,7 @@ halberdPushActor = halberd
 
 -- ** Treasure
 
+gemTemplate :: ItemKind
 gemTemplate = ItemKind
   { isymbol  = symbolGold
   , iname    = "gem"
@@ -1756,6 +2071,7 @@ gemTemplate = ItemKind
   , idesc    = "Useless, and still worth around 100 gold each. Would gems of thought and pearls of artful design be valued that much in our age of Science and Progress!"
   , ikit     = []
   }
+gem1 :: ItemKind
 gem1 = gemTemplate
   { ifreq    = [ (TREASURE, 100), (GEM, 100), (ANY_JEWELRY, 10)
                , (VALUABLE, 100) ]
@@ -1765,21 +2081,25 @@ gem1 = gemTemplate
                  -- is visible on dark floor, but not too tempting to wear
                ++ iaspects gemTemplate
   }
+gem2 :: ItemKind
 gem2 = gem1
   { ifreq    = [ (TREASURE, 150), (GEM, 100), (ANY_JEWELRY, 10)
                , (VALUABLE, 100) ]
   , irarity  = [(5, 0), (7, 25), (10, 8)]
   }
+gem3 :: ItemKind
 gem3 = gem1
   { ifreq    = [ (TREASURE, 150), (GEM, 100), (ANY_JEWELRY, 10)
                , (VALUABLE, 100) ]
   , irarity  = [(7, 0), (8, 20), (10, 8)]
   }
+gem4 :: ItemKind
 gem4 = gem1
   { ifreq    = [ (TREASURE, 150), (GEM, 100), (ANY_JEWELRY, 30)
                , (VALUABLE, 100) ]
   , irarity  = [(9, 0), (10, 70)]
   }
+gem5 :: ItemKind
 gem5 = gem1
   { isymbol  = symbolSpecial
   , iname    = "elixir"
@@ -1792,6 +2112,7 @@ gem5 = gem1
   , ieffects = [RefillCalm 10, RefillHP 40]
   , idesc    = "A crystal vial of amber liquid, supposedly granting eternal youth and fetching 100 gold per piece. The main effect seems to be mild euphoria, but it admittedly smells good and heals minor ailments rather well."
   }
+currencyTemplate :: ItemKind
 currencyTemplate = ItemKind
   { isymbol  = symbolGold
   , iname    = "gold piece"
@@ -1807,6 +2128,7 @@ currencyTemplate = ItemKind
   , idesc    = "Reliably valuable in every civilized plane of existence."
   , ikit     = []
   }
+currency :: ItemKind
 currency = currencyTemplate
   { ifreq    = [(TREASURE, 100), (S_CURRENCY, 100), (VALUABLE, 1)]
   , iaspects = [AddSkill SkShine 1, AddSkill SkSpeed (-1)]
@@ -1815,6 +2137,7 @@ currency = currencyTemplate
 
 -- ** Tools to be actively used, but not worn
 
+jumpingPole :: ItemKind
 jumpingPole = ItemKind
   { isymbol  = symbolWand
   , iname    = "jumping pole"
@@ -1843,6 +2166,7 @@ jumpingPole = ItemKind
   , idesc    = "Makes you vulnerable at take-off, but then you are free like a bird."
   , ikit     = []
   }
+seeingItem :: ItemKind
 seeingItem = ItemKind
   { isymbol  = symbolFood
   , iname    = "giant pupil"

@@ -1,12 +1,63 @@
+{-# OPTIONS_GHC -Wno-missing-signatures #-}
 -- | Actor organ definitions.
 module Content.ItemKindOrgan
-  ( -- * Group name patterns
-    pattern S_TIRE, pattern S_FIST, pattern S_FOOT, pattern S_HOOKED_CLAW, pattern S_SMALL_CLAW, pattern S_SNOUT, pattern S_SMALL_JAW, pattern S_JAW, pattern S_LARGE_JAW, pattern S_ANTLER, pattern S_HORN, pattern S_RHINO_HORN, pattern S_TENTACLE, pattern S_TIP, pattern S_LIP, pattern S_THORN, pattern S_BOILING_FISSURE, pattern S_ARSENIC_FISSURE, pattern S_SULFUR_FISSURE, pattern S_BEE_STING, pattern S_STING, pattern S_VENOM_TOOTH, pattern S_VENOM_FANG, pattern S_SCREECHING_BEAK, pattern S_LARGE_TAIL, pattern S_HUGE_TAIL, pattern S_ARMORED_SKIN, pattern S_BARK, pattern S_NOSTRIL, pattern S_RATLLE, pattern S_INSECT_MORTALITY, pattern S_SAPIENT_BRAIN, pattern S_ANIMAL_BRAIN, pattern S_SCENT_GLAND, pattern S_BOILING_VENT, pattern S_ARSENIC_VENT, pattern S_SULFUR_VENT, pattern S_EYE_3, pattern S_EYE_6, pattern S_EYE_8, pattern S_VISION_6, pattern S_VISION_12, pattern S_VISION_16, pattern S_EAR_3, pattern S_EAR_6, pattern S_EAR_8, pattern S_SPEED_GLAND_5, pattern S_SPEED_GLAND_10
-  , pattern SCAVENGER
-  , pattern S_TOOTH, pattern S_LASH, pattern S_RIGHT_TORSION, pattern S_LEFT_TORSION, pattern S_PUPIL
-  , organsGNSingleton, organsGN
-  , -- * Content
-    organs
+  ( pattern S_TIRE
+  , pattern S_FIST
+  , pattern S_FOOT
+  , pattern S_HOOKED_CLAW
+  , pattern S_SMALL_CLAW
+  , pattern S_SNOUT
+  , pattern S_SMALL_JAW
+  , pattern S_JAW
+  , pattern S_LARGE_JAW
+  , pattern S_ANTLER
+  , pattern S_HORN
+  , pattern S_RHINO_HORN
+  , pattern S_TENTACLE
+  , pattern S_TIP
+  , pattern S_LIP
+  , pattern S_THORN
+  , pattern S_BOILING_FISSURE
+  , pattern S_ARSENIC_FISSURE
+  , pattern S_SULFUR_FISSURE
+  , pattern S_BEE_STING
+  , pattern S_STING
+  , pattern S_VENOM_TOOTH
+  , pattern S_VENOM_FANG
+  , pattern S_SCREECHING_BEAK
+  , pattern S_LARGE_TAIL
+  , pattern S_HUGE_TAIL
+  , pattern S_ARMORED_SKIN
+  , pattern S_BARK
+  , pattern S_NOSTRIL
+  , pattern S_RATLLE
+  , pattern S_INSECT_MORTALITY
+  , pattern S_SAPIENT_BRAIN
+  , pattern S_ANIMAL_BRAIN
+  , pattern S_SCENT_GLAND
+  , pattern S_BOILING_VENT
+  , pattern S_ARSENIC_VENT
+  , pattern S_SULFUR_VENT
+  , pattern S_EYE_3
+  , pattern S_EYE_6
+  , pattern S_EYE_8
+  , pattern S_VISION_6
+  , pattern S_VISION_12
+  , pattern S_VISION_16
+  , pattern S_EAR_3
+  , pattern S_EAR_6
+  , pattern S_EAR_8
+  , pattern S_SPEED_GLAND_5
+  , pattern S_SPEED_GLAND_10 
+  , pattern SCAVENGER 
+  , pattern S_TOOTH
+  , pattern S_LASH
+  , pattern S_RIGHT_TORSION
+  , pattern S_LEFT_TORSION
+  , pattern S_PUPIL 
+  , organsGNSingleton
+  , organsGN 
+  , organs
   ) where
 
 import Prelude ()
@@ -30,12 +81,59 @@ import Content.RuleKind
 
 organsGNSingleton :: [GroupName ItemKind]
 organsGNSingleton =
-       [S_TIRE, S_FIST, S_FOOT, S_HOOKED_CLAW, S_SMALL_CLAW, S_SNOUT, S_SMALL_JAW, S_JAW, S_LARGE_JAW, S_ANTLER, S_HORN, S_RHINO_HORN, S_TENTACLE, S_TIP, S_LIP, S_THORN, S_BOILING_FISSURE, S_ARSENIC_FISSURE, S_SULFUR_FISSURE, S_BEE_STING, S_STING, S_VENOM_TOOTH, S_VENOM_FANG, S_SCREECHING_BEAK, S_LARGE_TAIL, S_HUGE_TAIL, S_ARMORED_SKIN, S_BARK, S_NOSTRIL, S_RATLLE, S_INSECT_MORTALITY, S_SAPIENT_BRAIN, S_ANIMAL_BRAIN, S_SCENT_GLAND, S_BOILING_VENT, S_ARSENIC_VENT, S_SULFUR_VENT, S_EYE_3, S_EYE_6, S_EYE_8, S_VISION_6, S_VISION_12, S_VISION_16, S_EAR_3, S_EAR_6, S_EAR_8, S_SPEED_GLAND_5, S_SPEED_GLAND_10]
-    ++ [S_TOOTH, S_LASH, S_RIGHT_TORSION, S_LEFT_TORSION, S_PUPIL]
-
-pattern S_TIRE, S_FIST, S_FOOT, S_HOOKED_CLAW, S_SMALL_CLAW, S_SNOUT, S_SMALL_JAW, S_JAW, S_LARGE_JAW, S_ANTLER, S_HORN, S_RHINO_HORN, S_TENTACLE, S_TIP, S_LIP, S_THORN, S_BOILING_FISSURE, S_ARSENIC_FISSURE, S_SULFUR_FISSURE, S_BEE_STING, S_STING, S_VENOM_TOOTH, S_VENOM_FANG, S_SCREECHING_BEAK, S_LARGE_TAIL, S_HUGE_TAIL, S_ARMORED_SKIN, S_BARK, S_NOSTRIL, S_RATLLE, S_INSECT_MORTALITY, S_SAPIENT_BRAIN, S_ANIMAL_BRAIN, S_SCENT_GLAND, S_BOILING_VENT, S_ARSENIC_VENT, S_SULFUR_VENT, S_EYE_3, S_EYE_6, S_EYE_8, S_VISION_6, S_VISION_12, S_VISION_16, S_EAR_3, S_EAR_6, S_EAR_8, S_SPEED_GLAND_5, S_SPEED_GLAND_10 :: GroupName ItemKind
-
-pattern S_TOOTH, S_LASH, S_RIGHT_TORSION, S_LEFT_TORSION, S_PUPIL :: GroupName ItemKind
+    [ S_TIRE
+    , S_FIST
+    , S_FOOT
+    , S_HOOKED_CLAW
+    , S_SMALL_CLAW
+    , S_SNOUT
+    , S_SMALL_JAW
+    , S_JAW
+    , S_LARGE_JAW
+    , S_ANTLER
+    , S_HORN
+    , S_RHINO_HORN
+    , S_TENTACLE
+    , S_TIP
+    , S_LIP
+    , S_THORN
+    , S_BOILING_FISSURE
+    , S_ARSENIC_FISSURE
+    , S_SULFUR_FISSURE
+    , S_BEE_STING
+    , S_STING
+    , S_VENOM_TOOTH
+    , S_VENOM_FANG
+    , S_SCREECHING_BEAK
+    , S_LARGE_TAIL
+    , S_HUGE_TAIL
+    , S_ARMORED_SKIN
+    , S_BARK
+    , S_NOSTRIL
+    , S_RATLLE
+    , S_INSECT_MORTALITY
+    , S_SAPIENT_BRAIN
+    , S_ANIMAL_BRAIN
+    , S_SCENT_GLAND
+    , S_BOILING_VENT
+    , S_ARSENIC_VENT
+    , S_SULFUR_VENT
+    , S_EYE_3
+    , S_EYE_6
+    , S_EYE_8
+    , S_VISION_6
+    , S_VISION_12
+    , S_VISION_16
+    , S_EAR_3
+    , S_EAR_6
+    , S_EAR_8
+    , S_SPEED_GLAND_5
+    , S_SPEED_GLAND_10
+    , S_TOOTH
+    , S_LASH
+    , S_RIGHT_TORSION
+    , S_LEFT_TORSION
+    , S_PUPIL]
 
 organsGN :: [GroupName ItemKind]
 organsGN =
@@ -43,81 +141,186 @@ organsGN =
 
 pattern SCAVENGER :: GroupName ItemKind
 
+pattern S_TIRE :: GroupName c
 pattern S_TIRE = GroupName "tire"
+pattern S_FIST :: GroupName c
 pattern S_FIST = GroupName "fist"
+pattern S_FOOT :: GroupName c
 pattern S_FOOT = GroupName "foot"
+pattern S_HOOKED_CLAW :: GroupName c
 pattern S_HOOKED_CLAW = GroupName "hooked claw"
+pattern S_SMALL_CLAW :: GroupName c
 pattern S_SMALL_CLAW = GroupName "small claw"
+pattern S_SNOUT :: GroupName c
 pattern S_SNOUT = GroupName "snout"
+pattern S_SMALL_JAW :: GroupName c
 pattern S_SMALL_JAW = GroupName "small jaw"
+pattern S_JAW :: GroupName c
 pattern S_JAW = GroupName "jaw"
+pattern S_LARGE_JAW :: GroupName c
 pattern S_LARGE_JAW = GroupName "large jaw"
+pattern S_ANTLER :: GroupName c
 pattern S_ANTLER = GroupName "antler"
+pattern S_HORN :: GroupName c
 pattern S_HORN = GroupName "horn"
+pattern S_RHINO_HORN :: GroupName c
 pattern S_RHINO_HORN = GroupName "rhino horn"
+pattern S_TENTACLE :: GroupName c
 pattern S_TENTACLE = GroupName "tentacle"
+pattern S_TIP :: GroupName c
 pattern S_TIP = GroupName "tip"
+pattern S_LIP :: GroupName c
 pattern S_LIP = GroupName "lip"
+pattern S_THORN :: GroupName c
 pattern S_THORN = GroupName "thorn"
+pattern S_BOILING_FISSURE :: GroupName c
 pattern S_BOILING_FISSURE = GroupName "boiling fissure"
+pattern S_ARSENIC_FISSURE :: GroupName c
 pattern S_ARSENIC_FISSURE = GroupName "arsenic fissure"
+pattern S_SULFUR_FISSURE :: GroupName c
 pattern S_SULFUR_FISSURE = GroupName "sulfur fissure"
+pattern S_BEE_STING :: GroupName c
 pattern S_BEE_STING = GroupName "bee sting"
+pattern S_STING :: GroupName c
 pattern S_STING = GroupName "sting"
+pattern S_VENOM_TOOTH :: GroupName c
 pattern S_VENOM_TOOTH = GroupName "venom tooth"
+pattern S_VENOM_FANG :: GroupName c
 pattern S_VENOM_FANG = GroupName "venom fang"
+pattern S_SCREECHING_BEAK :: GroupName c
 pattern S_SCREECHING_BEAK = GroupName "screeching beak"
+pattern S_LARGE_TAIL :: GroupName c
 pattern S_LARGE_TAIL = GroupName "large tail"
+pattern S_HUGE_TAIL :: GroupName c
 pattern S_HUGE_TAIL = GroupName "huge tail"
+pattern S_ARMORED_SKIN :: GroupName c
 pattern S_ARMORED_SKIN = GroupName "armored skin"
+pattern S_BARK :: GroupName c
 pattern S_BARK = GroupName "bark"
+pattern S_NOSTRIL :: GroupName c
 pattern S_NOSTRIL = GroupName "nostril"
+pattern S_RATLLE :: GroupName c
 pattern S_RATLLE = GroupName "rattle"
+pattern S_INSECT_MORTALITY :: GroupName c
 pattern S_INSECT_MORTALITY = GroupName "insect mortality"
+pattern S_SAPIENT_BRAIN :: GroupName c
 pattern S_SAPIENT_BRAIN = GroupName "sapient brain"
+pattern S_ANIMAL_BRAIN :: GroupName c
 pattern S_ANIMAL_BRAIN = GroupName "animal brain"
+pattern S_SCENT_GLAND :: GroupName c
 pattern S_SCENT_GLAND = GroupName "scent gland"
+pattern S_BOILING_VENT :: GroupName c
 pattern S_BOILING_VENT = GroupName "boiling vent"
+pattern S_ARSENIC_VENT :: GroupName c
 pattern S_ARSENIC_VENT = GroupName "arsenic vent"
+pattern S_SULFUR_VENT :: GroupName c
 pattern S_SULFUR_VENT = GroupName "sulfur vent"
+pattern S_EYE_3 :: GroupName c
 pattern S_EYE_3 = GroupName "eye 3"
+pattern S_EYE_6 :: GroupName c
 pattern S_EYE_6 = GroupName "eye 6"
+pattern S_EYE_8 :: GroupName c
 pattern S_EYE_8 = GroupName "eye 8"
+pattern S_VISION_6 :: GroupName c
 pattern S_VISION_6 = GroupName "vision 6"
+pattern S_VISION_12 :: GroupName c
 pattern S_VISION_12 = GroupName "vision 12"
+pattern S_VISION_16 :: GroupName c
 pattern S_VISION_16 = GroupName "vision 16"
+pattern S_EAR_3 :: GroupName c
 pattern S_EAR_3 = GroupName "ear 3"
+pattern S_EAR_6 :: GroupName c
 pattern S_EAR_6 = GroupName "ear 6"
+pattern S_EAR_8 :: GroupName c
 pattern S_EAR_8 = GroupName "ear 8"
+pattern S_SPEED_GLAND_5 :: GroupName c
 pattern S_SPEED_GLAND_5 = GroupName "speed gland 5"
+pattern S_SPEED_GLAND_10 :: GroupName c
 pattern S_SPEED_GLAND_10 = GroupName "speed gland 10"
 
 pattern SCAVENGER = GroupName "scavenger"
 
 -- * LH-specific
+pattern S_TOOTH :: GroupName c
 pattern S_TOOTH = GroupName "tooth"
+pattern S_LASH :: GroupName c
 pattern S_LASH = GroupName "lash"
+pattern S_RIGHT_TORSION :: GroupName c
 pattern S_RIGHT_TORSION = GroupName "right torsion"
+pattern S_LEFT_TORSION :: GroupName c
 pattern S_LEFT_TORSION = GroupName "left torsion"
+pattern S_PUPIL :: GroupName c
 pattern S_PUPIL = GroupName "pupil"
 
 -- * Content
 
 organs :: [ItemKind]
 organs =
-  [tire, fist, foot, hookedClaw, smallClaw, snout, smallJaw, jaw, largeJaw, antler, horn, rhinoHorn, tentacle, tip, lip, thorn, boilingFissure, arsenicFissure, sulfurFissure, beeSting, sting, venomTooth, venomFang, screechingBeak, largeTail, hugeTail, armoredSkin, bark, eye3, eye6, eye8, vision6, vision12, vision16, nostril, ear3, ear6, ear8, rattleOrgan, insectMortality, sapientBrain, animalBrain, speedGland5, speedGland10, scentGland, boilingVent, arsenicVent, sulfurVent, bonusHP, braced, asleep, impressed]
+    [ tire
+    , fist
+    , foot
+    , hookedClaw
+    , smallClaw
+    , snout
+    , smallJaw
+    , jaw
+    , largeJaw
+    , antler
+    , horn
+    , rhinoHorn
+    , tentacle
+    , tip
+    , lip
+    , thorn
+    , boilingFissure
+    , arsenicFissure
+    , sulfurFissure
+    , beeSting
+    , sting
+    , venomTooth
+    , venomFang
+    , screechingBeak
+    , largeTail
+    , hugeTail
+    , armoredSkin
+    , bark
+    , eye3
+    , eye6
+    , eye8
+    , vision6
+    , vision12
+    , vision16
+    , nostril
+    , ear3
+    , ear6
+    , ear8
+    , rattleOrgan
+    , insectMortality
+    , sapientBrain
+    , animalBrain
+    , speedGland5
+    , speedGland10
+    , scentGland
+    , boilingVent
+    , arsenicVent
+    , sulfurVent
+    , bonusHP
+    , braced
+    , asleep
+    , impressed
   -- LH-specific
-  ++ [tooth, lash, torsionRight, torsionLeft, pupil]
-
-tire, fist,    foot, hookedClaw, smallClaw, snout, smallJaw, jaw, largeJaw, antler, horn, rhinoHorn, tentacle, tip, lip, thorn, boilingFissure, arsenicFissure, sulfurFissure, beeSting, sting, venomTooth, venomFang, screechingBeak, largeTail, hugeTail, armoredSkin, bark, eye3, eye6, eye8, vision6, vision12, vision16, nostril, ear3, ear6, ear8, rattleOrgan, insectMortality, sapientBrain, animalBrain, speedGland5, speedGland10, scentGland, boilingVent, arsenicVent, sulfurVent, bonusHP, braced, asleep, impressed :: ItemKind
--- LH-specific
-tooth, lash, torsionRight, torsionLeft, pupil :: ItemKind
+    , tooth
+    , lash
+    , torsionRight
+    , torsionLeft
+    , pupil]
 
 symbolWand :: ContentSymbol ItemKind
 symbolWand = rsymbolWand $ ritemSymbols standardRules
 
 -- * No-cooldown melee damage organs without effects
 
+thorn :: ItemKind
 thorn = fist
   { isymbol  = symbolWand
   , iname    = "thorn"
@@ -129,6 +332,7 @@ thorn = fist
   , ieffects = [VerbNoLonger "be not so thorny any more" "."]
   , idesc    = "Sharp yet brittle."
   }
+tip :: ItemKind
 tip = fist
   { iname    = "tip"
   , ifreq    = [(S_TIP, 1)]
@@ -137,6 +341,7 @@ tip = fist
   , idamage  = 2 `d` 1
   , idesc    = ""
   }
+tire :: ItemKind
 tire = ItemKind
   { isymbol  = toContentSymbol '@'
   , iname    = "tire"
@@ -152,6 +357,7 @@ tire = ItemKind
   , idesc    = "Summer rubber tire"
   , ikit     = []
   }
+fist :: ItemKind
 fist = ItemKind
   { isymbol  = toContentSymbol ','
   , iname    = "fist"
@@ -167,6 +373,7 @@ fist = ItemKind
   , idesc    = "Simple but effective."
   , ikit     = []
   }
+foot :: ItemKind
 foot = fist
   { iname    = "foot"
   , ifreq    = [(S_FOOT, 1)]
@@ -175,6 +382,7 @@ foot = fist
   , idesc    = "A weapon you can still use if disarmed."
                  -- great example of tutorial hints inside a flavourful text
   }
+smallClaw :: ItemKind
 smallClaw = fist
   { iname    = "small claw"
   , ifreq    = [(S_SMALL_CLAW, 1)]
@@ -182,6 +390,7 @@ smallClaw = fist
   , idamage  = 2 `d` 1
   , idesc    = "A pearly spike."
   }
+snout :: ItemKind
 snout = fist
   { iname    = "snout"
   , ifreq    = [(S_SNOUT, 1)]
@@ -190,6 +399,7 @@ snout = fist
   , idamage  = 2 `d` 1
   , idesc    = "Sensitive and wide-nostrilled."
   }
+smallJaw :: ItemKind
 smallJaw = fist
   { iname    = "small jaw"
   , ifreq    = [(S_SMALL_JAW, 1)]
@@ -200,7 +410,7 @@ smallJaw = fist
   }
 
 -- * Cooldown melee damage organs without effects
-
+tentacle :: ItemKind
 tentacle = fist  -- two copies only
   { iname    = "tentacle"
   , ifreq    = [(S_TENTACLE, 1)]
@@ -210,6 +420,7 @@ tentacle = fist  -- two copies only
                : iaspects fist
   , idesc    = "Damp and dextrous."
   }
+jaw :: ItemKind
 jaw = fist
   { iname    = "jaw"
   , ifreq    = [(S_JAW, 1)]
@@ -220,6 +431,7 @@ jaw = fist
                : iaspects fist
   , idesc    = "Delivers a powerful bite."
   }
+horn :: ItemKind
 horn = fist
   { iname    = "horn"
   , ifreq    = [(S_HORN, 1)]
@@ -230,6 +442,7 @@ horn = fist
                ++ iaspects fist
   , idesc    = "Sharp and long, for defence or attack."
   }
+largeJaw :: ItemKind
 largeJaw = fist
   { iname    = "large jaw"
   , ifreq    = [(S_LARGE_JAW, 1)]
@@ -243,6 +456,7 @@ largeJaw = fist
 
 -- * Direct damage organs with effects
 
+beeSting :: ItemKind
 beeSting = fist
   { isymbol  = symbolWand
   , iname    = "bee sting"
@@ -256,6 +470,7 @@ beeSting = fist
                  -- no special message when runs out, because it's 1 copy
   , idesc    = "Painful, but beneficial."
   }
+sting :: ItemKind
 sting = fist
   { isymbol  = symbolWand
   , iname    = "sting"
@@ -268,6 +483,7 @@ sting = fist
   , ieffects = [toOrganBad S_RETAINING (3 + 1 `d` 3)]
   , idesc    = "Painful, debilitating and harmful."
   }
+lip :: ItemKind
 lip = fist
   { iname    = "lip"
   , ifreq    = [(S_LIP, 1)]
@@ -279,6 +495,7 @@ lip = fist
   , ieffects = [toOrganBad S_WEAKENED (2 + 1 `dL` 3)]
   , idesc    = ""
   }
+venomTooth :: ItemKind
 venomTooth = fist
   { isymbol  = symbolWand
   , iname    = "venom tooth"
@@ -290,6 +507,7 @@ venomTooth = fist
   , ieffects = [toOrganBad S_SLOWED (3 + 1 `d` 3)]
   , idesc    = "A chilling numbness spreads from its bite."
   }
+hookedClaw :: ItemKind
 hookedClaw = fist
   { isymbol  = symbolWand
   , iname    = "hooked claw"
@@ -302,6 +520,7 @@ hookedClaw = fist
   , ieffects = [toOrganBad S_SLOWED 2]
   , idesc    = "A curved talon."
   }
+screechingBeak :: ItemKind
 screechingBeak = fist
   { isymbol  = symbolWand
   , iname    = "screeching beak"
@@ -314,6 +533,7 @@ screechingBeak = fist
   , ieffects = [Summon SCAVENGER $ 1 `dL` 3]
   , idesc    = "Both a weapon and a beacon, calling more scavengers to the meal."
   }
+antler :: ItemKind
 antler = fist
   { isymbol  = symbolWand
   , iname    = "antler"
@@ -326,6 +546,7 @@ antler = fist
   , ieffects = [PushActor (ThrowMod 100 50 1)]  -- 1 step, slow
   , idesc    = ""
   }
+rhinoHorn :: ItemKind
 rhinoHorn = fist
   { isymbol  = symbolWand
   , iname    = "ugly horn"  -- made of keratin, unlike real horns
@@ -338,6 +559,7 @@ rhinoHorn = fist
   , ieffects = [Impress, Yell]  -- the owner is a mid-boss, after all
   , idesc    = "Very solid, considering it has the same composition as fingernails."
   }
+largeTail :: ItemKind
 largeTail = fist
   { isymbol  = symbolWand
   , iname    = "large tail"
@@ -351,6 +573,7 @@ largeTail = fist
   , ieffects = [PushActor (ThrowMod 200 50 1)]  -- 1 step, fast
   , idesc    = "Almost as long as the trunk."
   }
+hugeTail :: ItemKind
 hugeTail = largeTail
   { isymbol  = symbolWand
   , iname    = "huge tail"
@@ -365,6 +588,7 @@ hugeTail = largeTail
 
 -- * Melee weapons without direct damage
 
+venomFang :: ItemKind
 venomFang = fist
   { isymbol  = symbolWand
   , iname    = "venom fang"
@@ -379,6 +603,7 @@ venomFang = fist
 
 -- * Special melee weapons
 
+sulfurFissure :: ItemKind
 sulfurFissure = boilingFissure
   { iname    = "fissure"
   , ifreq    = [(S_SULFUR_FISSURE, 1)]
@@ -389,6 +614,7 @@ sulfurFissure = boilingFissure
                , VerbNoLonger "run out of the healing fumes" "."]
   , idesc    = ""
   }
+boilingFissure :: ItemKind
 boilingFissure = fist
   { isymbol  = symbolWand
   , iname    = "fissure"
@@ -402,6 +628,7 @@ boilingFissure = fist
                , VerbNoLonger "widen the crack, releasing pressure" "."]
   , idesc    = "A deep crack to the underworld."
   }
+arsenicFissure :: ItemKind
 arsenicFissure = boilingFissure
   { iname    = "fissure"
   , ifreq    = [(S_ARSENIC_FISSURE, 1)]
@@ -415,6 +642,7 @@ arsenicFissure = boilingFissure
 
 -- * Armor organs
 
+armoredSkin :: ItemKind
 armoredSkin = ItemKind
   { isymbol  = toContentSymbol ','
   , iname    = "armored skin"
@@ -431,6 +659,7 @@ armoredSkin = ItemKind
   , idesc    = "Homemade armour is just as good."  -- hmm, it may get confused with leather armor jackets, etc.
   , ikit     = []
   }
+bark :: ItemKind
 bark = armoredSkin
   { iname    = "bark"
   , ifreq    = [(S_BARK, 1)]
@@ -489,6 +718,7 @@ ear8 = ear 8 S_EAR_8
 
 -- * Assorted
 
+rattleOrgan :: ItemKind
 rattleOrgan = armoredSkin
   { iname    = "rattle"
   , ifreq    = [(S_RATLLE, 1)]
@@ -498,6 +728,7 @@ rattleOrgan = armoredSkin
   , ieffects = [Yell, RefillCalm 5]
   , idesc    = ""
   }
+insectMortality :: ItemKind
 insectMortality = armoredSkin
   { iname    = "insect mortality"
   , ifreq    = [(S_INSECT_MORTALITY, 1)]
@@ -508,6 +739,7 @@ insectMortality = armoredSkin
   , ieffects = [RefillHP (-1), Yell]
   , idesc    = ""
   }
+sapientBrain :: ItemKind
 sapientBrain = armoredSkin
   { iname    = "sapient brain"
   , ifreq    = [(S_SAPIENT_BRAIN, 1)]
@@ -520,6 +752,7 @@ sapientBrain = armoredSkin
                ++ [SetFlag Durable]
   , idesc    = ""
   }
+animalBrain :: ItemKind
 animalBrain = armoredSkin
   { iname    = "animal brain"
   , ifreq    = [(S_ANIMAL_BRAIN, 1)]
@@ -566,6 +799,7 @@ scentGland = armoredSkin
                    -- "of ([foo explosion] of [bar])"
   , idesc    = ""
   }
+sulfurVent :: ItemKind
 sulfurVent = armoredSkin
   { isymbol  = toContentSymbol 'v'
   , iname    = "vent"
@@ -577,6 +811,7 @@ sulfurVent = armoredSkin
   , ieffects = [RefillHP 2, Explode S_DENSE_SHOWER]
   , idesc    = ""
   }
+boilingVent :: ItemKind
 boilingVent = armoredSkin
   { isymbol  = toContentSymbol 'v'
   , iname    = "vent"
@@ -588,6 +823,7 @@ boilingVent = armoredSkin
   , ieffects = [RefillHP 2, Explode S_BOILING_WATER]
   , idesc    = ""
   }
+arsenicVent :: ItemKind
 arsenicVent = armoredSkin
   { isymbol  = toContentSymbol 'v'
   , iname    = "vent"
@@ -602,6 +838,7 @@ arsenicVent = armoredSkin
 
 -- * Special
 
+bonusHP :: ItemKind
 bonusHP = armoredSkin
   { isymbol  = toContentSymbol 'H'  -- '+' reserved for conditions
   , iname    = "extra HP"
@@ -612,6 +849,7 @@ bonusHP = armoredSkin
   , iaspects = [AddSkill SkMaxHP 1]
   , idesc    = "Growing up in a privileged background gave you the training and the discrete garment accessories that improve your posture and resilience."
   }
+braced :: ItemKind
 braced = armoredSkin
   { isymbol  = toContentSymbol 'B'
   , iname    = "braced"
@@ -624,6 +862,7 @@ braced = armoredSkin
                , SetFlag Condition ] -- hack: display as condition
   , idesc    = "Apart of increased resilience to attacks, being braced protects from displacement by foes and other forms of forced translocation, e.g., pushing or pulling."
   }
+asleep :: ItemKind
 asleep = armoredSkin
   { isymbol  = toContentSymbol 'S'
   , iname    = "asleep"
@@ -638,6 +877,7 @@ asleep = armoredSkin
                   , SetFlag Condition ]  -- hack: display as condition
   , idesc    = "Sleep helps to regain health, albeit extremely slowly. Being asleep makes you vulnerable, with gradually diminishing effects as the slumber wears off over several turns. Any non-idle action, not only combat but even yawning or stretching removes a sizable portion of the sleepiness."
   }
+impressed :: ItemKind
 impressed = armoredSkin
   { isymbol  = toContentSymbol 'I'
   , iname    = "impressed"  -- keep the same as in @ifreq@, to simplify code
@@ -659,6 +899,7 @@ impressed = armoredSkin
 
 -- * LH-specific
 
+tooth :: ItemKind
 tooth = fist
   { iname    = "tooth"
   , ifreq    = [(S_TOOTH, 1)]
@@ -667,6 +908,7 @@ tooth = fist
   , idamage  = 2 `d` 1
   , idesc    = ""
   }
+lash :: ItemKind
 lash = fist
   { iname    = "lash"
   , ifreq    = [(S_LASH, 1)]
@@ -675,6 +917,7 @@ lash = fist
   , idamage  = 3 `d` 1
   , idesc    = ""
   }
+torsionRight :: ItemKind
 torsionRight = fist
   { iname    = "right torsion"
   , ifreq    = [(S_RIGHT_TORSION, 1)]
@@ -686,6 +929,7 @@ torsionRight = fist
   , ieffects = [toOrganBad S_SLOWED (3 + 1 `d` 3)]
   , idesc    = ""
   }
+torsionLeft :: ItemKind
 torsionLeft = fist
   { iname    = "left torsion"
   , ifreq    = [(S_LEFT_TORSION, 1)]
@@ -697,6 +941,7 @@ torsionLeft = fist
   , ieffects = [toOrganBad S_WEAKENED (3 + 1 `d` 3)]
   , idesc    = ""
   }
+pupil :: ItemKind
 pupil = fist
   { iname    = "pupil"
   , ifreq    = [(S_PUPIL, 1)]

@@ -1,12 +1,14 @@
 -- | Definitions of game mode kinds.
 module Content.ModeKind
-  ( -- * Group name patterns
-    groupNamesSingleton, groupNames
-  , -- * Content
-    content
+  ( groupNamesSingleton
+  , groupNames
+  , content
 #ifdef EXPOSE_INTERNAL
-  -- * Group name patterns
-  , pattern MINI, pattern RAID, pattern BRAWL, pattern LONG, pattern CRAWL
+  , pattern MINI
+  , pattern RAID
+  , pattern BRAWL
+  , pattern LONG
+  , pattern CRAWL
 #endif
   ) where
 
@@ -33,24 +35,31 @@ groupNamesSingleton :: [GroupName ModeKind]
 groupNamesSingleton =
        [MINI, RAID, BRAWL, LONG, CRAWL]
 
-pattern MINI, RAID, BRAWL, LONG, CRAWL :: GroupName ModeKind
-
 groupNames :: [GroupName ModeKind]
 groupNames = []
 
+pattern MINI :: GroupName c
 pattern MINI = GroupName "mini"
+pattern RAID :: GroupName c
 pattern RAID = GroupName "raid"
+pattern BRAWL :: GroupName c
 pattern BRAWL = GroupName "brawl"
+pattern LONG :: GroupName c
 pattern LONG = GroupName "long crawl"
+pattern CRAWL :: GroupName c
 pattern CRAWL = GroupName "crawl"
 
 -- * Content
 
 content :: [ModeKind]
 content =
-  [mini, raid, brawl, crawl, screensaverRaid, screensaverBrawl, screensaverCrawl]
-
-mini, raid, brawl, crawl, screensaverRaid, screensaverBrawl, screensaverCrawl :: ModeKind
+  [ mini
+  , raid
+  , brawl
+  , crawl
+  , screensaverRaid
+  , screensaverBrawl
+  , screensaverCrawl]
 
 -- What other symmetric (two only-one-moves factions) and asymmetric vs crowd
 -- scenarios make sense (e.g., are good for a tutorial or for standalone
@@ -65,6 +74,7 @@ mini, raid, brawl, crawl, screensaverRaid, screensaverBrawl, screensaverCrawl ::
 -- crowd ranged: no, fish in a barrel, less predictable and more fun inside
 --   crawl, even without reaction fire
 
+raid :: ModeKind
 raid = ModeKind
   { mname   = "raid (tutorial, 1)"
   , mfreq   = [(RAID, 1), (CAMPAIGN_SCENARIO, 1)]
@@ -86,6 +96,7 @@ raid = ModeKind
   , mhint   = "You can't use gathered items in your next encounters, so trigger any consumables at will. Feel free to scout with only one of the heroes and keep the other one immobile, e.g., standing guard over the squad's shared inventory stash. If in grave danger, retreat with the scout to join forces with the guard. The more gold collected and the faster the victory, the higher your score in this encounter."
   }
 
+mini :: ModeKind
 mini = ModeKind
   { mname = "mini"
   , mfreq   = [(MINI, 1), (CAMPAIGN_SCENARIO, 1)]
@@ -105,6 +116,7 @@ mini = ModeKind
     , mhint = "There are no hints, be careful."
   }
 
+brawl :: ModeKind
 brawl = ModeKind  -- sparse melee in daylight, with shade for melee ambush
   { mname   = "brawl (tutorial, 2)"
   , mfreq   = [(BRAWL, 1), (CAMPAIGN_SCENARIO, 1)]
@@ -130,6 +142,7 @@ brawl = ModeKind  -- sparse melee in daylight, with shade for melee ambush
     ]
   }
 
+crawl :: ModeKind
 crawl = ModeKind
   { mname   = "long crawl (main)"
   , mfreq   = [(LONG, 1), (CRAWL, 1), (CAMPAIGN_SCENARIO, 1)]
@@ -155,26 +168,28 @@ crawl = ModeKind
      , "Perhaps the gathered items should have been used for scientific experiments on the spot rather than hoarded as if of base covetousness? Or perhaps the challenge, chosen freely but without the foreknowledge of the grisly difficulty, was insurmountable and forlorn from the start, despite the enormous power of educated reason at out disposal?"
      ]
 
+screensaverRaid :: ModeKind
 screensaverRaid = raid
   { mname   = "auto-raid (1)"
   , mfreq   = [(INSERT_COIN, 2)]
   , mattract = True
   }
 
+screensaverBrawl :: ModeKind
 screensaverBrawl = brawl
   { mname   = "auto-brawl (2)"
   , mfreq   = []
   , mattract = True
   }
 
+screensaverCrawl :: ModeKind
 screensaverCrawl = crawl
   { mname   = "auto-crawl (long)"
   , mfreq   = []
   , mattract = True
   }
 
-rosterMini, rosterRaid, rosterBrawl, rosterCrawl :: Roster
-
+rosterMini :: [(GroupName c1, [(Int, Dice, GroupName c2)])]
 rosterMini =
   [ ( ANIMAL_REPRESENTATIVE  -- starting over escape
     , [(-2, 2, ANIMAL)] )
@@ -184,6 +199,7 @@ rosterMini =
     , [(-2, 1, HERO)] )
   , (HORROR_REPRESENTATIVE, []) ]  -- for summoned monsters
 
+rosterRaid :: [(GroupName c1, [(Int, Dice, GroupName c2)])]
 rosterRaid =
   [ ( ANIMAL_REPRESENTATIVE  -- starting over escape
     , [(-2, 2, ANIMAL)] )
@@ -193,6 +209,7 @@ rosterRaid =
     , [(-2, 1, HERO)] )
   , (HORROR_REPRESENTATIVE, []) ]  -- for summoned monsters
 
+rosterBrawl :: [(GroupName c1, [(Int, Dice, GroupName c2)])]
 rosterBrawl =
   [ ( EXPLORER_NO_ESCAPE
     , [(-2, 3, BRAWLER_HERO)] )
@@ -200,6 +217,7 @@ rosterBrawl =
     , [(-2, 3, BRAWLER_HERO)] )
   , (HORROR_REPRESENTATIVE, []) ]
 
+rosterCrawl :: [(GroupName c1, [(Int, Dice, GroupName c2)])]
 rosterCrawl =
   [ ( ANIMAL_REPRESENTATIVE  -- starting over escape
     , -- Fun from the start to avoid empty initial level:
@@ -212,12 +230,13 @@ rosterCrawl =
   , ( MONSTER_REPRESENTATIVE
     , [(-4, 1, SCOUT_MONSTER), (-4, 3, MONSTER)] ) ]
 
-cavesMini, cavesRaid, cavesBrawl, cavesCrawl :: Caves
-
+cavesMini :: [([Int], [GroupName c])]
 cavesMini = [([-2], [CAVE_MINI])]
 
+cavesRaid :: [([Int], [GroupName c])]
 cavesRaid = [([-2], [CAVE_RAID])]
 
+cavesBrawl :: [([Int], [GroupName c])]
 cavesBrawl = [([-2], [CAVE_BRAWL])]
 
 listCrawl :: [([Int], [GroupName CaveKind])]
@@ -230,4 +249,5 @@ listCrawl =
   , ([-9], [CAVE_LABORATORY])
   , ([-10], [CAVE_MINE]) ]
 
+cavesCrawl :: [([Int], [GroupName CaveKind])]
 cavesCrawl = listCrawl
