@@ -472,13 +472,8 @@ torsor = ItemKind
 -- pullback
 -- skeletal
 
--- * Animals
-
--- They need rather strong melee, because they don't use items.
--- They have dull colors, except for yellow, because there is no dull variant.
---
 toyota :: ItemKind
-toyota = ItemKind  -- basically a much smaller, slower and nosy hyena
+toyota = ItemKind
   { isymbol  = toContentSymbol 't'
   , iname    = "Toyota"
   , ifreq    = [(CAR, 100), (MOBILE, 1), (MOBILE_CAR, 100)]
@@ -499,8 +494,11 @@ toyota = ItemKind  -- basically a much smaller, slower and nosy hyena
                , (S_CAMERA, COrgan)
                , (S_CAR_COMPUTER, COrgan) ]
   }
+
+-- * Cars
+
 tesla :: ItemKind
-tesla = ItemKind  -- basically a much smaller, slower and nosy hyena
+tesla = ItemKind
   { isymbol  = toContentSymbol 'T'
   , iname    = "Tesla"
   , ifreq    = [(CAR, 100), (MOBILE, 1), (MOBILE_CAR, 100)]
@@ -522,7 +520,7 @@ tesla = ItemKind  -- basically a much smaller, slower and nosy hyena
                , (S_CAR_COMPUTER, COrgan) ]
   }
 blackVolga :: ItemKind
-blackVolga = ItemKind  -- basically a much smaller, slower and nosy hyena
+blackVolga = ItemKind
   { isymbol  = toContentSymbol 'V'
   , iname    = "black Volga"
   , ifreq    = [(CAR, 100), (MOBILE, 1), (MOBILE_CAR, 100)]
@@ -543,6 +541,12 @@ blackVolga = ItemKind  -- basically a much smaller, slower and nosy hyena
                , (S_CAMERA, COrgan)
                , (S_CAR_COMPUTER, COrgan) ]
   }
+
+-- * Animals
+
+-- They need rather strong melee, because they don't use items.
+-- They have dull colors, except for yellow, because there is no dull variant.
+--
 goldenJackal :: ItemKind
 goldenJackal = ItemKind  -- basically a much smaller, slower and nosy hyena
   { isymbol  = toContentSymbol 'j'
