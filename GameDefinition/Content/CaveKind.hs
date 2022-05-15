@@ -1,11 +1,21 @@
 -- | Definitions of of cave kinds. Every level in the game is an instantiated
 -- cave kind.
 module Content.CaveKind
-  ( -- * Group name patterns
-    pattern CAVE_MINI, pattern CAVE_ROGUE, pattern CAVE_ARENA, pattern CAVE_SMOKING, pattern CAVE_LABORATORY, pattern CAVE_NOISE, pattern CAVE_MINE, pattern CAVE_EMPTY, pattern CAVE_SHALLOW_ROGUE, pattern CAVE_OUTERMOST, pattern CAVE_RAID, pattern CAVE_BRAWL
-  , groupNamesSingleton, groupNames
-  , -- * Content
-    content
+  ( pattern CAVE_MINI
+  , pattern CAVE_ROGUE
+  , pattern CAVE_ARENA
+  , pattern CAVE_SMOKING
+  , pattern CAVE_LABORATORY
+  , pattern CAVE_NOISE
+  , pattern CAVE_MINE
+  , pattern CAVE_EMPTY
+  , pattern CAVE_SHALLOW_ROGUE
+  , pattern CAVE_OUTERMOST
+  , pattern CAVE_RAID
+  , pattern CAVE_BRAWL
+  , groupNamesSingleton
+  , groupNames
+  , content
   ) where
 
 import Prelude ()
@@ -21,7 +31,6 @@ import           Game.LambdaHack.Core.Dice
 import           Game.LambdaHack.Definition.Defs
 import           Game.LambdaHack.Definition.DefsInternal
 
-import Content.ItemKind hiding (content, groupNames, groupNamesSingleton)
 import Content.ItemKindActor
 import Content.PlaceKind hiding (content, groupNames, groupNamesSingleton)
 import Content.TileKind hiding (content, groupNames, groupNamesSingleton)
@@ -33,33 +42,64 @@ groupNamesSingleton = []
 
 groupNames :: [GroupName CaveKind]
 groupNames =
-       [CAVE_MINI, CAVE_ROGUE, CAVE_ARENA, CAVE_SMOKING, CAVE_LABORATORY, CAVE_NOISE, CAVE_MINE, CAVE_EMPTY, CAVE_SHALLOW_ROGUE, CAVE_OUTERMOST, CAVE_RAID, CAVE_BRAWL]
+    [ CAVE_MINI
+    , CAVE_ROGUE
+    , CAVE_ARENA
+    , CAVE_SMOKING
+    , CAVE_LABORATORY
+    , CAVE_NOISE
+    , CAVE_MINE
+    , CAVE_EMPTY
+    , CAVE_SHALLOW_ROGUE
+    , CAVE_OUTERMOST
+    , CAVE_RAID
+    , CAVE_BRAWL]
 
-pattern CAVE_MINI, CAVE_ROGUE, CAVE_ARENA, CAVE_SMOKING, CAVE_LABORATORY, CAVE_NOISE, CAVE_MINE, CAVE_EMPTY, CAVE_SHALLOW_ROGUE, CAVE_OUTERMOST, CAVE_RAID, CAVE_BRAWL :: GroupName CaveKind
-
+pattern CAVE_MINI :: GroupName c
 pattern CAVE_MINI = GroupName "caveMini"
+pattern CAVE_ROGUE :: GroupName c
 pattern CAVE_ROGUE = GroupName "caveRogue"
+pattern CAVE_ARENA :: GroupName c
 pattern CAVE_ARENA = GroupName "caveArena"
+pattern CAVE_SMOKING :: GroupName c
 pattern CAVE_SMOKING = GroupName "caveSmoking"
+pattern CAVE_LABORATORY :: GroupName c
 pattern CAVE_LABORATORY = GroupName "caveLaboratory"
+pattern CAVE_NOISE :: GroupName c
 pattern CAVE_NOISE = GroupName "caveNoise"
+pattern CAVE_MINE :: GroupName c
 pattern CAVE_MINE = GroupName "caveMine"
+pattern CAVE_EMPTY :: GroupName c
 pattern CAVE_EMPTY = GroupName "caveEmpty"
+pattern CAVE_SHALLOW_ROGUE :: GroupName c
 pattern CAVE_SHALLOW_ROGUE = GroupName "caveShallowRogue"
+pattern CAVE_OUTERMOST :: GroupName c
 pattern CAVE_OUTERMOST = GroupName "caveOutermost"
+pattern CAVE_RAID :: GroupName c
 pattern CAVE_RAID = GroupName "caveRaid"
+pattern CAVE_BRAWL :: GroupName c
 pattern CAVE_BRAWL = GroupName "caveBrawl"
 
 -- * Content
 
 content :: [CaveKind]
 content =
-  [mini, rogue, arena, smoking, laboratory, noise, mine, empty, outermost, shallowRogue, raid, brawl]
-
-mini, rogue, arena, smoking, laboratory, noise, mine, empty, outermost, shallowRogue, raid, brawl :: CaveKind
+    [ mini
+    , rogue
+    , arena
+    , smoking
+    , laboratory
+    , noise
+    , mine
+    , empty
+    , outermost
+    , shallowRogue
+    , raid
+    , brawl]
 
 -- * Underground caves; most of mediocre height and size
 
+rogue :: CaveKind
 rogue = CaveKind
   { cname         = "A maze of twisty passages"
   , cfreq         = [(DEFAULT_RANDOM, 100), (CAVE_ROGUE, 1)]
@@ -105,6 +145,7 @@ rogue = CaveKind
   , cinitSleep    = InitSleepPermitted
   , cdesc         = "Winding tunnels stretch into the dark."
   }  -- no lit corridors cave alternative, since both lit # and . look bad here
+arena :: CaveKind
 arena = rogue
   { cname         = "Dusty underground library"
   , cfreq         = [(DEFAULT_RANDOM, 60), (CAVE_ARENA, 1)]
@@ -138,6 +179,7 @@ arena = rogue
   , cinitSleep    = InitSleepAlways
   , cdesc         = "The shelves groan with dusty books and tattered scrolls. Subtle snoring can be heard from a distance."
   }
+smoking :: CaveKind
 smoking = arena
   { cname         = "Smoking rooms"
   , cfreq         = [(CAVE_SMOKING, 1)]
@@ -149,6 +191,7 @@ smoking = arena
   , cdefTile      = ARENA_SET_DARK
   , cdesc         = "Velvet couches exude the strong smell of tobacco."
   }
+laboratory :: CaveKind
 laboratory = rogue
   { cname         = "Burnt laboratory"
   , cfreq         = [(CAVE_LABORATORY, 1)]
@@ -174,6 +217,7 @@ laboratory = rogue
                     , (TINY_STAIRCASE, 1) ]
   , cdesc         = "Shattered glassware and the sharp scent of spilt chemicals show that something terrible happened here."
   }
+noise :: CaveKind
 noise = rogue
   { cname         = "Leaky burrowed sediment"
   , cfreq         = [(DEFAULT_RANDOM, 30), (CAVE_NOISE, 1)]
@@ -206,6 +250,7 @@ noise = rogue
   , cinitSleep    = InitSleepBanned
   , cdesc         = "Soon, these passages will be swallowed up by the mud."
   }
+mine :: CaveKind
 mine = noise
   { cname         = "Frozen derelict mine"
   , cfreq         = [(CAVE_MINE, 1)]
@@ -222,6 +267,7 @@ mine = noise
   , cinitSleep    = InitSleepBanned
   , cdesc         = "Pillars of shining ice create a frozen labyrinth."
   }
+empty :: CaveKind
 empty = rogue
   { cname         = "Tall cavern"
   , cfreq         = [(CAVE_EMPTY, 1)]
@@ -255,6 +301,7 @@ empty = rogue
                     , (TINY_STAIRCASE, 1) ]
   , cdesc         = "Swirls of warm fog fill the air, the hiss of geysers sounding all around."
   }
+outermost :: CaveKind
 outermost = shallowRogue
   { cname         = "Cave entrance"
   , cfreq         = [(CAVE_OUTERMOST, 100)]
@@ -270,6 +317,7 @@ outermost = shallowRogue
   , cescapeFreq   = [(INDOOR_ESCAPE_UP, 1)]
   , cdesc         = "This close to the surface, the sunlight still illuminates the dungeon."
   }
+shallowRogue :: CaveKind
 shallowRogue = rogue
   { cfreq         = [(CAVE_SHALLOW_ROGUE, 100)]
   , cXminSize     = 60
@@ -280,6 +328,7 @@ shallowRogue = rogue
 
 -- * Overground "caves"; no story-wise limits wrt height and size
 
+raid :: CaveKind
 raid = rogue
   { cname         = "Typing den"
   , cfreq         = [(CAVE_RAID, 1)]
@@ -304,6 +353,7 @@ raid = rogue
   , cdesc         = "Mold spreads across the walls and scuttling sounds can be heard in the distance."
   }
 
+mini :: CaveKind
 mini = rogue
   { cname = "MiNI parking lot"
   , cfreq = [(CAVE_MINI, 1)]
@@ -328,6 +378,7 @@ mini = rogue
   , cstairAllowed = []
   }
 
+brawl :: CaveKind
 brawl = rogue  -- many random solid tiles, to break LOS, since it's a day
                -- and this scenario is not focused on ranged combat;
                -- also, sanctuaries against missiles in shadow under trees

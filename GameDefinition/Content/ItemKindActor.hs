@@ -1,12 +1,36 @@
 -- | Actor (or rather actor body trunk) definitions.
 module Content.ItemKindActor
-  ( -- * Group name patterns
-    pattern S_WOODEN_TORCH, pattern S_SANDSTONE_ROCK
-  , pattern HERO, pattern SCOUT_HERO, pattern RANGER_HERO, pattern ESCAPIST_HERO, pattern AMBUSHER_HERO, pattern BRAWLER_HERO, pattern SOLDIER_HERO, pattern CIVILIAN, pattern MONSTER, pattern MOBILE_MONSTER, pattern SCOUT_MONSTER, pattern ANIMAL, pattern CAR, pattern MOBILE_ANIMAL, pattern IMMOBILE_ANIMAL, pattern INSECT, pattern GEOPHENOMENON
-  , pattern ADD_SIGHT, pattern ARMOR_RANGED, pattern ADD_NOCTO_1, pattern WEAK_ARROW, pattern LIGHT_ATTENUATOR, pattern FIREPROOF_CLOTH, pattern RING_OF_OPPORTUNITY_SNIPER, pattern ANY_ARROW, pattern STARTING_ARMOR, pattern STARTING_WEAPON, pattern GEM
-  , actorsGN, actorsGNSingleton
-  , -- * Content
-    actors) where
+  ( pattern S_WOODEN_TORCH
+  , pattern S_SANDSTONE_ROCK
+  , pattern HERO
+  , pattern SCOUT_HERO
+  , pattern RANGER_HERO
+  , pattern ESCAPIST_HERO
+  , pattern AMBUSHER_HERO
+  , pattern BRAWLER_HERO
+  , pattern SOLDIER_HERO
+  , pattern CIVILIAN
+  , pattern MONSTER
+  , pattern MOBILE_MONSTER
+  , pattern SCOUT_MONSTER
+  , pattern ANIMAL
+  , pattern CAR
+  , pattern MOBILE_ANIMAL
+  , pattern IMMOBILE_ANIMAL
+  , pattern INSECT
+  , pattern GEOPHENOMENON
+  , pattern ADD_SIGHT, pattern ARMOR_RANGED, pattern ADD_NOCTO_1
+  , pattern WEAK_ARROW
+  , pattern LIGHT_ATTENUATOR
+  , pattern FIREPROOF_CLOTH
+  , pattern RING_OF_OPPORTUNITY_SNIPER
+  , pattern ANY_ARROW
+  , pattern STARTING_ARMOR
+  , pattern STARTING_WEAPON
+  , pattern GEM
+  , actorsGN
+  , actorsGNSingleton
+  , actors) where
 
 import Prelude ()
 
@@ -31,57 +55,138 @@ pattern S_WOODEN_TORCH, S_SANDSTONE_ROCK :: GroupName ItemKind
 
 actorsGN :: [GroupName ItemKind]
 actorsGN =
-       [HERO, SCOUT_HERO, RANGER_HERO, ESCAPIST_HERO, AMBUSHER_HERO, BRAWLER_HERO, SOLDIER_HERO, CIVILIAN, MONSTER, MOBILE_MONSTER, SCOUT_MONSTER, ANIMAL, CAR, MOBILE_ANIMAL, IMMOBILE_ANIMAL, INSECT, GEOPHENOMENON]
-    ++ [ADD_SIGHT, ARMOR_RANGED, ADD_NOCTO_1, WEAK_ARROW, LIGHT_ATTENUATOR, FIREPROOF_CLOTH, RING_OF_OPPORTUNITY_SNIPER, ANY_ARROW, STARTING_ARMOR, STARTING_WEAPON, GEM]
+    [ HERO
+    , SCOUT_HERO
+    , RANGER_HERO
+    , ESCAPIST_HERO
+    , AMBUSHER_HERO
+    , BRAWLER_HERO
+    , SOLDIER_HERO
+    , CIVILIAN
+    , MONSTER
+    , MOBILE_MONSTER
+    , SCOUT_MONSTER
+    , ANIMAL
+    , CAR
+    , MOBILE_ANIMAL
+    , IMMOBILE_ANIMAL
+    , INSECT
+    , GEOPHENOMENON
+    , ADD_SIGHT
+    , ARMOR_RANGED
+    , ADD_NOCTO_1
+    , WEAK_ARROW
+    , LIGHT_ATTENUATOR
+    , FIREPROOF_CLOTH
+    , RING_OF_OPPORTUNITY_SNIPER
+    , ANY_ARROW
+    , STARTING_ARMOR
+    , STARTING_WEAPON
+    , GEM]
 
-pattern HERO, SCOUT_HERO, RANGER_HERO, ESCAPIST_HERO, AMBUSHER_HERO, BRAWLER_HERO, SOLDIER_HERO, CIVILIAN, MONSTER, MOBILE_MONSTER, SCOUT_MONSTER, ANIMAL, CAR, MOBILE_ANIMAL, IMMOBILE_ANIMAL, INSECT, GEOPHENOMENON :: GroupName ItemKind
-
-pattern ADD_SIGHT, ARMOR_RANGED, ADD_NOCTO_1, WEAK_ARROW, LIGHT_ATTENUATOR, FIREPROOF_CLOTH, RING_OF_OPPORTUNITY_SNIPER, ANY_ARROW, STARTING_ARMOR, STARTING_WEAPON, GEM :: GroupName ItemKind
-
+pattern HERO :: GroupName c
 pattern HERO = GroupName "adventurer"
+pattern SCOUT_HERO :: GroupName c
 pattern SCOUT_HERO = GroupName "scout"
+pattern RANGER_HERO :: GroupName c
 pattern RANGER_HERO = GroupName "ranger"
+pattern ESCAPIST_HERO :: GroupName c
 pattern ESCAPIST_HERO = GroupName "escapist"
+pattern AMBUSHER_HERO :: GroupName c
 pattern AMBUSHER_HERO = GroupName "ambusher"
+pattern BRAWLER_HERO :: GroupName c
 pattern BRAWLER_HERO = GroupName "brawler"
+pattern SOLDIER_HERO :: GroupName c
 pattern SOLDIER_HERO = GroupName "soldier"
+pattern CIVILIAN :: GroupName c
 pattern CIVILIAN = GroupName "civilian"
+pattern MONSTER :: GroupName c
 pattern MONSTER = GroupName "monstrosity"
+pattern MOBILE_MONSTER :: GroupName c
 pattern MOBILE_MONSTER = GroupName "mobile monstrosity"
+pattern SCOUT_MONSTER :: GroupName c
 pattern SCOUT_MONSTER = GroupName "scout monstrosity"
+pattern ANIMAL :: GroupName c
 pattern ANIMAL = GroupName "animal"
+pattern CAR :: GroupName c
 pattern CAR = GroupName "car"
+pattern MOBILE_ANIMAL :: GroupName c
 pattern MOBILE_ANIMAL = GroupName "mobile animal"
+pattern IMMOBILE_ANIMAL :: GroupName c
 pattern IMMOBILE_ANIMAL = GroupName "immobile animal"
+pattern INSECT :: GroupName c
 pattern INSECT = GroupName "insect"
+pattern GEOPHENOMENON :: GroupName c
 pattern GEOPHENOMENON = GroupName "geological phenomenon"
 
 pattern S_WOODEN_TORCH = GroupName "wooden torch"
 pattern S_SANDSTONE_ROCK = GroupName "sandstone rock"
 
+pattern ADD_SIGHT :: GroupName c
 pattern ADD_SIGHT = GroupName "sight improvement"
+pattern ARMOR_RANGED :: GroupName c
 pattern ARMOR_RANGED = GroupName "ranged armor"
+pattern ADD_NOCTO_1 :: GroupName c
 pattern ADD_NOCTO_1 = GroupName "noctovision improvement"
+pattern WEAK_ARROW :: GroupName c
 pattern WEAK_ARROW = GroupName "weak arrow"
+pattern LIGHT_ATTENUATOR :: GroupName c
 pattern LIGHT_ATTENUATOR = GroupName "light attenuator"
+pattern FIREPROOF_CLOTH :: GroupName c
 pattern FIREPROOF_CLOTH = GroupName "fireproof cloth"
+pattern RING_OF_OPPORTUNITY_SNIPER :: GroupName c
 pattern RING_OF_OPPORTUNITY_SNIPER = GroupName "ring of sniper"
+pattern ANY_ARROW :: GroupName c
 pattern ANY_ARROW = GroupName "arrow"
+pattern STARTING_ARMOR :: GroupName c
 pattern STARTING_ARMOR = GroupName "starting armor"
+pattern STARTING_WEAPON :: GroupName c
 pattern STARTING_WEAPON = GroupName "starting weapon"
+pattern GEM :: GroupName c
 pattern GEM = GroupName "gem"
 
 -- * Content
 
 actors :: [ItemKind]
 actors =
-  [warrior, warrior2, warrior3, warrior4, warrior5, scout, ranger, escapist, ambusher, brawler, soldier, civilian, civilian2, civilian3, civilian4, civilian5, eye, fastEye, nose, elbow, torsor, goldenJackal, toyota, griffonVulture, skunk, armadillo, gilaMonster, rattlesnake, hyena, komodoDragon, alligator, rhinoceros, beeSwarm, hornetSwarm, thornbush]
-  -- LH-specific
-  ++ [geyserBoiling, geyserArsenic, geyserSulfur]
-
-warrior,    warrior2, warrior3, warrior4, warrior5, scout, ranger, escapist, ambusher, brawler, soldier, civilian, civilian2, civilian3, civilian4, civilian5, eye, fastEye, nose, elbow, torsor, goldenJackal, toyota, griffonVulture, skunk, armadillo, gilaMonster, rattlesnake, hyena, komodoDragon, alligator, rhinoceros, beeSwarm, hornetSwarm, thornbush :: ItemKind
--- LH-specific
-geyserBoiling, geyserArsenic, geyserSulfur :: ItemKind
+  [ warrior
+  , warrior2
+  , warrior3
+  , warrior4
+  , warrior5
+  , scout
+  , ranger
+  , escapist
+  , ambusher
+  , brawler
+  , soldier
+  , civilian
+  , civilian2
+  , civilian3
+  , civilian4
+  , civilian5
+  , eye
+  , fastEye
+  , nose
+  , elbow
+  , torsor
+  , goldenJackal
+  , toyota
+  , griffonVulture
+  , skunk
+  , armadillo
+  , gilaMonster
+  , rattlesnake
+  , hyena
+  , komodoDragon
+  , alligator
+  , rhinoceros
+  , beeSwarm
+  , hornetSwarm
+  , thornbush
+  , geyserBoiling
+  , geyserArsenic
+  , geyserSulfur]
 
 -- Note that the actors that appear in the crawl scenario should
 -- be generated with at most ordinary ammo. Otherwise, farming them
@@ -96,6 +201,7 @@ humanOrgans :: [(GroupName ItemKind, CStore)]
 humanOrgans = [ (S_FIST, COrgan), (S_FOOT, COrgan)
               , (S_EYE_6, COrgan), (S_EAR_6, COrgan)
               , (S_SAPIENT_BRAIN, COrgan) ]
+warrior :: ItemKind
 warrior = ItemKind
   { isymbol  = toContentSymbol '@'
   , iname    = "adventurer"  -- modified if initial actors in hero faction
@@ -308,6 +414,7 @@ elbow = ItemKind
                , (ANY_ARROW, CStash), (ANY_ARROW, CStash)
                , (WEAK_ARROW, CStash), (WEAK_ARROW, CStash) ]
   }
+torsor :: ItemKind
 torsor = ItemKind
   { isymbol  = toContentSymbol 'T'
   , iname    = "The Forgetful Torsor"
@@ -346,6 +453,7 @@ torsor = ItemKind
 -- They need rather strong melee, because they don't use items.
 -- They have dull colors, except for yellow, because there is no dull variant.
 --
+toyota :: ItemKind
 toyota = ItemKind  -- basically a much smaller, slower and nosy hyena
   { isymbol  = toContentSymbol 'T'
   , iname    = "toyota"
@@ -364,6 +472,7 @@ toyota = ItemKind  -- basically a much smaller, slower and nosy hyena
   , idesc    = "A mystical automobile, who knows who is sitting behind the wheel?"
   , ikit     = [ (S_TIRE, COrgan) ]
   }
+goldenJackal :: ItemKind
 goldenJackal = ItemKind  -- basically a much smaller, slower and nosy hyena
   { isymbol  = toContentSymbol 'j'
   , iname    = "golden jackal"
@@ -386,6 +495,7 @@ goldenJackal = ItemKind  -- basically a much smaller, slower and nosy hyena
                , (S_EYE_6, COrgan), (S_NOSTRIL, COrgan), (S_EAR_8, COrgan)
                , (S_ANIMAL_BRAIN, COrgan) ]
   }
+griffonVulture :: ItemKind
 griffonVulture = ItemKind  -- keep it boring and weak, because it summons
   { isymbol  = toContentSymbol 'v'
   , iname    = "griffon vulture"
@@ -437,6 +547,7 @@ skunk = ItemKind
                , (S_EYE_3, COrgan), (S_EAR_6, COrgan)
                , (S_ANIMAL_BRAIN, COrgan) ]
   }
+armadillo :: ItemKind
 armadillo = ItemKind
   { isymbol  = toContentSymbol 'a'
   , iname    = "giant armadillo"
@@ -459,6 +570,7 @@ armadillo = ItemKind
                , (S_EYE_3, COrgan), (S_NOSTRIL, COrgan), (S_EAR_6, COrgan)
                , (S_ANIMAL_BRAIN, COrgan) ]
   }
+gilaMonster :: ItemKind
 gilaMonster = ItemKind
   { isymbol  = toContentSymbol 'g'
   , iname    = "Gila monster"
@@ -479,6 +591,7 @@ gilaMonster = ItemKind
                , (S_EYE_3, COrgan), (S_NOSTRIL, COrgan), (S_EAR_6, COrgan)
                , (S_ANIMAL_BRAIN, COrgan) ]
   }
+rattlesnake :: ItemKind
 rattlesnake = ItemKind
   { isymbol  = toContentSymbol 's'
   , iname    = "rattlesnake"
@@ -501,6 +614,7 @@ rattlesnake = ItemKind
                , (S_EYE_3, COrgan), (S_NOSTRIL, COrgan), (S_EAR_6, COrgan)
                , (S_ANIMAL_BRAIN, COrgan) ]
   }
+hyena :: ItemKind
 hyena = ItemKind
   { isymbol  = toContentSymbol 'h'
   , iname    = "spotted hyena"
@@ -522,6 +636,7 @@ hyena = ItemKind
                , (S_EYE_6, COrgan), (S_NOSTRIL, COrgan), (S_EAR_8, COrgan)
                , (S_ANIMAL_BRAIN, COrgan) ]
   }
+komodoDragon :: ItemKind
 komodoDragon = ItemKind
   { isymbol  = toContentSymbol 'k'
   , iname    = "Komodo dragon"
@@ -545,6 +660,7 @@ komodoDragon = ItemKind
                , (S_EYE_3, COrgan), (S_NOSTRIL, COrgan), (S_EAR_3, COrgan)
                , (S_ANIMAL_BRAIN, COrgan) ]
   }
+alligator :: ItemKind
 alligator = ItemKind  -- late, slow, deadly semi-tank with some armor;
                       -- too deadly to get more HP; bombs the only recourse
   { isymbol  = toContentSymbol 'a'
@@ -569,6 +685,7 @@ alligator = ItemKind  -- late, slow, deadly semi-tank with some armor;
                , (S_EYE_6, COrgan), (S_EAR_8, COrgan)
                , (S_ANIMAL_BRAIN, COrgan) ]
   }
+rhinoceros :: ItemKind
 rhinoceros = ItemKind
   { isymbol  = toContentSymbol 'R'
   , iname    = "The Maddened Rhinoceros"
@@ -596,6 +713,7 @@ rhinoceros = ItemKind
 
 -- * Non-animal animals
 
+beeSwarm :: ItemKind
 beeSwarm = ItemKind
   { isymbol  = toContentSymbol 'b'
   , iname    = "bee swarm"
@@ -618,6 +736,7 @@ beeSwarm = ItemKind
                , (S_VISION_6, COrgan), (S_EAR_6, COrgan)
                , (S_INSECT_MORTALITY, COrgan), (S_ANIMAL_BRAIN, COrgan) ]
   }
+hornetSwarm :: ItemKind
 hornetSwarm = ItemKind  -- kind of tank with armor, but short-lived
   { isymbol  = toContentSymbol 'h'
   , iname    = "hornet swarm"
@@ -643,6 +762,7 @@ hornetSwarm = ItemKind  -- kind of tank with armor, but short-lived
                , (S_VISION_6, COrgan), (S_EAR_6, COrgan)
                , (S_INSECT_MORTALITY, COrgan), (S_ANIMAL_BRAIN, COrgan) ]
   }
+thornbush :: ItemKind
 thornbush = ItemKind  -- the wimpiest kind of early tank
   { isymbol  = toContentSymbol 't'
   , iname    = "thornbush"
@@ -662,6 +782,7 @@ thornbush = ItemKind  -- the wimpiest kind of early tank
   , ikit     = [ (S_THORN, COrgan)  -- after all run out, it's weaponless
                , (S_BARK, COrgan) ]
   }
+geyserBoiling :: ItemKind
 geyserBoiling = ItemKind
   { isymbol  = toContentSymbol 'g'
   , iname    = "geyser"
@@ -680,6 +801,7 @@ geyserBoiling = ItemKind
   , idesc    = "A jet of acidic water, hot enough to melt flesh."
   , ikit     = [(S_BOILING_VENT, COrgan), (S_BOILING_FISSURE, COrgan)]
   }
+geyserArsenic :: ItemKind
 geyserArsenic = ItemKind
   { isymbol  = toContentSymbol 'g'
   , iname    = "arsenic geyser"
@@ -698,6 +820,7 @@ geyserArsenic = ItemKind
   , idesc    = "The sharp scent betrays the poison within the spray."
   , ikit     = [(S_ARSENIC_VENT, COrgan), (S_ARSENIC_FISSURE, COrgan)]
   }
+geyserSulfur :: ItemKind
 geyserSulfur = ItemKind
   { isymbol  = toContentSymbol 'g'
   , iname    = "sulfur geyser"

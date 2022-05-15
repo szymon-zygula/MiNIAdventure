@@ -1,10 +1,16 @@
 -- | Definitions of basic items.
 module Content.ItemKind
-  ( -- * Group name patterns
-    pattern HARPOON, pattern EDIBLE_PLANT, pattern RING_OF_OPPORTUNITY_GRENADIER, pattern ARMOR_LOOSE, pattern CLOTHING_MISC, pattern CHIC_GEAR
-  , groupNamesSingleton, groupNames
-  , -- * Content
-    content, items, otherItemContent
+  ( pattern HARPOON
+  , pattern EDIBLE_PLANT
+  , pattern RING_OF_OPPORTUNITY_GRENADIER
+  , pattern ARMOR_LOOSE
+  , pattern CLOTHING_MISC
+  , pattern CHIC_GEAR
+  , groupNamesSingleton
+  , groupNames
+  , content
+  , items
+  , otherItemContent
   ) where
 
 import Prelude ()
