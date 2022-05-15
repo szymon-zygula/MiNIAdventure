@@ -14,13 +14,11 @@ import qualified GHC.IO.Encoding as SIO
 import qualified Options.Applicative as OA
 import qualified System.IO as SIO
 
-#ifndef USE_JSFILE
 import qualified GHC.IO.Handle
 import           System.FilePath
 
 import Game.LambdaHack.Common.File (tryCreateDir)
 import Game.LambdaHack.Common.Misc
-#endif
 
 import Game.LambdaHack.Server (serverOptionsPI)
 
@@ -34,10 +32,6 @@ main = do
   let enc = SIO.localeEncoding
   when (show enc `elem` ["ASCII", "ISO-8859-1", "ISO-8859-2"]) $
     SIO.setLocaleEncoding SIO.utf8
-  -- This test is faulty with JS, because it reports the browser console
-  -- is not a terminal, but then we can't open files to contain the logs.
-  -- Also it bloats the outcome JS file, so disabled.
-#ifndef USE_JSFILE
   -- Special case hack, when the game is started not on a console.
   -- Without this, any attempt to output on stdout crashes a Windows exe
   -- (at least on Windows Vista) launched from the desktop or start menu.
@@ -52,10 +46,6 @@ main = do
     fstderr <- SIO.openFile (dataDir </> "stderr.txt") SIO.WriteMode
     GHC.IO.Handle.hDuplicateTo fstdout SIO.stdout
     GHC.IO.Handle.hDuplicateTo fstderr SIO.stderr
-#else
-  -- Work around display of one character per line.
-  SIO.hSetBuffering SIO.stderr SIO.LineBuffering
-#endif
   -- Fail here, not inside server code, so that savefiles are not removed,
   -- because they are not the source of the failure.
   !serverOptions <- OA.execParser serverOptionsPI

@@ -33,11 +33,13 @@ module Content.ItemKindOrgan
   , pattern S_RATLLE
   , pattern S_INSECT_MORTALITY
   , pattern S_SAPIENT_BRAIN
+  , pattern S_CAR_COMPUTER
   , pattern S_ANIMAL_BRAIN
   , pattern S_SCENT_GLAND
   , pattern S_BOILING_VENT
   , pattern S_ARSENIC_VENT
   , pattern S_SULFUR_VENT
+  , pattern S_CAMERA
   , pattern S_EYE_3
   , pattern S_EYE_6
   , pattern S_EYE_8
@@ -113,11 +115,13 @@ organsGNSingleton =
     , S_RATLLE
     , S_INSECT_MORTALITY
     , S_SAPIENT_BRAIN
+    , S_CAR_COMPUTER
     , S_ANIMAL_BRAIN
     , S_SCENT_GLAND
     , S_BOILING_VENT
     , S_ARSENIC_VENT
     , S_SULFUR_VENT
+    , S_CAMERA
     , S_EYE_3
     , S_EYE_6
     , S_EYE_8
@@ -205,6 +209,8 @@ pattern S_INSECT_MORTALITY :: GroupName c
 pattern S_INSECT_MORTALITY = GroupName "insect mortality"
 pattern S_SAPIENT_BRAIN :: GroupName c
 pattern S_SAPIENT_BRAIN = GroupName "sapient brain"
+pattern S_CAR_COMPUTER :: GroupName c
+pattern S_CAR_COMPUTER = GroupName "car computer"
 pattern S_ANIMAL_BRAIN :: GroupName c
 pattern S_ANIMAL_BRAIN = GroupName "animal brain"
 pattern S_SCENT_GLAND :: GroupName c
@@ -215,6 +221,8 @@ pattern S_ARSENIC_VENT :: GroupName c
 pattern S_ARSENIC_VENT = GroupName "arsenic vent"
 pattern S_SULFUR_VENT :: GroupName c
 pattern S_SULFUR_VENT = GroupName "sulfur vent"
+pattern S_CAMERA :: GroupName c
+pattern S_CAMERA = GroupName "camera"
 pattern S_EYE_3 :: GroupName c
 pattern S_EYE_3 = GroupName "eye 3"
 pattern S_EYE_6 :: GroupName c
@@ -284,6 +292,7 @@ organs =
     , hugeTail
     , armoredSkin
     , bark
+    , camera
     , eye3
     , eye6
     , eye8
@@ -297,6 +306,7 @@ organs =
     , rattleOrgan
     , insectMortality
     , sapientBrain
+    , carComputer
     , animalBrain
     , speedGland5
     , speedGland10
@@ -678,6 +688,15 @@ eye n grp = armoredSkin
                , SetFlag Durable ]
   , idesc    = "A piercing stare."
   }
+camera = armoredSkin
+  { iname    = "camera"
+  , ifreq    = [(S_CAMERA, 1)]
+  , icount   = 1
+  , iverbHit = "record"
+  , iaspects = [ AddSkill SkSight (intToDice 6)
+               , SetFlag Durable ]
+  , idesc    = "An RGB camera"
+  }
 eye3 = eye 3 S_EYE_3
 eye6 = eye 6 S_EYE_6
 eye8 = eye 8 S_EYE_8
@@ -749,6 +768,24 @@ sapientBrain = armoredSkin
                ++ [AddSkill SkAlter 4]  -- can use all stairs; dig rubble, ice
                ++ [AddSkill SkWait 2]  -- can brace and sleep
                ++ [AddSkill SkApply 1]  -- can use most items, not just foods
+               ++ [SetFlag Durable]
+  , idesc    = ""
+  }
+carComputer :: ItemKind
+carComputer = armoredSkin
+  { iname    = "car computer"
+  , ifreq    = [(S_CAR_COMPUTER, 1)]
+  , iverbHit = "blank"
+  , iaspects = [AddSkill sk 1 | sk <- [SkMove .. SkApply]]
+               ++ [AddSkill SkMove 4]  -- can move at once when waking up
+               ++ [AddSkill SkAlter 2]  -- can use normal stairs; can't dig
+               ++ [AddSkill SkWait 2]  -- can brace and sleep
+               -- No @SkApply@ bonus, so can only apply foods. Note, however,
+               -- that AI doesn't risk applying unIded items, so in early
+               -- game animals won't eat anything.
+               ++ [AddSkill SkDisplace (-1)]  -- no melee tactics
+               ++ [AddSkill SkMoveItem (-1)]  -- no item gathering
+               ++ [AddSkill SkProject (-1)]  -- nor item flinging
                ++ [SetFlag Durable]
   , idesc    = ""
   }

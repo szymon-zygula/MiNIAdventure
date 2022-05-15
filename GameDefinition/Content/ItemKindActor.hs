@@ -51,8 +51,6 @@ actorsGNSingleton :: [GroupName ItemKind]
 actorsGNSingleton =
        [S_WOODEN_TORCH, S_SANDSTONE_ROCK]
 
-pattern S_WOODEN_TORCH, S_SANDSTONE_ROCK :: GroupName ItemKind
-
 actorsGN :: [GroupName ItemKind]
 actorsGN =
     [ HERO
@@ -66,8 +64,9 @@ actorsGN =
     , MONSTER
     , MOBILE_MONSTER
     , SCOUT_MONSTER
-    , ANIMAL
     , CAR
+    , MOBILE_CAR
+    , ANIMAL
     , MOBILE_ANIMAL
     , IMMOBILE_ANIMAL
     , INSECT
@@ -82,7 +81,7 @@ actorsGN =
     , ANY_ARROW
     , STARTING_ARMOR
     , STARTING_WEAPON
-    , GEM]
+    , GEM ]
 
 pattern HERO :: GroupName c
 pattern HERO = GroupName "adventurer"
@@ -110,6 +109,8 @@ pattern ANIMAL :: GroupName c
 pattern ANIMAL = GroupName "animal"
 pattern CAR :: GroupName c
 pattern CAR = GroupName "car"
+pattern MOBILE_CAR :: GroupName c
+pattern MOBILE_CAR = GroupName "mobile car"
 pattern MOBILE_ANIMAL :: GroupName c
 pattern MOBILE_ANIMAL = GroupName "mobile animal"
 pattern IMMOBILE_ANIMAL :: GroupName c
@@ -119,7 +120,9 @@ pattern INSECT = GroupName "insect"
 pattern GEOPHENOMENON :: GroupName c
 pattern GEOPHENOMENON = GroupName "geological phenomenon"
 
+pattern S_WOODEN_TORCH :: GroupName c
 pattern S_WOODEN_TORCH = GroupName "wooden torch"
+pattern S_SANDSTONE_ROCK :: GroupName c
 pattern S_SANDSTONE_ROCK = GroupName "sandstone rock"
 
 pattern ADD_SIGHT :: GroupName c
@@ -172,6 +175,8 @@ actors =
   , torsor
   , goldenJackal
   , toyota
+  , tesla
+  , blackVolga
   , griffonVulture
   , skunk
   , armadillo
@@ -226,25 +231,30 @@ warrior = ItemKind
                ++ [(S_SANDSTONE_ROCK, CStash)]
   , idesc    = ""  -- "A hardened veteran of combat."
   }
+warrior2 :: ItemKind
 warrior2 = warrior
   { iname    = "warrior"
   , ikit     = humanOrgans
                ++ [(COMMON_ITEM, CStash)]
   -- , idesc    = ""
   }
+warrior3 :: ItemKind
 warrior3 = warrior
   { iname    = "blacksmith"
   -- , idesc    = ""
   }
+warrior4 :: ItemKind
 warrior4 = warrior
   { iname    = "forester"
   -- , idesc    = ""
   }
+warrior5 :: ItemKind
 warrior5 = warrior
   { iname    = "scientist"
   -- , idesc    = ""
   }
 
+scout :: ItemKind
 scout = warrior
   { ifreq    = [(SCOUT_HERO, 100), (MOBILE, 1)]
   , ikit     = humanOrgans
@@ -253,6 +263,7 @@ scout = warrior
                   , (ADD_NOCTO_1, CStash) ]
   -- , idesc    = ""
   }
+ranger :: ItemKind
 ranger = warrior
   { ifreq    = [(RANGER_HERO, 100), (MOBILE, 1)]
   , ikit     = humanOrgans
@@ -260,6 +271,7 @@ ranger = warrior
                   , (WEAK_ARROW, CStash) ]
   -- , idesc    = ""
   }
+escapist :: ItemKind
 escapist = warrior
   { ifreq    = [(ESCAPIST_HERO, 100), (MOBILE, 1)]
   , ikit     = humanOrgans
@@ -271,6 +283,7 @@ escapist = warrior
                   , (FIREPROOF_CLOTH, CStash) ]
   -- , idesc    = ""
   }
+ambusher :: ItemKind
 ambusher = warrior
   { ifreq    = [(AMBUSHER_HERO, 100), (MOBILE, 1)]
   , ikit     = humanOrgans  -- dark and numerous, so more kit without exploring
@@ -282,6 +295,7 @@ ambusher = warrior
                   , (S_WOODEN_TORCH, CStash) ]
   -- , idesc    = ""
   }
+brawler :: ItemKind
 brawler = warrior
   { ifreq    = [(BRAWLER_HERO, 100), (MOBILE, 1)]
   , ikit     = humanOrgans
@@ -289,6 +303,7 @@ brawler = warrior
                   , (ANY_POTION, CStash) ]
   -- , idesc    = ""
   }
+soldier :: ItemKind
 soldier = brawler
   { ifreq    = [(SOLDIER_HERO, 100), (MOBILE, 1)]
   , ikit     = ikit brawler
@@ -296,24 +311,29 @@ soldier = brawler
   -- , idesc    = ""
   }
 
+civilian :: ItemKind
 civilian = warrior
   { iname    = "clerk"
   , ifreq    = [(CIVILIAN, 100), (MOBILE, 1)]
   , iflavour = zipPlain [BrBlack]
   -- , idesc    = ""
   }
+civilian2 :: ItemKind
 civilian2 = civilian
   { iname    = "hairdresser"
   -- , idesc    = ""
   }
+civilian3 :: ItemKind
 civilian3 = civilian
   { iname    = "lawyer"
   -- , idesc    = ""
   }
+civilian4 :: ItemKind
 civilian4 = civilian
   { iname    = "peddler"
   -- , idesc    = ""
   }
+civilian5 :: ItemKind
 civilian5 = civilian
   { iname    = "tax collector"
   -- , idesc    = ""
@@ -323,6 +343,7 @@ civilian5 = civilian
 
 -- They have bright colours, because they are not natural.
 
+eye :: ItemKind
 eye = ItemKind
   { isymbol  = toContentSymbol 'e'
   , iname    = "reducible eye"
@@ -345,6 +366,7 @@ eye = ItemKind
   , ikit     = [ (S_LASH, COrgan), (S_PUPIL, COrgan)  -- at least one non-timed
                , (S_SAPIENT_BRAIN, COrgan) ]  -- no hearing, it's all eyes
   }
+fastEye :: ItemKind
 fastEye = ItemKind
   { isymbol  = toContentSymbol 'j'
   , iname    = "injective jaw"
@@ -367,6 +389,7 @@ fastEye = ItemKind
                , (S_VISION_6, COrgan), (S_EAR_3, COrgan)
                , (S_SAPIENT_BRAIN, COrgan) ]
   }
+nose :: ItemKind
 nose = ItemKind  -- depends solely on smell
   { isymbol  = toContentSymbol 'n'
   , iname    = "point-free nose"
@@ -388,6 +411,7 @@ nose = ItemKind  -- depends solely on smell
                , (S_NOSTRIL, COrgan)
                , (S_SAPIENT_BRAIN, COrgan) ]  -- no sight nor hearing
   }
+elbow :: ItemKind
 elbow = ItemKind
   { isymbol  = toContentSymbol 'e'
   , iname    = "commutative elbow"
@@ -455,22 +479,69 @@ torsor = ItemKind
 --
 toyota :: ItemKind
 toyota = ItemKind  -- basically a much smaller, slower and nosy hyena
-  { isymbol  = toContentSymbol 'T'
-  , iname    = "toyota"
-  , ifreq    = [ (CAR, 100) ]
-  , iflavour = zipPlain [BrRed]
+  { isymbol  = toContentSymbol 't'
+  , iname    = "Toyota"
+  , ifreq    = [(CAR, 100), (MOBILE, 1), (MOBILE_CAR, 100)]
+  , iflavour = zipPlain [Blue]
   , icount   = 1
   , irarity  = [(1, 4), (10, 2)]
   , iverbHit = "brum brum"
-  , iweight  = 13000
+  , iweight  = 8000000
   , idamage  = 0
-  , iaspects = [ AddSkill SkMaxHP 15, AddSkill SkMaxCalm 70
-               , AddSkill SkSpeed 24, AddSkill SkNocto 2
-               , AddSkill SkAggression 2  -- scout
+  , iaspects = [ AddSkill SkMaxHP 28, AddSkill SkMaxCalm 60
+               , AddSkill SkSpeed 16, AddSkill SkNocto 2
+               , AddSkill SkAggression 2
+               , AddSkill SkAlter (-2)
                , SetFlag Durable ]
   , ieffects = []
-  , idesc    = "A mystical automobile, who knows who is sitting behind the wheel?"
-  , ikit     = [ (S_TIRE, COrgan) ]
+  , idesc    = "A classic vehicle of Japanese quality"
+  , ikit     = [ (S_TIRE, COrgan)
+               , (S_CAMERA, COrgan)
+               , (S_CAR_COMPUTER, COrgan) ]
+  }
+tesla :: ItemKind
+tesla = ItemKind  -- basically a much smaller, slower and nosy hyena
+  { isymbol  = toContentSymbol 'T'
+  , iname    = "Tesla"
+  , ifreq    = [(CAR, 100), (MOBILE, 1), (MOBILE_CAR, 100)]
+  , iflavour = zipPlain [Red]
+  , icount   = 1
+  , irarity  = [(1, 4), (10, 2)]
+  , iverbHit = "brum brum"
+  , iweight  = 6000000
+  , idamage  = 0
+  , iaspects = [ AddSkill SkMaxHP 50, AddSkill SkMaxCalm 60
+               , AddSkill SkSpeed 30, AddSkill SkNocto 2
+               , AddSkill SkAggression 2
+               , AddSkill SkAlter (-2)
+               , SetFlag Durable ]
+  , ieffects = []
+  , idesc    = "A new generation elector vehicle of questionable reputation"
+  , ikit     = [ (S_TIRE, COrgan)
+               , (S_CAMERA, COrgan)
+               , (S_CAR_COMPUTER, COrgan) ]
+  }
+blackVolga :: ItemKind
+blackVolga = ItemKind  -- basically a much smaller, slower and nosy hyena
+  { isymbol  = toContentSymbol 'V'
+  , iname    = "black Volga"
+  , ifreq    = [(CAR, 100), (MOBILE, 1), (MOBILE_CAR, 100)]
+  , iflavour = zipPlain [BrBlack]
+  , icount   = 1
+  , irarity  = [(1, 4), (10, 2)]
+  , iverbHit = "brum brum"
+  , iweight  = 9000000
+  , idamage  = 0
+  , iaspects = [ AddSkill SkMaxHP 70, AddSkill SkMaxCalm 60
+               , AddSkill SkSpeed 20, AddSkill SkNocto 2
+               , AddSkill SkAggression 2
+               , AddSkill SkAlter (-2)
+               , SetFlag Durable ]
+  , ieffects = []
+  , idesc    = "A mysterious and legendary vehicle, who knows what it itentions are?"
+  , ikit     = [ (S_TIRE, COrgan)
+               , (S_CAMERA, COrgan)
+               , (S_CAR_COMPUTER, COrgan) ]
   }
 goldenJackal :: ItemKind
 goldenJackal = ItemKind  -- basically a much smaller, slower and nosy hyena
@@ -525,6 +596,7 @@ griffonVulture = ItemKind  -- keep it boring and weak, because it summons
                    -- can't shoot, so strong sight is OK
                , (S_ANIMAL_BRAIN, COrgan) ]
   }
+skunk :: ItemKind
 skunk = ItemKind
   { isymbol  = toContentSymbol 's'
   , iname    = "hog-nosed skunk"

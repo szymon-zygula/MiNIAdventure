@@ -1,7 +1,8 @@
 -- | Definitions of kinds of factions present in a game, both human
 -- and computer-controlled.
 module Content.FactionKind
-  ( pattern EXPLORER_REPRESENTATIVE
+  ( pattern CAR_REPRESENTATIVE
+  , pattern EXPLORER_REPRESENTATIVE
   , pattern EXPLORER_SHORT
   , pattern EXPLORER_MEDIUM
   , pattern EXPLORER_TRAPPED
@@ -54,7 +55,8 @@ import Content.ItemKindOrgan
 
 groupNamesSingleton :: [GroupName FactionKind]
 groupNamesSingleton =
-    [EXPLORER_REPRESENTATIVE
+    [ CAR_REPRESENTATIVE
+    , EXPLORER_REPRESENTATIVE
     , EXPLORER_SHORT
     , EXPLORER_MEDIUM
     , EXPLORER_TRAPPED
@@ -87,8 +89,9 @@ groupNames :: [GroupName FactionKind]
 groupNames = [REPRESENTATIVE]
 
 pattern REPRESENTATIVE :: GroupName FactionKind
-
 pattern REPRESENTATIVE = GroupName "representative"
+pattern CAR_REPRESENTATIVE :: GroupName c
+pattern CAR_REPRESENTATIVE = GroupName "car"
 pattern EXPLORER_REPRESENTATIVE :: GroupName c
 pattern EXPLORER_REPRESENTATIVE = GroupName "explorer"
 pattern EXPLORER_SHORT :: GroupName c
@@ -148,20 +151,29 @@ pattern HORROR_PACIFIST = GroupName "horror pacifist"
 
 -- * Teams
 
-teamCompetitor, teamCivilian, teamConvict, teamMonster, teamAnimal, teamHorror, teamOther :: TeamContinuity
+teamCompetitor :: TeamContinuity
 teamCompetitor = TeamContinuity 2
+teamCivilian :: TeamContinuity
 teamCivilian = TeamContinuity 3
+teamConvict :: TeamContinuity
 teamConvict = TeamContinuity 4
+teamMonster :: TeamContinuity
 teamMonster = TeamContinuity 5
+teamAnimal :: TeamContinuity
 teamAnimal = TeamContinuity 6
+teamHorror :: TeamContinuity
 teamHorror = TeamContinuity 7
+teamCars :: TeamContinuity
+teamCars = TeamContinuity 8
+teamOther :: TeamContinuity
 teamOther = TeamContinuity 10
 
 -- * Content
 
 content :: [FactionKind]
 content =
-    [ factExplorer
+    [ factCar
+    , factExplorer
     , factExplorerShort
     , factExplorerMedium
     , factExplorerTrapped
@@ -188,12 +200,32 @@ content =
     , factAnimalCaptiveNarrating
     , factHorror
     , factHorrorCaptive
-    , factHorrorPacifist]
+    , factHorrorPacifist ]
 
 
 -- * Content
 
 -- ** teamExplorer
+
+factCar :: FactionKind
+factCar = FactionKind
+  { fname = "Traffic of cars"
+  , ffreq = [(CAR_REPRESENTATIVE, 1), (REPRESENTATIVE, 1)]
+  , fteam = teamCars
+  , fgroups = [ (CAR, 100) ]
+  , fskillsOther = zeroSkills
+  , fcanEscape = False
+  , fneverEmpty = False
+  , fhiCondPoly = hiDweller
+  , fhasGender = False
+  , finitDoctrine = TExplore
+  , fspawnsFast = True
+  , fhasPointman = True
+  , fhasUI = False
+  , finitUnderAI = True
+  , fenemyTeams = [teamExplorer, teamCompetitor, teamCivilian, teamConvict]
+  , falliedTeams = []
+  }
 
 factExplorer :: FactionKind
 factExplorer = FactionKind

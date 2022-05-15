@@ -153,8 +153,8 @@ screensaverCrawl = crawl
 
 rosterMini :: [(GroupName c1, [(Int, Dice, GroupName c2)])]
 rosterMini =
-  [ ( ANIMAL_REPRESENTATIVE  -- starting over escape
-    , [(-2, 2, ANIMAL)] )
+  [ ( CAR_REPRESENTATIVE  -- starting over escape
+    , [(-2, 2, CAR)] )
   , ( EXPLORER_SHORT
     , [(-2, 2, HERO)] )
   , ( COMPETITOR_SHORT
