@@ -12,7 +12,6 @@ module Content.CaveKind
   , pattern CAVE_SHALLOW_ROGUE
   , pattern CAVE_OUTERMOST
   , pattern CAVE_RAID
-  , pattern CAVE_BRAWL
   , groupNamesSingleton
   , groupNames
   , content
@@ -52,8 +51,7 @@ groupNames =
     , CAVE_EMPTY
     , CAVE_SHALLOW_ROGUE
     , CAVE_OUTERMOST
-    , CAVE_RAID
-    , CAVE_BRAWL]
+    , CAVE_RAID ]
 
 pattern CAVE_MINI :: GroupName c
 pattern CAVE_MINI = GroupName "caveMini"
@@ -77,8 +75,6 @@ pattern CAVE_OUTERMOST :: GroupName c
 pattern CAVE_OUTERMOST = GroupName "caveOutermost"
 pattern CAVE_RAID :: GroupName c
 pattern CAVE_RAID = GroupName "caveRaid"
-pattern CAVE_BRAWL :: GroupName c
-pattern CAVE_BRAWL = GroupName "caveBrawl"
 
 -- * Content
 
@@ -94,8 +90,7 @@ content =
     , empty
     , outermost
     , shallowRogue
-    , raid
-    , brawl]
+    , raid ]
 
 -- * Underground caves; most of mediocre height and size
 
@@ -376,38 +371,4 @@ mini = rogue
   , cescapeFreq   = [(INDOOR_ESCAPE_UP, 1)]
   , cstairFreq    = []
   , cstairAllowed = []
-  }
-
-brawl :: CaveKind
-brawl = rogue  -- many random solid tiles, to break LOS, since it's a day
-               -- and this scenario is not focused on ranged combat;
-               -- also, sanctuaries against missiles in shadow under trees
-  { cname         = "Sunny woodland"
-  , cfreq         = [(CAVE_BRAWL, 1)]
-  , cXminSize     = 60
-  , cYminSize     = 21
-  , ccellSize     = DiceXY (2 `d` 5 + 5) 6
-  , cminPlaceSize = DiceXY 3 3
-  , cmaxPlaceSize = DiceXY 7 5
-  , cdarkOdds     = 51
-  , cnightOdds    = 0
-  , cdoorChance   = 1
-  , copenChance   = 0
-  , chidden       = 0
-  , cactorFreq    = []
-  , citemNum      = 4 `d` 6
-  , citemFreq     = [ (IK.COMMON_ITEM, 50), (STARTING_WEAPON, 100)
-                    , (STARTING_ARMOR, 100) ]
-  , cplaceFreq    = [(BRAWL, 1)]
-  , cpassable     = True
-  , cdefTile      = BRAWL_SET_LIT
-  , cdarkCorTile  = DIRT_LIT
-  , clitCorTile   = DIRT_LIT
-  , cstairFreq    = []
-  , cfenceTileN   = OUTDOOR_OUTER_FENCE
-  , cfenceTileE   = OUTDOOR_OUTER_FENCE
-  , cfenceTileS   = OUTDOOR_OUTER_FENCE
-  , cfenceTileW   = OUTDOOR_OUTER_FENCE
-  , cmaxStairsNum = 0
-  , cdesc         = "Sunlight falls through the trees and dapples on the ground."
   }

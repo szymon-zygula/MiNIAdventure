@@ -6,7 +6,6 @@ module Content.ModeKind
 #ifdef EXPOSE_INTERNAL
   , pattern MINI
   , pattern RAID
-  , pattern BRAWL
   , pattern LONG
   , pattern CRAWL
 #endif
@@ -33,7 +32,7 @@ import Content.ItemKindActor
 
 groupNamesSingleton :: [GroupName ModeKind]
 groupNamesSingleton =
-       [MINI, RAID, BRAWL, LONG, CRAWL]
+       [MINI, RAID, LONG, CRAWL]
 
 groupNames :: [GroupName ModeKind]
 groupNames = []
@@ -42,8 +41,6 @@ pattern MINI :: GroupName c
 pattern MINI = GroupName "mini"
 pattern RAID :: GroupName c
 pattern RAID = GroupName "raid"
-pattern BRAWL :: GroupName c
-pattern BRAWL = GroupName "brawl"
 pattern LONG :: GroupName c
 pattern LONG = GroupName "long crawl"
 pattern CRAWL :: GroupName c
@@ -55,10 +52,8 @@ content :: [ModeKind]
 content =
   [ mini
   , raid
-  , brawl
   , crawl
   , screensaverRaid
-  , screensaverBrawl
   , screensaverCrawl]
 
 -- What other symmetric (two only-one-moves factions) and asymmetric vs crowd
@@ -116,32 +111,6 @@ mini = ModeKind
     , mhint = "There are no hints, be careful."
   }
 
-brawl :: ModeKind
-brawl = ModeKind  -- sparse melee in daylight, with shade for melee ambush
-  { mname   = "brawl (tutorial, 2)"
-  , mfreq   = [(BRAWL, 1), (CAMPAIGN_SCENARIO, 1)]
-  , mtutorial = True
-  , mattract = False
-  , mroster = rosterBrawl
-  , mcaves  = cavesBrawl
-  , mendMsg = [ (Killed, "The inquisitive scholars turned out to be envious of our deep insight to the point of outright violence. It would still not result in such a defeat and recanting of our thesis if we figured out to use terrain to protect us from missiles or even completely hide our presence. It would also help if we honourably kept our ground together to the end, at the same time preventing the overwhelming enemy forces from brutishly ganging up on our modest-sized, though valiant, research team.")
-              , (Conquer, "That's settled: local compactness *is* necessary for relative completeness, given the assumptions.") ]
-  , mrules  = T.intercalate "\n"
-      [ "* One level only"
-      , "* Three heroes vs. Three human enemies"
-      , "* Minimize losses"
-      , "* Incapacitate all enemies ASAP"
-      ]
-  , mdesc   = "Your research team disagrees over a drink with some gentlemen scientists about premises of a relative completeness theorem and there's only one way to settle that."
-      -- Not enough space with square fonts and also this is more of a hint than a flavour: Remember to keep your party together when opponents are spotted, or they might be tempted to silence solitary disputants one by one and so win the altercation.
-  , mreason = "In addition to advancing game plot, this encounter trains melee, squad formation and stealth. The battle is symmetric in goals (incapacitate all enemies) and in squad capabilities (only the pointman moves, others either melee or wait)."
-  , mhint   =  T.intercalate "\n"
-    [ "Run a short distance with Shift or LMB, switch the pointman with Tab, repeat. In open terrain, if you keep distance between teammates, this resembles the leap frog infantry tactics. For best effects, end each sprint behind a cover or concealment."
-    , "Observe and mimic the enemies. If you can't see an enemy that apparently can see you, in reversed circumstances you would have the same advantage. Savour the relative fairness --- you won't find any in the main crawl adventure that follows."
-    , "If you get beaten repeatedly, try using all consumables you find. Ponder the hints from the defeat message, in particular the one about keeping your party together once the opponents are spotted. However, if you want to discover a winning tactics on your own, make sure to ignore any such tips until you succeed."
-    ]
-  }
-
 crawl :: ModeKind
 crawl = ModeKind
   { mname   = "long crawl (main)"
@@ -175,13 +144,6 @@ screensaverRaid = raid
   , mattract = True
   }
 
-screensaverBrawl :: ModeKind
-screensaverBrawl = brawl
-  { mname   = "auto-brawl (2)"
-  , mfreq   = []
-  , mattract = True
-  }
-
 screensaverCrawl :: ModeKind
 screensaverCrawl = crawl
   { mname   = "auto-crawl (long)"
@@ -209,14 +171,6 @@ rosterRaid =
     , [(-2, 1, HERO)] )
   , (HORROR_REPRESENTATIVE, []) ]  -- for summoned monsters
 
-rosterBrawl :: [(GroupName c1, [(Int, Dice, GroupName c2)])]
-rosterBrawl =
-  [ ( EXPLORER_NO_ESCAPE
-    , [(-2, 3, BRAWLER_HERO)] )
-  , ( COMPETITOR_NO_ESCAPE
-    , [(-2, 3, BRAWLER_HERO)] )
-  , (HORROR_REPRESENTATIVE, []) ]
-
 rosterCrawl :: [(GroupName c1, [(Int, Dice, GroupName c2)])]
 rosterCrawl =
   [ ( ANIMAL_REPRESENTATIVE  -- starting over escape
@@ -235,9 +189,6 @@ cavesMini = [([-2], [CAVE_MINI])]
 
 cavesRaid :: [([Int], [GroupName c])]
 cavesRaid = [([-2], [CAVE_RAID])]
-
-cavesBrawl :: [([Int], [GroupName c])]
-cavesBrawl = [([-2], [CAVE_BRAWL])]
 
 listCrawl :: [([Int], [GroupName CaveKind])]
 listCrawl =

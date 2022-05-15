@@ -3,7 +3,6 @@
 module Content.FactionKind
   ( pattern EXPLORER_REPRESENTATIVE
   , pattern EXPLORER_SHORT
-  , pattern EXPLORER_NO_ESCAPE
   , pattern EXPLORER_MEDIUM
   , pattern EXPLORER_TRAPPED
   , pattern EXPLORER_AUTOMATED
@@ -12,7 +11,6 @@ module Content.FactionKind
   , pattern EXPLORER_PACIFIST
   , pattern COMPETITOR_REPRESENTATIVE
   , pattern COMPETITOR_SHORT
-  , pattern COMPETITOR_NO_ESCAPE
   , pattern CIVILIAN_REPRESENTATIVE
   , pattern CONVICT_REPRESENTATIVE
   , pattern MONSTER_REPRESENTATIVE
@@ -58,7 +56,6 @@ groupNamesSingleton :: [GroupName FactionKind]
 groupNamesSingleton =
     [EXPLORER_REPRESENTATIVE
     , EXPLORER_SHORT
-    , EXPLORER_NO_ESCAPE
     , EXPLORER_MEDIUM
     , EXPLORER_TRAPPED
     , EXPLORER_AUTOMATED
@@ -67,7 +64,6 @@ groupNamesSingleton =
     , EXPLORER_PACIFIST
     , COMPETITOR_REPRESENTATIVE
     , COMPETITOR_SHORT
-    , COMPETITOR_NO_ESCAPE
     , CIVILIAN_REPRESENTATIVE
     , CONVICT_REPRESENTATIVE
     , MONSTER_REPRESENTATIVE
@@ -97,8 +93,6 @@ pattern EXPLORER_REPRESENTATIVE :: GroupName c
 pattern EXPLORER_REPRESENTATIVE = GroupName "explorer"
 pattern EXPLORER_SHORT :: GroupName c
 pattern EXPLORER_SHORT = GroupName "explorer short"
-pattern EXPLORER_NO_ESCAPE :: GroupName c
-pattern EXPLORER_NO_ESCAPE = GroupName "explorer no escape"
 pattern EXPLORER_MEDIUM :: GroupName c
 pattern EXPLORER_MEDIUM = GroupName "explorer medium"
 pattern EXPLORER_TRAPPED :: GroupName c
@@ -115,8 +109,6 @@ pattern COMPETITOR_REPRESENTATIVE :: GroupName c
 pattern COMPETITOR_REPRESENTATIVE = GroupName "competitor"
 pattern COMPETITOR_SHORT :: GroupName c
 pattern COMPETITOR_SHORT = GroupName "competitor short"
-pattern COMPETITOR_NO_ESCAPE :: GroupName c
-pattern COMPETITOR_NO_ESCAPE = GroupName "competitor no escape"
 pattern CIVILIAN_REPRESENTATIVE :: GroupName c
 pattern CIVILIAN_REPRESENTATIVE = GroupName "civilian"
 pattern CONVICT_REPRESENTATIVE :: GroupName c
@@ -171,7 +163,6 @@ content :: [FactionKind]
 content =
     [ factExplorer
     , factExplorerShort
-    , factExplorerNoEscape
     , factExplorerMedium
     , factExplorerTrapped
     , factExplorerAutomated
@@ -180,7 +171,6 @@ content =
     , factExplorerPacifist
     , factCompetitor
     , factCompetitorShort
-    , factCompetitorNoEscape
     , factCivilian
     , factConvict
     , factMonster
@@ -229,12 +219,6 @@ factExplorerShort = factExplorer
   { ffreq = [(EXPLORER_SHORT, 1)]
   , fhiCondPoly = hiHeroShort
   , fenemyTeams = [teamMonster, teamAnimal, teamHorror]
-  }
-factExplorerNoEscape :: FactionKind
-factExplorerNoEscape = factExplorer
-  { ffreq = [(EXPLORER_NO_ESCAPE, 1)]
-  , fcanEscape = False
-  , fhiCondPoly = hiHeroMedium
   }
 factExplorerMedium :: FactionKind
 factExplorerMedium = factExplorer
@@ -289,12 +273,6 @@ factCompetitorShort = factCompetitor
   , ffreq = [(COMPETITOR_SHORT, 1)]
   , fhiCondPoly = hiHeroShort
   , fenemyTeams = [teamMonster, teamAnimal, teamHorror]
-  }
-factCompetitorNoEscape :: FactionKind
-factCompetitorNoEscape = factCompetitor
-  { ffreq = [(COMPETITOR_NO_ESCAPE, 1)]
-  , fcanEscape = False
-  , fhiCondPoly = hiHeroMedium
   }
 
 -- ** teamCivilian
