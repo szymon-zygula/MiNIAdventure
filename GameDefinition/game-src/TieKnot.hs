@@ -135,12 +135,6 @@ tieKnotForAsync options@ServerOptions{ sallClear
 -- | Runs tieKnotForAsync in an async and applies the main thread workaround.
 tieKnot :: ServerOptions -> IO ()
 tieKnot serverOptions = do
-#ifdef USE_JSFILE
-  -- Hard to tweak the config file when in the browser, so hardwire.
-  let serverOptionsJS = serverOptions {sdumpInitRngs = True}
-  a <- async $ tieKnotForAsync serverOptionsJS
-  wait a
-#else
   let fillWorkaround =
         -- Set up void workaround if nothing specific required.
         void $ tryPutMVar workaroundOnMainThreadMVar $ return ()
@@ -158,4 +152,3 @@ tieKnot serverOptions = do
   wait a
   -- Consume the void workaround if it was spurious to make @tieKnot@ reentrant.
   void $ tryTakeMVar workaroundOnMainThreadMVar
-#endif
