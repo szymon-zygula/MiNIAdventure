@@ -475,7 +475,7 @@ pattern S_SUSPECT_VERTICAL_WALL_DARK = GroupName "suspect vertical wall Dark"
 
 content :: [TileKind]
 content =
-  [unknown, unknownOuterFence, basicOuterFence, bedrock, wall, wallSuspect, wallObscured, wallH, wallSuspectH, wallObscuredDefacedH, wallObscuredFrescoedH, pillar, pillarCache, lampPost, signboardUnread, signboardRead, tree, treeBurnt, treeBurning, rubble, rubbleSpice, doorTrapped, doorClosed, doorTrappedH, doorClosedH, stairsUp, stairsTrappedUp, stairsOutdoorUp, stairsGatedUp, stairsDown, stairsTrappedDown, stairsDown
+  [floorDirtSpice, stairsOutdoorDown, unknownOuterFence, basicOuterFence, bedrock, wall, wallSuspect, wallObscured, wallH, wallSuspectH, wallObscuredDefacedH, wallObscuredFrescoedH, pillar, pillarCache, lampPost, signboardUnread, signboardRead, tree, treeBurnt, treeBurning, rubble, rubbleSpice, doorTrapped, doorClosed, doorTrappedH, doorClosedH, stairsUp, stairsTrappedUp, stairsOutdoorUp, stairsGatedUp, stairsDown, stairsTrappedDown, stairsDown
   { tname    = "signpost pointing forward"
   , tfreq    = [(STAIRCASE_OUTDOOR_DOWN, 1)]
   }, stairsGatedDown, escapeUp, escapeDown, escapeOutdoorDown, wallGlass, wallGlassSpice, wallGlassH, wallGlassHSpice, pillarIce, pulpit, bush, bushBurnt, bushBurning, fog, fogDark, smoke, smokeDark, doorOpen, doorOpenH, floorCorridor, floorArena, floorDamp, floorDirt, floorDirt
@@ -521,6 +521,7 @@ ldarkColorable = [tree, bush, floorArena, floorDamp, floorDirt, floorDirt
 
 -- *** Not clear
 
+unknown :: TileKind
 unknown = TileKind  -- needs to have index 0 and alter 1; no other with 1
   { tsymbol  = ' '
   , tname    = "unknown space"
@@ -530,6 +531,7 @@ unknown = TileKind  -- needs to have index 0 and alter 1; no other with 1
   , talter   = 1
   , tfeature = [Dark]
   }
+unknownOuterFence :: TileKind
 unknownOuterFence = TileKind
   { tsymbol  = ' '
   , tname    = "unknown space"
@@ -539,6 +541,7 @@ unknownOuterFence = TileKind
   , talter   = maxBound  -- impenetrable
   , tfeature = [Dark]
   }
+basicOuterFence :: TileKind
 basicOuterFence = TileKind
   { tsymbol  = ' '
   , tname    = "impenetrable bedrock"
@@ -548,6 +551,7 @@ basicOuterFence = TileKind
   , talter   = maxBound  -- impenetrable
   , tfeature = [Dark]
   }
+bedrock :: TileKind
 bedrock = TileKind
   { tsymbol  = ' '
   , tname    = "bedrock"
@@ -568,6 +572,7 @@ bedrock = TileKind
       -- unless we turn to subtle shades of black or non-ASCII glyphs,
       -- but that is yet different aesthetics.
   }
+wall :: TileKind
 wall = TileKind
   { tsymbol  = '|'
   , tname    = "granite wall"
@@ -578,6 +583,7 @@ wall = TileKind
   , talter   = 100
   , tfeature = [BuildAs S_SUSPECT_VERTICAL_WALL_LIT]
   }
+wallSuspect :: TileKind
 wallSuspect = TileKind  -- only on client
   { tsymbol  = '|'
   , tname    = "suspect uneven wall"
@@ -589,6 +595,7 @@ wallSuspect = TileKind  -- only on client
                , ObscureAs OBSCURED_VERTICAL_WALL_LIT
                ]
   }
+wallObscured :: TileKind
 wallObscured = TileKind
   { tsymbol  = '|'
   , tname    = "scratched wall"
@@ -600,6 +607,7 @@ wallObscured = TileKind
                , HideAs S_SUSPECT_VERTICAL_WALL_LIT
                ]
   }
+wallH :: TileKind
 wallH = TileKind
   { tsymbol  = '-'
   , tname    = "sandstone wall"
@@ -610,6 +618,7 @@ wallH = TileKind
   , talter   = 100
   , tfeature = [BuildAs S_SUSPECT_HORIZONTAL_WALL_LIT]
   }
+wallSuspectH :: TileKind
 wallSuspectH = TileKind  -- only on client
   { tsymbol  = '-'
   , tname    = "suspect painted wall"
@@ -621,6 +630,7 @@ wallSuspectH = TileKind  -- only on client
                , ObscureAs OBSCURED_HORIZONTAL_WALL_LIT
                ]
   }
+wallObscuredDefacedH :: TileKind
 wallObscuredDefacedH = TileKind
   { tsymbol  = '-'
   , tname    = "defaced wall"
@@ -632,6 +642,7 @@ wallObscuredDefacedH = TileKind
                , HideAs S_SUSPECT_HORIZONTAL_WALL_LIT
                ]
   }
+wallObscuredFrescoedH :: TileKind
 wallObscuredFrescoedH = TileKind
   { tsymbol  = '-'
   , tname    = "frescoed wall"
@@ -644,6 +655,7 @@ wallObscuredFrescoedH = TileKind
                ]  -- a bit beneficial, but AI would loop if allowed to trigger
                   -- so no @ConsideredByAI@
   }
+pillar :: TileKind
 pillar = TileKind
   { tsymbol  = '0'
   , tname    = "rock outcrop"
@@ -658,6 +670,7 @@ pillar = TileKind
   , talter   = 100
   , tfeature = []
   }
+pillarCache :: TileKind
 pillarCache = TileKind
   { tsymbol  = '0'
   , tname    = "smoothed outcrop"
@@ -671,6 +684,7 @@ pillarCache = TileKind
       -- Not explorable, but prominently placed, so hard to miss.
       -- Very beneficial, so AI eager to trigger, unless wary of traps.
   }
+lampPost :: TileKind
 lampPost = TileKind
   { tsymbol  = '0'
   , tname    = "lamp post"
@@ -680,6 +694,7 @@ lampPost = TileKind
   , talter   = 100
   , tfeature = []
   }
+signboardUnread :: TileKind
 signboardUnread = TileKind  -- client only, indicates never used by this faction
   { tsymbol  = '0'
   , tname    = "signboard"
@@ -691,6 +706,7 @@ signboardUnread = TileKind  -- client only, indicates never used by this faction
                , RevealAs SIGNBOARD  -- to display as hidden
                ]
   }
+signboardRead :: TileKind
 signboardRead = TileKind
   { tsymbol  = '0'
   , tname    = "signboard"
@@ -749,10 +765,12 @@ rubble = TileKind
       -- Getting the item is risky and, e.g., AI doesn't attempt it.
       -- Also, AI doesn't go out of its way to clear the way for heroes.
   }
+rubbleSpice :: TileKind
 rubbleSpice = rubble
   { tfreq    = [(SMOKE_CLUMP_LIT, 1), (SMOKE_CLUMP_DARK, 1)]
   , tfeature = Spice : tfeature rubble
   }
+doorTrapped :: TileKind
 doorTrapped = TileKind
   { tsymbol  = '+'
   , tname    = "trapped door"
@@ -765,6 +783,7 @@ doorTrapped = TileKind
                , HideAs S_SUSPECT_VERTICAL_WALL_LIT
                ]
   }
+doorClosed :: TileKind
 doorClosed = TileKind
   { tsymbol  = '+'
   , tname    = "closed door"
@@ -774,6 +793,7 @@ doorClosed = TileKind
   , talter   = 2
   , tfeature = [OpenTo S_OPEN_VERTICAL_DOOR_LIT]  -- never hidden
   }
+doorTrappedH :: TileKind
 doorTrappedH = TileKind
   { tsymbol  = '+'
   , tname    = "trapped door"
@@ -786,6 +806,7 @@ doorTrappedH = TileKind
                , HideAs S_SUSPECT_HORIZONTAL_WALL_LIT
                ]
   }
+doorClosedH :: TileKind
 doorClosedH = TileKind
   { tsymbol  = '+'
   , tname    = "closed door"
@@ -795,6 +816,7 @@ doorClosedH = TileKind
   , talter   = 2
   , tfeature = [OpenTo S_OPEN_HORIZONTAL_DOOR_LIT]  -- never hidden
   }
+stairsUp :: TileKind
 stairsUp = TileKind
   { tsymbol  = '<'
   , tname    = "staircase up"
@@ -804,6 +826,7 @@ stairsUp = TileKind
   , talter   = talterForStairs
   , tfeature = [Embed STAIRS_UP, ConsideredByAI]
   }
+stairsTrappedUp :: TileKind
 stairsTrappedUp = TileKind
   { tsymbol  = '<'
   , tname    = "windy staircase up"

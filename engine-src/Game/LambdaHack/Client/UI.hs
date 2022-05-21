@@ -44,7 +44,7 @@ module Game.LambdaHack.Client.UI
     MsgClassShow (..),
 #ifdef EXPOSE_INTERNAL
     -- * Internal operations
-  , stepQueryUIwithLeader, stepQueryUI
+  stepQueryUIwithLeader, stepQueryUI
 #endif
   )
 where

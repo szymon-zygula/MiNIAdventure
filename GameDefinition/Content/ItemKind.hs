@@ -517,7 +517,7 @@ fragmentationBomb = ItemKind
   , iaspects = [ ELabel "of black powder"
                , SetFlag Lobable, SetFlag Fragile ]
   , ieffects = [ Explode S_FOCUSED_FRAGMENTATION
-               , OnSmash (Explode S_VIOLENT_FRAGMENTATION) ]
+               , OnSmash $ Explode S_VIOLENT_FRAGMENTATION ]
   , idesc    = "The practical application of science."
   , ikit     = []
   }

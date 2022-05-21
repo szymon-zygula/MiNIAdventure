@@ -44,6 +44,7 @@ import Game.LambdaHack.Definition.DefsInternal
 import Game.LambdaHack.Definition.Flavour
 
 import Content.ItemKindOrgan
+import Content.ItemKindBlast
 
 -- * Group name patterns
 
@@ -468,9 +469,8 @@ torsor = ItemKind
                , (GEM, CStash), (GEM, CStash)
                , (GEM, CStash), (GEM, CStash) ]
   }
--- "ground x" --- for immovable monster that can only tele or prob travel
--- pullback
--- skeletal
+
+-- * Cars
 
 toyota :: ItemKind
 toyota = ItemKind
@@ -488,14 +488,12 @@ toyota = ItemKind
                , AddSkill SkAggression 2
                , AddSkill SkAlter (-2)
                , SetFlag Durable ]
-  , ieffects = []
+  , ieffects = [ OnSmash $ Explode S_VIOLENT_FRAGMENTATION ]
   , idesc    = "A classic vehicle of Japanese quality"
   , ikit     = [ (S_TIRE, COrgan)
                , (S_CAMERA, COrgan)
                , (S_CAR_COMPUTER, COrgan) ]
   }
-
--- * Cars
 
 tesla :: ItemKind
 tesla = ItemKind
@@ -513,8 +511,8 @@ tesla = ItemKind
                , AddSkill SkAggression 2
                , AddSkill SkAlter (-2)
                , SetFlag Durable ]
-  , ieffects = []
-  , idesc    = "A new generation elector vehicle of questionable reputation"
+  , ieffects = [ OnSmash $ Explode S_VIOLENT_FRAGMENTATION ]
+  , idesc    = "A new generation electric vehicle of questionable reputation"
   , ikit     = [ (S_TIRE, COrgan)
                , (S_CAMERA, COrgan)
                , (S_CAR_COMPUTER, COrgan) ]
@@ -535,7 +533,7 @@ blackVolga = ItemKind
                , AddSkill SkAggression 2
                , AddSkill SkAlter (-2)
                , SetFlag Durable ]
-  , ieffects = []
+  , ieffects = [ OnSmash $ Explode S_VIOLENT_FRAGMENTATION ]
   , idesc    = "A mysterious and legendary vehicle, who knows what it itentions are?"
   , ikit     = [ (S_TIRE, COrgan)
                , (S_CAMERA, COrgan)

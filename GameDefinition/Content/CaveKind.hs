@@ -365,8 +365,7 @@ mini = rogue
   , cactorCoeff   = 300  -- deep level with no kit, so slow spawning
   , cactorFreq    = [(CAR, 100)]
   , citemNum      = 30 -- 18 -- first tutorial mode, so make it consistent
-  , citemFreq     = [ (IK.COMMON_ITEM, 100), (IK.S_CURRENCY, 1000)
-                    , (STARTING_WEAPON, 100) ]
+  , citemFreq     = [ (IK.EXPLOSIVE, 80) ]
   , cmaxStairsNum = 0
   , cescapeFreq   = [(INDOOR_ESCAPE_UP, 1)]
   , cstairFreq    = []
