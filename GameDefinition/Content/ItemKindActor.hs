@@ -13,12 +13,7 @@ module Content.ItemKindActor
   , pattern MONSTER
   , pattern MOBILE_MONSTER
   , pattern SCOUT_MONSTER
-  , pattern ANIMAL
   , pattern CAR
-  , pattern MOBILE_ANIMAL
-  , pattern IMMOBILE_ANIMAL
-  , pattern INSECT
-  , pattern GEOPHENOMENON
   , pattern ADD_SIGHT, pattern ARMOR_RANGED, pattern ADD_NOCTO_1
   , pattern WEAK_ARROW
   , pattern LIGHT_ATTENUATOR
@@ -27,7 +22,6 @@ module Content.ItemKindActor
   , pattern ANY_ARROW
   , pattern STARTING_ARMOR
   , pattern STARTING_WEAPON
-  , pattern GEM
   , actorsGN
   , actorsGNSingleton
   , actors) where
@@ -67,11 +61,6 @@ actorsGN =
     , SCOUT_MONSTER
     , CAR
     , MOBILE_CAR
-    , ANIMAL
-    , MOBILE_ANIMAL
-    , IMMOBILE_ANIMAL
-    , INSECT
-    , GEOPHENOMENON
     , ADD_SIGHT
     , ARMOR_RANGED
     , ADD_NOCTO_1
@@ -81,8 +70,7 @@ actorsGN =
     , RING_OF_OPPORTUNITY_SNIPER
     , ANY_ARROW
     , STARTING_ARMOR
-    , STARTING_WEAPON
-    , GEM ]
+    , STARTING_WEAPON ]
 
 pattern HERO :: GroupName c
 pattern HERO = GroupName "adventurer"
@@ -106,20 +94,10 @@ pattern MOBILE_MONSTER :: GroupName c
 pattern MOBILE_MONSTER = GroupName "mobile monstrosity"
 pattern SCOUT_MONSTER :: GroupName c
 pattern SCOUT_MONSTER = GroupName "scout monstrosity"
-pattern ANIMAL :: GroupName c
-pattern ANIMAL = GroupName "animal"
 pattern CAR :: GroupName c
 pattern CAR = GroupName "car"
 pattern MOBILE_CAR :: GroupName c
 pattern MOBILE_CAR = GroupName "mobile car"
-pattern MOBILE_ANIMAL :: GroupName c
-pattern MOBILE_ANIMAL = GroupName "mobile animal"
-pattern IMMOBILE_ANIMAL :: GroupName c
-pattern IMMOBILE_ANIMAL = GroupName "immobile animal"
-pattern INSECT :: GroupName c
-pattern INSECT = GroupName "insect"
-pattern GEOPHENOMENON :: GroupName c
-pattern GEOPHENOMENON = GroupName "geological phenomenon"
 
 pattern S_WOODEN_TORCH :: GroupName c
 pattern S_WOODEN_TORCH = GroupName "wooden torch"
@@ -146,8 +124,6 @@ pattern STARTING_ARMOR :: GroupName c
 pattern STARTING_ARMOR = GroupName "starting armor"
 pattern STARTING_WEAPON :: GroupName c
 pattern STARTING_WEAPON = GroupName "starting weapon"
-pattern GEM :: GroupName c
-pattern GEM = GroupName "gem"
 
 -- * Content
 
@@ -174,25 +150,10 @@ actors =
   , nose
   , elbow
   , torsor
-  , goldenJackal
   , toyota
+  , skoda
   , tesla
-  , blackVolga
-  , griffonVulture
-  , skunk
-  , armadillo
-  , gilaMonster
-  , rattlesnake
-  , hyena
-  , komodoDragon
-  , alligator
-  , rhinoceros
-  , beeSwarm
-  , hornetSwarm
-  , thornbush
-  , geyserBoiling
-  , geyserArsenic
-  , geyserSulfur]
+  , blackVolga ]
 
 -- Note that the actors that appear in the crawl scenario should
 -- be generated with at most ordinary ammo. Otherwise, farming them
@@ -466,450 +427,87 @@ torsor = ItemKind
                , (S_TENTACLE, COrgan)  -- low timeout, so rarely a stall
                , (S_EAR_8, COrgan)
                , (S_SAPIENT_BRAIN, COrgan)
-               , (GEM, CStash), (GEM, CStash)
-               , (GEM, CStash), (GEM, CStash) ]
+               ]
   }
 
 -- * Cars
 
-toyota :: ItemKind
-toyota = ItemKind
+car :: ItemKind
+car = ItemKind
   { isymbol  = toContentSymbol 't'
-  , iname    = "Toyota"
+  , iname    = "car"
   , ifreq    = [(CAR, 100), (MOBILE, 1), (MOBILE_CAR, 100)]
   , iflavour = zipPlain [Blue]
-  , icount   = 1
-  , irarity  = [(1, 4), (10, 2)]
-  , iverbHit = "brum brum"
-  , iweight  = 8000000
-  , idamage  = 0
-  , iaspects = [ AddSkill SkMaxHP 28, AddSkill SkMaxCalm 60
-               , AddSkill SkSpeed 16, AddSkill SkNocto 2
-               , AddSkill SkAggression 2
-               , AddSkill SkAlter (-2)
-               , SetFlag Durable ]
-  , ieffects = [ OnSmash $ Explode S_VIOLENT_FRAGMENTATION ]
-  , idesc    = "A classic vehicle of Japanese quality"
-  , ikit     = [ (S_TIRE, COrgan)
-               , (S_CAMERA, COrgan)
-               , (S_CAR_COMPUTER, COrgan) ]
-  }
-
-tesla :: ItemKind
-tesla = ItemKind
-  { isymbol  = toContentSymbol 'T'
-  , iname    = "Tesla"
-  , ifreq    = [(CAR, 100), (MOBILE, 1), (MOBILE_CAR, 100)]
-  , iflavour = zipPlain [Red]
   , icount   = 1
   , irarity  = [(1, 4), (10, 2)]
   , iverbHit = "brum brum"
   , iweight  = 6000000
   , idamage  = 0
-  , iaspects = [ AddSkill SkMaxHP 50, AddSkill SkMaxCalm 60
-               , AddSkill SkSpeed 30, AddSkill SkNocto 2
-               , AddSkill SkAggression 2
-               , AddSkill SkAlter (-2)
-               , SetFlag Durable ]
-  , ieffects = [ OnSmash $ Explode S_VIOLENT_FRAGMENTATION ]
-  , idesc    = "A new generation electric vehicle of questionable reputation"
-  , ikit     = [ (S_TIRE, COrgan)
-               , (S_CAMERA, COrgan)
-               , (S_CAR_COMPUTER, COrgan) ]
-  }
-blackVolga :: ItemKind
-blackVolga = ItemKind
-  { isymbol  = toContentSymbol 'V'
-  , iname    = "black Volga"
-  , ifreq    = [(CAR, 100), (MOBILE, 1), (MOBILE_CAR, 100)]
-  , iflavour = zipPlain [BrBlack]
-  , icount   = 1
-  , irarity  = [(1, 4), (10, 2)]
-  , iverbHit = "brum brum"
-  , iweight  = 9000000
-  , idamage  = 0
-  , iaspects = [ AddSkill SkMaxHP 70, AddSkill SkMaxCalm 60
-               , AddSkill SkSpeed 20, AddSkill SkNocto 2
-               , AddSkill SkAggression 2
-               , AddSkill SkAlter (-2)
-               , SetFlag Durable ]
-  , ieffects = [ OnSmash $ Explode S_VIOLENT_FRAGMENTATION ]
-  , idesc    = "A mysterious and legendary vehicle, who knows what it itentions are?"
-  , ikit     = [ (S_TIRE, COrgan)
-               , (S_CAMERA, COrgan)
-               , (S_CAR_COMPUTER, COrgan) ]
-  }
-
--- * Animals
-
--- They need rather strong melee, because they don't use items.
--- They have dull colors, except for yellow, because there is no dull variant.
---
-goldenJackal :: ItemKind
-goldenJackal = ItemKind  -- basically a much smaller, slower and nosy hyena
-  { isymbol  = toContentSymbol 'j'
-  , iname    = "golden jackal"
-  , ifreq    = [ (ANIMAL, 100), (MOBILE, 1), (MOBILE_ANIMAL, 100)
-               , (SCAVENGER, 50) ]
-  , iflavour = zipPlain [BrYellow]
-  , icount   = 1
-  , irarity  = [(1, 4), (10, 2)]
-  , iverbHit = "thud"
-  , iweight  = 13000
-  , idamage  = 0
-  , iaspects = [ AddSkill SkMaxHP 15, AddSkill SkMaxCalm 70
-               , AddSkill SkSpeed 24, AddSkill SkNocto 2
-               , AddSkill SkAggression 2  -- scout
-               , AddSkill SkDisplace 1  -- scout
-               , SetFlag Durable ]
-  , ieffects = []
-  , idesc    = "An opportunistic predator, feeding on carrion and the weak."
-  , ikit     = [ (S_SMALL_JAW, COrgan)
-               , (S_EYE_6, COrgan), (S_NOSTRIL, COrgan), (S_EAR_8, COrgan)
-               , (S_ANIMAL_BRAIN, COrgan) ]
-  }
-griffonVulture :: ItemKind
-griffonVulture = ItemKind  -- keep it boring and weak, because it summons
-  { isymbol  = toContentSymbol 'v'
-  , iname    = "griffon vulture"
-  , ifreq    = [ (ANIMAL, 100), (MOBILE, 1), (MOBILE_ANIMAL, 100)
-               , (SCAVENGER, 30) ]
-  , iflavour = zipPlain [BrYellow]
-  , icount   = 1
-  , irarity  = [(1, 3), (10, 3)]
-  , iverbHit = "thud"
-  , iweight  = 13000
-  , idamage  = 0
-  , iaspects = [ AddSkill SkMaxHP 15, AddSkill SkMaxCalm 80
-                   -- enough Calm to summon twice only if not attacked at all;
-                   -- loses a lot of sight after summoning
-               , AddSkill SkSpeed 22, AddSkill SkNocto 2
-               , AddSkill SkAlter (-2)  -- can't use hard stairs nor doors
-               , AddSkill SkFlying 10  -- flies slowly, but far
-               , SetFlag Durable ]
-      -- Animals don't have leader, usually, so even if only one on level,
-      -- it pays the communication overhead, so the speed is higher to get
-      -- them on par with human leaders moving solo.
-  , ieffects = []
-  , idesc    = "It soars high above, searching for vulnerable prey."
-  , ikit     = [ (S_SCREECHING_BEAK, COrgan)  -- in reality it grunts and hisses
-               , (S_SMALL_CLAW, COrgan)
-               , (S_EYE_8, COrgan), (S_EAR_8, COrgan)
-                   -- can't shoot, so strong sight is OK
-               , (S_ANIMAL_BRAIN, COrgan) ]
-  }
-skunk :: ItemKind
-skunk = ItemKind
-  { isymbol  = toContentSymbol 's'
-  , iname    = "hog-nosed skunk"
-  , ifreq    = [(ANIMAL, 100), (MOBILE, 1), (MOBILE_ANIMAL, 100)]
-  , iflavour = zipPlain [White]
-  , icount   = 1
-  , irarity  = [(1, 8), (5, 1)]
-  , iverbHit = "thud"
-  , iweight  = 4000
-  , idamage  = 0
-  , iaspects = [ AddSkill SkMaxHP 13, AddSkill SkMaxCalm 30
-               , AddSkill SkSpeed 22, AddSkill SkNocto 2
-               , AddSkill SkAlter (-2)  -- can't use hard stairs nor doors
-               , AddSkill SkOdor 5  -- and no smell skill, to let it leave smell
-               , SetFlag Durable ]
-  , ieffects = []
-  , idesc    = "Its only defence is the terrible stench."
-  , ikit     = [ (S_SCENT_GLAND, COrgan)
-               , (S_SMALL_CLAW, COrgan), (S_SNOUT, COrgan)
-               , (S_EYE_3, COrgan), (S_EAR_6, COrgan)
-               , (S_ANIMAL_BRAIN, COrgan) ]
-  }
-armadillo :: ItemKind
-armadillo = ItemKind
-  { isymbol  = toContentSymbol 'a'
-  , iname    = "giant armadillo"
-  , ifreq    = [(ANIMAL, 100), (MOBILE, 1), (MOBILE_ANIMAL, 100)]
-  , iflavour = zipPlain [Brown]
-  , icount   = 1
-  , irarity  = [(1, 7)]
-  , iverbHit = "thud"
-  , iweight  = 54000
-  , idamage  = 0
-  , iaspects = [ AddSkill SkMaxHP 25, AddSkill SkMaxCalm 30
-               , AddSkill SkSpeed 20, AddSkill SkNocto 2
-               , AddSkill SkHurtMelee (-70)  -- quite harmless rolled in a ball
-               , AddSkill SkAlter (-2)  -- can't use hard stairs nor doors
-               , SetFlag Durable ]
-  , ieffects = []
-  , idesc    = "When threatened, it rolls into a ball."
-  , ikit     = [ (S_HOOKED_CLAW, COrgan), (S_SNOUT, COrgan)
-               , (S_ARMORED_SKIN, COrgan), (S_ARMORED_SKIN, COrgan)
-               , (S_EYE_3, COrgan), (S_NOSTRIL, COrgan), (S_EAR_6, COrgan)
-               , (S_ANIMAL_BRAIN, COrgan) ]
-  }
-gilaMonster :: ItemKind
-gilaMonster = ItemKind
-  { isymbol  = toContentSymbol 'g'
-  , iname    = "Gila monster"
-  , ifreq    = [(ANIMAL, 100), (MOBILE, 1), (MOBILE_ANIMAL, 100)]
-  , iflavour = zipPlain [Magenta]
-  , icount   = 1
-  , irarity  = [(2, 5), (10, 2)]
-  , iverbHit = "thud"
-  , iweight  = 80000
-  , idamage  = 0
-  , iaspects = [ AddSkill SkMaxHP 15, AddSkill SkMaxCalm 50
-               , AddSkill SkSpeed 18, AddSkill SkNocto 2
-               , AddSkill SkAlter (-2)  -- can't use hard stairs nor doors
-               , SetFlag Durable ]
-  , ieffects = []
-  , idesc    = "Numbing venom ensures that even the fastest prey has no escape."
-  , ikit     = [ (S_VENOM_TOOTH, COrgan), (S_SMALL_CLAW, COrgan)
-               , (S_EYE_3, COrgan), (S_NOSTRIL, COrgan), (S_EAR_6, COrgan)
-               , (S_ANIMAL_BRAIN, COrgan) ]
-  }
-rattlesnake :: ItemKind
-rattlesnake = ItemKind
-  { isymbol  = toContentSymbol 's'
-  , iname    = "rattlesnake"
-  , ifreq    = [(ANIMAL, 100), (MOBILE, 1), (MOBILE_ANIMAL, 100)]
-  , iflavour = zipPlain [Brown]
-  , icount   = 1
-  , irarity  = [(5, 1), (10, 7), (20, 10)]  -- common among late spawns
-  , iverbHit = "thud"
-  , iweight  = 80000
-  , idamage  = 0
   , iaspects = [ AddSkill SkMaxHP 28, AddSkill SkMaxCalm 60
                , AddSkill SkSpeed 16, AddSkill SkNocto 2
-               , AddSkill SkAggression 2  -- often discharged. so flees anyway
-               , AddSkill SkAlter (-2)  -- can't use hard stairs nor doors
-               , SetFlag Durable ]
-  , ieffects = []
-  , idesc    = "Beware its rattle - it serves as a warning of an agonising death."
-  , ikit     = [ (S_VENOM_FANG, COrgan)  -- when discharged, it's weaponless
-               , (S_RATLLE, COrgan)
-               , (S_EYE_3, COrgan), (S_NOSTRIL, COrgan), (S_EAR_6, COrgan)
-               , (S_ANIMAL_BRAIN, COrgan) ]
-  }
-hyena :: ItemKind
-hyena = ItemKind
-  { isymbol  = toContentSymbol 'h'
-  , iname    = "spotted hyena"
-  , ifreq    = [ (ANIMAL, 100), (MOBILE, 1), (MOBILE_ANIMAL, 100)
-               , (SCAVENGER, 20) ]
-  , iflavour = zipPlain [BrYellow]
-  , icount   = 1
-  , irarity  = [(4, 1), (10, 5), (20, 10)]
-      -- gets summoned often, so low base rarity, except among late spawns
-  , iverbHit = "thud"
-  , iweight  = 60000
-  , idamage  = 0
-  , iaspects = [ AddSkill SkMaxHP 23, AddSkill SkMaxCalm 70
-               , AddSkill SkSpeed 32, AddSkill SkNocto 2
-               , SetFlag Durable ]
-  , ieffects = []
-  , idesc    = "Skulking in the shadows, waiting for easy prey."
-  , ikit     = [ (S_JAW, COrgan), (S_SMALL_CLAW, COrgan)
-               , (S_EYE_6, COrgan), (S_NOSTRIL, COrgan), (S_EAR_8, COrgan)
-               , (S_ANIMAL_BRAIN, COrgan) ]
-  }
-komodoDragon :: ItemKind
-komodoDragon = ItemKind
-  { isymbol  = toContentSymbol 'k'
-  , iname    = "Komodo dragon"
-  , ifreq    = [(ANIMAL, 100), (MOBILE, 1), (MOBILE_ANIMAL, 100)]
-  , iflavour = zipPlain [BrRed]  -- speedy, so bright red
-  , icount   = 1
-  , irarity  = [(9, 0), (10, 11), (20, 20)]
-  , iverbHit = "thud"
-  , iweight  = 80000
-  , idamage  = 0
-  , iaspects = [ AddSkill SkMaxHP 40, AddSkill SkMaxCalm 60  -- regens
-               , AddSkill SkSpeed 17, AddSkill SkNocto 2
-               , AddSkill SkHurtMelee 60  -- great fighter with low cooldowns
-               , AddSkill SkAggression 1  -- match the description
-               , SetFlag Durable ]
-  , ieffects = []
-  , idesc    = "Larger and more aggressive than any other lizard, but as easily recovering from wounds as its lesser cousins."
-  , ikit     = [ (S_LARGE_TAIL, COrgan), (S_JAW, COrgan)
-               , (S_LIP, COrgan), (S_FOOT, COrgan)
-               , (S_SPEED_GLAND_5, COrgan), (S_ARMORED_SKIN, COrgan)
-               , (S_EYE_3, COrgan), (S_NOSTRIL, COrgan), (S_EAR_3, COrgan)
-               , (S_ANIMAL_BRAIN, COrgan) ]
-  }
-alligator :: ItemKind
-alligator = ItemKind  -- late, slow, deadly semi-tank with some armor;
-                      -- too deadly to get more HP; bombs the only recourse
-  { isymbol  = toContentSymbol 'a'
-  , iname    = "alligator"
-  , ifreq    = [(ANIMAL, 100), (MOBILE, 1), (MOBILE_ANIMAL, 100)]
-  , iflavour = zipPlain [Blue]
-  , icount   = 1
-  , irarity  = [(9, 0), (10, 12), (20, 10), (40, 40)]
-  , iverbHit = "thud"
-  , iweight  = 80000
-  , idamage  = 0
-  , iaspects = [ AddSkill SkMaxHP 55, AddSkill SkMaxCalm 70
-               , AddSkill SkSpeed 18, AddSkill SkNocto 2
-               , AddSkill SkSwimming 100  -- swims better than walks
-               , SetFlag Durable ]
-  , ieffects = []
-  , idesc    = "An armored predator from the dawn of time. You better not get within its reach."
-  , ikit     = [ (S_HUGE_TAIL, COrgan)  -- the special trick, breaking frontline
-               , (S_LARGE_JAW, COrgan)
-               , (S_SMALL_CLAW, COrgan)
-               , (S_ARMORED_SKIN, COrgan)
-               , (S_EYE_6, COrgan), (S_EAR_8, COrgan)
-               , (S_ANIMAL_BRAIN, COrgan) ]
-  }
-rhinoceros :: ItemKind
-rhinoceros = ItemKind
-  { isymbol  = toContentSymbol 'R'
-  , iname    = "The Maddened Rhinoceros"
-  , ifreq    = [(ANIMAL, 100), (MOBILE, 1)]
-  , iflavour = zipPlain [Brown]
-  , icount   = 1
-  , irarity  = [(2, 0), (3, 1000), (4, 0)]  -- an early unique
-  , iverbHit = "thud"
-  , iweight  = 80000
-  , idamage  = 0
-  , iaspects = [ SetFlag Unique
-               , AddSkill SkMaxHP 90, AddSkill SkMaxCalm 60
-               , AddSkill SkSpeed 27, AddSkill SkNocto 2
                , AddSkill SkAggression 2
-               , AddSkill SkAlter (-1)  -- can't use hard stairs nor dig;
-                                        -- a weak miniboss
+               , AddSkill SkAlter (-2)
                , SetFlag Durable ]
-  , ieffects = []
-  , idesc    = "The last of its kind. Blind with rage. Charges at deadly speed."
-  , ikit     = [ (S_RHINO_HORN, COrgan), (S_SNOUT, COrgan)
-               , (S_ARMORED_SKIN, COrgan)
-               , (S_EYE_3, COrgan), (S_EAR_8, COrgan)
-               , (S_ANIMAL_BRAIN, COrgan) ]
+  , ieffects = [ OnSmash $ Explode S_VIOLENT_FRAGMENTATION ]
+  , idesc    = "car description"
+  , ikit     = [ (S_TIRE, COrgan)
+               , (S_CAMERA, COrgan)
+               , (S_CAR_COMPUTER, COrgan) ]
   }
 
--- * Non-animal animals
+skoda :: ItemKind
+skoda = car
+  { isymbol  = toContentSymbol 's'
+  , iname    = "Skoda"
+  , iweight  = 7000000
+  , iflavour = zipPlain [Green]
+  , iaspects = [ AddSkill SkMaxHP 20, AddSkill SkMaxCalm 60
+               , AddSkill SkSpeed 12, AddSkill SkNocto 2
+               , AddSkill SkAggression 2
+               , AddSkill SkAlter (-2)
+               , SetFlag Durable ]
+  , idesc    = "Czech vehicle of the neighbours"
+  }
 
-beeSwarm :: ItemKind
-beeSwarm = ItemKind
-  { isymbol  = toContentSymbol 'b'
-  , iname    = "bee swarm"
-  , ifreq    = [(ANIMAL, 100), (INSECT, 50), (MOBILE, 1)]
-  , iflavour = zipPlain [Brown]
-  , icount   = 1
-  , irarity  = [(1, 3), (10, 4)]
-  , iverbHit = "buzz"
-  , iweight  = 1000
-  , idamage  = 0
-  , iaspects = [ AddSkill SkMaxHP 10, AddSkill SkMaxCalm 60
-               , AddSkill SkSpeed 30, AddSkill SkNocto 2  -- armor in sting
-               , AddSkill SkAlter (-2)  -- can't use hard stairs nor doors
-               , AddSkill SkWait (-2)  -- can't brace, sleep and lurk
-               , AddSkill SkFlying 10  -- flies slowly, but far
-               , SetFlag Durable ]
-  , ieffects = []
-  , idesc    = "Every bee would die for the queen."
-  , ikit     = [ (S_BEE_STING, COrgan)  -- weaponless when it's used up
-               , (S_VISION_6, COrgan), (S_EAR_6, COrgan)
-               , (S_INSECT_MORTALITY, COrgan), (S_ANIMAL_BRAIN, COrgan) ]
-  }
-hornetSwarm :: ItemKind
-hornetSwarm = ItemKind  -- kind of tank with armor, but short-lived
-  { isymbol  = toContentSymbol 'h'
-  , iname    = "hornet swarm"
-  , ifreq    = [(ANIMAL, 100), (INSECT, 100), (MOBILE, 1), (MOBILE_ANIMAL, 100)]
-  , iflavour = zipPlain [Magenta]
-  , icount   = 1
-  , irarity  = [(5, 1), (10, 4), (20, 10)]
-      -- should be many, because die after a time
-  , iverbHit = "buzz"
-  , iweight  = 1000
-  , idamage  = 0
-  , iaspects = [ AddSkill SkArmorMelee 80, AddSkill SkArmorRanged 40
-               , AddSkill SkHurtMelee 50
-               , AddSkill SkMaxHP 10, AddSkill SkMaxCalm 70
-               , AddSkill SkSpeed 30, AddSkill SkNocto 2
-               , AddSkill SkAlter (-2)  -- can't use hard stairs nor doors
-               , AddSkill SkWait (-2)  -- can't brace, sleep and lurk
-               , AddSkill SkFlying 10  -- flies slowly, but far
-               , SetFlag Durable ]
-  , ieffects = []
-  , idesc    = "A vicious cloud of stings and hate."
-  , ikit     = [ (S_STING, COrgan)  -- when on cooldown, it's weaponless
-               , (S_VISION_6, COrgan), (S_EAR_6, COrgan)
-               , (S_INSECT_MORTALITY, COrgan), (S_ANIMAL_BRAIN, COrgan) ]
-  }
-thornbush :: ItemKind
-thornbush = ItemKind  -- the wimpiest kind of early tank
+toyota :: ItemKind
+toyota = car
   { isymbol  = toContentSymbol 't'
-  , iname    = "thornbush"
-  , ifreq    = [(ANIMAL, 20), (IMMOBILE_ANIMAL, 20)]
-  , iflavour = zipPlain [Brown]
-  , icount   = 1
-  , irarity  = [(1, 13)]
-  , iverbHit = "scrape"
-  , iweight  = 80000
-  , idamage  = 0
-  , iaspects = [ AddSkill SkMaxHP 30, AddSkill SkMaxCalm 999
-               , AddSkill SkSpeed 22, AddSkill SkNocto 2
-               , AddSkill SkWait 1, AddSkill SkMelee 1  -- no brain
-               , SetFlag Durable ]
-  , ieffects = []
-  , idesc    = "Each branch bears long, curved thorns."
-  , ikit     = [ (S_THORN, COrgan)  -- after all run out, it's weaponless
-               , (S_BARK, COrgan) ]
-  }
-geyserBoiling :: ItemKind
-geyserBoiling = ItemKind
-  { isymbol  = toContentSymbol 'g'
-  , iname    = "geyser"
-  , ifreq    = [(ANIMAL, 8), (IMMOBILE_ANIMAL, 30), (GEOPHENOMENON, 1)]
+  , iname    = "Toyota"
+  , iweight  = 8000000
   , iflavour = zipPlain [Blue]
-  , icount   = 1
-  , irarity  = [(1, 10), (10, 6)]
-  , iverbHit = "thud"
-  , iweight  = 80000
-  , idamage  = 0
-  , iaspects = [ AddSkill SkMaxHP 10, AddSkill SkMaxCalm 999
-               , AddSkill SkSpeed 11, AddSkill SkNocto 2
-               , AddSkill SkWait 1, AddSkill SkMelee 1  -- no brain
+  , iaspects = [ AddSkill SkMaxHP 30, AddSkill SkMaxCalm 60
+               , AddSkill SkSpeed 16, AddSkill SkNocto 2
+               , AddSkill SkAggression 2
+               , AddSkill SkAlter (-2)
                , SetFlag Durable ]
-  , ieffects = []
-  , idesc    = "A jet of acidic water, hot enough to melt flesh."
-  , ikit     = [(S_BOILING_VENT, COrgan), (S_BOILING_FISSURE, COrgan)]
+  , idesc    = "Classic vehicle of Japanese quality"
   }
-geyserArsenic :: ItemKind
-geyserArsenic = ItemKind
-  { isymbol  = toContentSymbol 'g'
-  , iname    = "arsenic geyser"
-  , ifreq    = [(ANIMAL, 8), (IMMOBILE_ANIMAL, 40), (GEOPHENOMENON, 1)]
-  , iflavour = zipPlain [Cyan]
-  , icount   = 1
-  , irarity  = [(1, 10), (10, 6)]
-  , iverbHit = "thud"
-  , iweight  = 80000
-  , idamage  = 0
-  , iaspects = [ AddSkill SkMaxHP 20, AddSkill SkMaxCalm 999
-               , AddSkill SkSpeed 22, AddSkill SkNocto 2, AddSkill SkShine 3
-               , AddSkill SkWait 1, AddSkill SkMelee 1  -- no brain
+
+tesla :: ItemKind
+tesla = car
+  { isymbol  = toContentSymbol 'T'
+  , iname    = "Tesla"
+  , iflavour = zipPlain [Red]
+  , iweight  = 6000000
+  , iaspects = [ AddSkill SkMaxHP 40, AddSkill SkMaxCalm 60
+               , AddSkill SkSpeed 30, AddSkill SkNocto 2
+               , AddSkill SkAggression 2
+               , AddSkill SkAlter (-2)
                , SetFlag Durable ]
-  , ieffects = []
-  , idesc    = "The sharp scent betrays the poison within the spray."
-  , ikit     = [(S_ARSENIC_VENT, COrgan), (S_ARSENIC_FISSURE, COrgan)]
+  , ieffects = [ OnSmash $ Explode S_FIRECRACKER ] -- Batteries explode with colorful fire
+  , idesc    = "New generation electric vehicle of questionable reputation"
   }
-geyserSulfur :: ItemKind
-geyserSulfur = ItemKind
-  { isymbol  = toContentSymbol 'g'
-  , iname    = "sulfur geyser"
-  , ifreq    = [(ANIMAL, 8), (IMMOBILE_ANIMAL, 120), (GEOPHENOMENON, 1)]
-  , iflavour = zipPlain [BrYellow]  -- exception, animal with bright color
-  , icount   = 1
-  , irarity  = [(1, 10), (10, 6)]
-  , iverbHit = "thud"
-  , iweight  = 80000
-  , idamage  = 0
-  , iaspects = [ AddSkill SkMaxHP 20, AddSkill SkMaxCalm 999
-               , AddSkill SkSpeed 22, AddSkill SkNocto 2, AddSkill SkShine 3
-               , AddSkill SkWait 1, AddSkill SkMelee 1  -- no brain
+
+blackVolga :: ItemKind
+blackVolga = car
+  { isymbol  = toContentSymbol 'V'
+  , iname    = "black Volga"
+  , iflavour = zipPlain [BrBlack]
+  , iweight  = 9000000
+  , iaspects = [ AddSkill SkMaxHP 50, AddSkill SkMaxCalm 60
+               , AddSkill SkSpeed 20, AddSkill SkNocto 2
+               , AddSkill SkAggression 2
+               , AddSkill SkAlter (-2)
                , SetFlag Durable ]
-  , ieffects = []
-  , idesc    = "The pool boils and bubbles, stinking of rotten eggs. Despite the smell, these waters purify and strengthen."
-  , ikit     = [(S_SULFUR_VENT, COrgan), (S_SULFUR_FISSURE, COrgan)]
+  , idesc    = "Mysterious and legendary vehicle, who knows what it itentions are?"
   }

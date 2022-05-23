@@ -240,7 +240,6 @@ rubble = ItemKind
   , idamage  = 0
   , iaspects = [SetFlag Durable]
   , ieffects = [OneOf [ Explode S_FOCUSED_GLASS_HAIL
-                      , Summon MOBILE_ANIMAL $ 1 `dL` 2
                       , toOrganNoTimer S_POISONED
                       , CreateItem Nothing CGround ANY_ARROW timerNone
                       , CreateItem Nothing CGround STARTING_WEAPON timerNone

@@ -20,13 +20,6 @@ module Content.FactionKind
   , pattern MONSTER_ANTI_PACIFIST
   , pattern MONSTER_CAPTIVE
   , pattern MONSTER_CAPTIVE_NARRATING
-  , pattern ANIMAL_REPRESENTATIVE
-  , pattern ANIMAL_MAGNIFICENT
-  , pattern ANIMAL_EXQUISITE
-  , pattern ANIMAL_CAPTIVE
-  , pattern ANIMAL_NARRATING
-  , pattern ANIMAL_MAGNIFICENT_NARRATING
-  , pattern ANIMAL_CAPTIVE_NARRATING
   , pattern HORROR_REPRESENTATIVE
   , pattern HORROR_CAPTIVE
   , pattern HORROR_PACIFIST
@@ -74,13 +67,6 @@ groupNamesSingleton =
     , MONSTER_ANTI_PACIFIST
     , MONSTER_CAPTIVE
     , MONSTER_CAPTIVE_NARRATING
-    , ANIMAL_REPRESENTATIVE
-    , ANIMAL_MAGNIFICENT
-    , ANIMAL_EXQUISITE
-    , ANIMAL_CAPTIVE
-    , ANIMAL_NARRATING
-    , ANIMAL_MAGNIFICENT_NARRATING
-    , ANIMAL_CAPTIVE_NARRATING
     , HORROR_REPRESENTATIVE
     , HORROR_CAPTIVE
     , HORROR_PACIFIST]
@@ -128,20 +114,6 @@ pattern MONSTER_CAPTIVE :: GroupName c
 pattern MONSTER_CAPTIVE = GroupName "monster captive"
 pattern MONSTER_CAPTIVE_NARRATING :: GroupName c
 pattern MONSTER_CAPTIVE_NARRATING = GroupName "monster captive narrating"
-pattern ANIMAL_REPRESENTATIVE :: GroupName c
-pattern ANIMAL_REPRESENTATIVE = GroupName "animal"
-pattern ANIMAL_MAGNIFICENT :: GroupName c
-pattern ANIMAL_MAGNIFICENT = GroupName "animal magnificent"
-pattern ANIMAL_EXQUISITE :: GroupName c
-pattern ANIMAL_EXQUISITE = GroupName "animal exquisite"
-pattern ANIMAL_CAPTIVE :: GroupName c
-pattern ANIMAL_CAPTIVE = GroupName "animal captive"
-pattern ANIMAL_NARRATING :: GroupName c
-pattern ANIMAL_NARRATING = GroupName "animal narrating"
-pattern ANIMAL_MAGNIFICENT_NARRATING :: GroupName c
-pattern ANIMAL_MAGNIFICENT_NARRATING = GroupName "animal magnificent narrating"
-pattern ANIMAL_CAPTIVE_NARRATING :: GroupName c
-pattern ANIMAL_CAPTIVE_NARRATING = GroupName "animal captive narrating"
 pattern HORROR_REPRESENTATIVE :: GroupName c
 pattern HORROR_REPRESENTATIVE = GroupName "horror"
 pattern HORROR_CAPTIVE :: GroupName c
@@ -159,8 +131,6 @@ teamConvict :: TeamContinuity
 teamConvict = TeamContinuity 4
 teamMonster :: TeamContinuity
 teamMonster = TeamContinuity 5
-teamAnimal :: TeamContinuity
-teamAnimal = TeamContinuity 6
 teamHorror :: TeamContinuity
 teamHorror = TeamContinuity 7
 teamCars :: TeamContinuity
@@ -191,13 +161,6 @@ content =
     , factMonsterAntiPacifist
     , factMonsterCaptive
     , factMonsterCaptiveNarrating
-    , factAnimal
-    , factAnimalMagnificent
-    , factAnimalExquisite
-    , factAnimalCaptive
-    , factAnimalNarrating
-    , factAnimalMagnificentNarrating
-    , factAnimalCaptiveNarrating
     , factHorror
     , factHorrorCaptive
     , factHorrorPacifist ]
@@ -243,14 +206,14 @@ factExplorer = FactionKind
   , fhasPointman = True
   , fhasUI = True
   , finitUnderAI = False
-  , fenemyTeams = [teamCompetitor, teamMonster, teamAnimal, teamHorror]
+  , fenemyTeams = [teamCompetitor, teamMonster, teamHorror]
   , falliedTeams = []
   }
 factExplorerShort :: FactionKind
 factExplorerShort = factExplorer
   { ffreq = [(EXPLORER_SHORT, 1)]
   , fhiCondPoly = hiHeroShort
-  , fenemyTeams = [teamMonster, teamAnimal, teamHorror]
+  , fenemyTeams = [teamMonster, teamHorror]
   }
 factExplorerMedium :: FactionKind
 factExplorerMedium = factExplorer
@@ -296,7 +259,7 @@ factCompetitor = factExplorer
   , fteam = teamCompetitor
   , fhasUI = False
   , finitUnderAI = True
-  , fenemyTeams = [teamExplorer, teamMonster, teamAnimal, teamHorror]
+  , fenemyTeams = [teamExplorer, teamMonster, teamHorror]
   , falliedTeams = []
   }
 factCompetitorShort :: FactionKind
@@ -304,7 +267,7 @@ factCompetitorShort = factCompetitor
   { fname = "Indigo Founder"  -- early
   , ffreq = [(COMPETITOR_SHORT, 1)]
   , fhiCondPoly = hiHeroShort
-  , fenemyTeams = [teamMonster, teamAnimal, teamHorror]
+  , fenemyTeams = [teamMonster, teamHorror]
   }
 
 -- ** teamCivilian
@@ -325,7 +288,7 @@ factCivilian = FactionKind
   , fhasPointman = False  -- unorganized
   , fhasUI = False
   , finitUnderAI = True
-  , fenemyTeams = [teamMonster, teamAnimal, teamHorror]
+  , fenemyTeams = [teamMonster, teamHorror]
   , falliedTeams = []
   }
 
@@ -338,7 +301,7 @@ factConvict = factCivilian
   , fteam = teamConvict
   , fhasPointman = True  -- convicts organize better
   , finitUnderAI = True
-  , fenemyTeams = [teamMonster, teamAnimal, teamHorror]
+  , fenemyTeams = [teamMonster, teamHorror]
   , falliedTeams = []
   }
 
@@ -362,7 +325,7 @@ factMonster = FactionKind
   , fhasUI = False
   , finitUnderAI = True
   , fenemyTeams = [teamExplorer, teamCompetitor, teamCivilian, teamConvict]
-  , falliedTeams = [teamAnimal]
+  , falliedTeams = []
   }
 -- This has continuity @teamMonster@, despite being playable.
 factMonsterAnti :: FactionKind
@@ -390,75 +353,6 @@ factMonsterCaptive = factMonster
 factMonsterCaptiveNarrating :: FactionKind
 factMonsterCaptiveNarrating = factMonsterAntiCaptive
   { ffreq = [(MONSTER_CAPTIVE_NARRATING, 1)]
-  , fhasUI = True
-  }
-
--- ** teamAnimal
-
-factAnimal :: FactionKind
-factAnimal = FactionKind
-  { fname = "Animal Kingdom"
-  , ffreq = [(ANIMAL_REPRESENTATIVE, 1), (REPRESENTATIVE, 1)]
-  , fteam = teamAnimal
-  , fgroups = [ (ANIMAL, 100), (INSECT, 100), (GEOPHENOMENON, 100)
-                   -- only the distinct enough ones
-              , (MOBILE_ANIMAL, 1), (IMMOBILE_ANIMAL, 1), (SCAVENGER, 1) ]
-  , fskillsOther = zeroSkills
-  , fcanEscape = False
-  , fneverEmpty = False
-  , fhiCondPoly = hiDweller
-  , fhasGender = False
-  , finitDoctrine = TRoam  -- can't pick up, so no point exploring
-  , fspawnsFast = True
-  , fhasPointman = False
-  , fhasUI = False
-  , finitUnderAI = True
-  , fenemyTeams = [teamExplorer, teamCompetitor, teamCivilian, teamConvict]
-  , falliedTeams = [teamMonster]
-  }
--- These two differ from outside, but share information and boasting
--- about them tends to be general, too.
-factAnimalMagnificent :: FactionKind
-factAnimalMagnificent = factAnimal
-  { fname = "Animal Magnificent Specimen Variety"
-  , ffreq = [(ANIMAL_MAGNIFICENT, 1)]
-  , fneverEmpty = True
-  , fenemyTeams =
-      [teamMonster, teamExplorer, teamCompetitor, teamCivilian, teamConvict]
-  , falliedTeams = []
-  }
-factAnimalExquisite :: FactionKind
-factAnimalExquisite = factAnimal
-  { fname = "Animal Exquisite Herds and Packs Galore"
-  , ffreq = [(ANIMAL_EXQUISITE, 1)]
-  , fteam = teamOther
-      -- in the same mode as @factAnimalMagnificent@, so borrow
-      -- identity from horrors to avoid a clash
-  , fneverEmpty = True
-  , fenemyTeams =
-      [teamMonster, teamExplorer, teamCompetitor, teamCivilian, teamConvict]
-  , falliedTeams = []
-  }
-factAnimalCaptive :: FactionKind
-factAnimalCaptive = factAnimal
-  { ffreq = [(ANIMAL_CAPTIVE, 1)]
-  , fneverEmpty = True
-  }
-factAnimalNarrating :: FactionKind
-factAnimalNarrating = factAnimal
-  { ffreq = [(ANIMAL_NARRATING, 1)]
-  , fhasUI = True
-  }
-factAnimalMagnificentNarrating :: FactionKind
-factAnimalMagnificentNarrating = factAnimalMagnificent
-  { ffreq = [(ANIMAL_MAGNIFICENT_NARRATING, 1)]
-  , fhasPointman = True
-  , fhasUI = True
-  , finitUnderAI = False
-  }
-factAnimalCaptiveNarrating :: FactionKind
-factAnimalCaptiveNarrating = factAnimalCaptive
-  { ffreq = [(ANIMAL_CAPTIVE_NARRATING, 1)]
   , fhasUI = True
   }
 

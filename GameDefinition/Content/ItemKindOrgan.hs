@@ -24,7 +24,6 @@ module Content.ItemKindOrgan
   , pattern S_STING
   , pattern S_VENOM_TOOTH
   , pattern S_VENOM_FANG
-  , pattern S_SCREECHING_BEAK
   , pattern S_LARGE_TAIL
   , pattern S_HUGE_TAIL
   , pattern S_ARMORED_SKIN
@@ -51,14 +50,12 @@ module Content.ItemKindOrgan
   , pattern S_EAR_8
   , pattern S_SPEED_GLAND_5
   , pattern S_SPEED_GLAND_10 
-  , pattern SCAVENGER 
   , pattern S_TOOTH
   , pattern S_LASH
   , pattern S_RIGHT_TORSION
   , pattern S_LEFT_TORSION
   , pattern S_PUPIL 
   , organsGNSingleton
-  , organsGN 
   , organs
   ) where
 
@@ -106,7 +103,6 @@ organsGNSingleton =
     , S_STING
     , S_VENOM_TOOTH
     , S_VENOM_FANG
-    , S_SCREECHING_BEAK
     , S_LARGE_TAIL
     , S_HUGE_TAIL
     , S_ARMORED_SKIN
@@ -138,12 +134,6 @@ organsGNSingleton =
     , S_RIGHT_TORSION
     , S_LEFT_TORSION
     , S_PUPIL]
-
-organsGN :: [GroupName ItemKind]
-organsGN =
-       [SCAVENGER]
-
-pattern SCAVENGER :: GroupName ItemKind
 
 pattern S_TIRE :: GroupName c
 pattern S_TIRE = GroupName "tire"
@@ -191,8 +181,6 @@ pattern S_VENOM_TOOTH :: GroupName c
 pattern S_VENOM_TOOTH = GroupName "venom tooth"
 pattern S_VENOM_FANG :: GroupName c
 pattern S_VENOM_FANG = GroupName "venom fang"
-pattern S_SCREECHING_BEAK :: GroupName c
-pattern S_SCREECHING_BEAK = GroupName "screeching beak"
 pattern S_LARGE_TAIL :: GroupName c
 pattern S_LARGE_TAIL = GroupName "large tail"
 pattern S_HUGE_TAIL :: GroupName c
@@ -246,8 +234,6 @@ pattern S_SPEED_GLAND_5 = GroupName "speed gland 5"
 pattern S_SPEED_GLAND_10 :: GroupName c
 pattern S_SPEED_GLAND_10 = GroupName "speed gland 10"
 
-pattern SCAVENGER = GroupName "scavenger"
-
 -- * LH-specific
 pattern S_TOOTH :: GroupName c
 pattern S_TOOTH = GroupName "tooth"
@@ -287,7 +273,6 @@ organs =
     , sting
     , venomTooth
     , venomFang
-    , screechingBeak
     , largeTail
     , hugeTail
     , armoredSkin
@@ -529,19 +514,6 @@ hookedClaw = fist
                : iaspects fist
   , ieffects = [toOrganBad S_SLOWED 2]
   , idesc    = "A curved talon."
-  }
-screechingBeak :: ItemKind
-screechingBeak = fist
-  { isymbol  = symbolWand
-  , iname    = "screeching beak"
-  , ifreq    = [(S_SCREECHING_BEAK, 1)]
-  , icount   = 1
-  , iverbHit = "peck"
-  , idamage  = 3 `d` 1
-  , iaspects = Timeout (7 - 1 `dL` 3)
-               : iaspects fist
-  , ieffects = [Summon SCAVENGER $ 1 `dL` 3]
-  , idesc    = "Both a weapon and a beacon, calling more scavengers to the meal."
   }
 antler :: ItemKind
 antler = fist

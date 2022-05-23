@@ -47,7 +47,6 @@ groupNamesSingleton =
     , NECKLACE_UNKNOWN
     , RING_UNKNOWN
     , HAMMER_UNKNOWN
-    , GEM_UNKNOWN
     , CURRENCY_UNKNOWN]
     ++ actorsGNSingleton ++ organsGNSingleton
     ++ blastsGNSingleton ++ temporariesGNSingleton
@@ -69,7 +68,7 @@ groupNames =
     , ARMOR_LOOSE
     , CLOTHING_MISC
     , CHIC_GEAR]
-    ++ embedsGN ++ actorsGN ++ organsGN ++ blastsGN
+    ++ embedsGN ++ actorsGN ++ blastsGN
 
 -- The @UNKNOWN@ patterns don't need to be exported. Used internally.
 -- They also represent singleton groups.
@@ -87,8 +86,6 @@ pattern RING_UNKNOWN :: GroupName c
 pattern RING_UNKNOWN = GroupName "ring unknown"
 pattern HAMMER_UNKNOWN :: GroupName c
 pattern HAMMER_UNKNOWN = GroupName "hammer unknown"
-pattern GEM_UNKNOWN :: GroupName c
-pattern GEM_UNKNOWN = GroupName "gem unknown"
 pattern CURRENCY_UNKNOWN :: GroupName c
 pattern CURRENCY_UNKNOWN = GroupName "currency unknown"
 
@@ -125,7 +122,7 @@ items =
     , harpoon
     , harpoon2
     , net
-    , fragmentationBomb
+    , diablotekSupply
     , concussionBomb
     , flashBomb
     , firecrackerBomb
@@ -213,41 +210,19 @@ items =
     , ring8
     , ring9
     , ring10
-    , armorLeather
-    , armorMail
-    , meleeEnhancement
+    , pwPullover
+    , miniPullover
     , gloveFencing
-    , gloveGauntlet
-    , gloveJousting
     , hatUshanka
     , capReinforced
-    , helmArmored
-    , smokingJacket
-    , buckler
-    , shield
-    , shield2
-    , shield3
-    , hammerTemplate
-    , hammer1
-    , hammer2
-    , hammer3
-    , hammerParalyze
-    , hammerSpark
+    , miniBalaclava
+    , miniJacket
+    , laptopCharger
+    , bigLaptopCharger
     , knife
-    , daggerDischarge
+    , pencil
     , sword
-    , swordImpress
-    , swordNullify
-    , halberd
-    , halberd2
-    , halberd3
-    , halberdPushActor
-    , gemTemplate
-    , gem1
-    , gem2
-    , gem3
-    , gem4
-    , gem5
+    , cableTray
     , currencyTemplate
     , currency
     , jumpingPole
@@ -273,10 +248,6 @@ _symbolLauncher :: ContentSymbol c
 _symbolLauncher  = toContentSymbol '}'
 symbolLight :: ContentSymbol c
 symbolLight      = rsymbolLight $ ritemSymbols standardRules
-symbolTool :: ContentSymbol c
-symbolTool       = rsymbolTool $ ritemSymbols standardRules
-symbolSpecial :: ContentSymbol c
-symbolSpecial    = rsymbolSpecial $ ritemSymbols standardRules
 symbolGold :: ContentSymbol c
 symbolGold       = rsymbolGold $ ritemSymbols standardRules
 symbolNecklace :: ContentSymbol c
@@ -295,8 +266,6 @@ symbolMiscArmor :: ContentSymbol c
 symbolMiscArmor  = rsymbolMiscArmor $ ritemSymbols standardRules
 symbolClothes :: ContentSymbol c
 symbolClothes    = rsymbolClothes $ ritemSymbols standardRules
-symbolShield :: ContentSymbol c
-symbolShield     = rsymbolShield $ ritemSymbols standardRules
 symbolPolearm :: ContentSymbol c
 symbolPolearm    = rsymbolPolearm $ ritemSymbols standardRules
 symbolEdged :: ContentSymbol c
@@ -499,30 +468,25 @@ net = ItemKind
 
 -- ** Explosives, with the only effect being @Explode@
 
-fragmentationBomb :: ItemKind
-fragmentationBomb = ItemKind
+diablotekSupply :: ItemKind
+diablotekSupply = ItemKind
   { isymbol  = symbolProjectile
-  , iname    = "clay pot"
-      -- clay pot filled with black powder; fragmentation comes from the clay
-      -- shards, so it's not obvious if it's a weapon or just storage method;
-      -- deflagration, not detonation, so large mass and hard container
-      -- required not to burn harmlessly; improvised short fuze
+  , iname    = "diablotek power supply"
   , ifreq    = [(COMMON_ITEM, 100), (EXPLOSIVE, 200)]
   , iflavour = zipPlain [Red]
-  , icount   = 1 `dL` 5  -- many, because not very intricate
+  , icount   = 1 `dL` 5
   , irarity  = [(5, 8), (10, 5)]
   , iverbHit = "thud"
-  , iweight  = 3000  -- low velocity due to weight
-  , idamage  = 0  -- heavy and hard, but let's not confuse with blast damage
-  , iaspects = [ ELabel "of black powder"
-               , SetFlag Lobable, SetFlag Fragile ]
+  , iweight  = 5000
+  , idamage  = 0
+  , iaspects = [ SetFlag Lobable, SetFlag Fragile ]
   , ieffects = [ Explode S_FOCUSED_FRAGMENTATION
                , OnSmash $ Explode S_VIOLENT_FRAGMENTATION ]
-  , idesc    = "The practical application of science."
+  , idesc    = "A particulary unstable power supply"
   , ikit     = []
   }
 concussionBomb :: ItemKind
-concussionBomb = fragmentationBomb
+concussionBomb = diablotekSupply
   { iname    = "satchel"
       -- slightly stabilized nitroglycerine in a soft satchel, hence
       -- no fragmentation, but huge shock wave despite small size and lack of
@@ -543,7 +507,7 @@ concussionBomb = fragmentationBomb
 -- The bang would also paralyze and/or lower the movement skill
 -- (out of balance due to ear trauma).
 flashBomb :: ItemKind
-flashBomb = fragmentationBomb
+flashBomb = diablotekSupply
   { iname    = "magnesium ribbon"  -- filled with magnesium flash powder
   , iflavour = zipPlain [BrYellow]  -- avoid @BrWhite@; looks wrong in dark
   , iverbHit = "flash"
@@ -554,7 +518,7 @@ flashBomb = fragmentationBomb
   , idesc    = "For dramatic entrances and urgent exits."
   }
 firecrackerBomb :: ItemKind
-firecrackerBomb = fragmentationBomb
+firecrackerBomb = diablotekSupply
   { iname = "roll"  -- not fireworks, as they require outdoors
   , iflavour = zipPlain [BrMagenta]
   , irarity  = [(1, 5), (5, 6)]  -- a toy, if harmful
@@ -720,8 +684,6 @@ flask12 = flaskTemplate
                : iaspects flaskTemplate
   , ieffects = [ toOrganGood S_DRUNK (20 + 1 `d` 5)
                , Burn 1, RefillHP 3  -- risky exploit possible, good
-               , Summon MOBILE_ANIMAL 1
-               , OnSmash (Summon MOBILE_ANIMAL 1)
                , OnSmash Impress  -- mildly useful when thrown
                , OnSmash (Explode S_WASTE) ]
   }
@@ -996,7 +958,7 @@ scroll1 = scrollTemplate
   , irarity  = [(5, 9), (10, 9)]  -- mixed blessing, so found early for a unique
   , iaspects = [SetFlag Unique, ELabel "of Reckless Beacon"]
                ++ iaspects scrollTemplate
-  , ieffects = [Summon HERO 1, Summon MOBILE_ANIMAL (2 + 1 `d` 2)]
+  , ieffects = [Summon HERO 1]
   , idesc    = "The bright flame and sweet-smelling smoke of this heavily infused scroll should attract natural creatures inhabiting the area, including human survivors, if any."
   }
 scroll2 :: ItemKind
@@ -1022,7 +984,7 @@ scroll4 = scrollTemplate
   , irarity  = [(10, 14)]
   , ieffects = [ Impress
                , OneOf [ Teleport 20, Ascend False, Ascend True
-                       , OneOf [Summon HERO 1, Summon MOBILE_ANIMAL $ 1 `d` 2]
+                       , OneOf [Summon HERO 1]
                            -- gaining a hero particularly uncommon
                        , Detect DetectLoot 20  -- the most useful of detections
                        , CreateItem Nothing CGround COMMON_ITEM timerNone ] ]
@@ -1098,7 +1060,7 @@ scroll13 = scrollTemplate
   , ieffects = [DupItem]
   }
 
--- Foods require only minimal apply skill to consume. Many animals can eat them.
+-- Foods require only minimal apply skill to consume.
 
 ediblePlantTemplate :: ItemKind
 ediblePlantTemplate = ItemKind
@@ -1107,7 +1069,7 @@ ediblePlantTemplate = ItemKind
   , ifreq    = [(EDIBLE_PLANT_UNKNOWN, 1)]
   , iflavour = zipFancy stdCol
   , icount   = 1 `dL` 5
-  , irarity  = [(1, 12), (10, 6)]  -- let's feed the animals
+  , irarity  = [(1, 12), (10, 6)]
   , iverbHit = "thump"
   , iweight  = 50
   , idamage  = 0
@@ -1330,7 +1292,6 @@ necklace2 = necklaceTemplate
   , ieffects = [ DropItem 1 1 COrgan CONDITION  -- mildly useful when applied
                , When (TriggeredBy ActivationPeriodic) $ SeqEffect
                    [ Impress
-                   , Summon MOBILE_ANIMAL $ 1 `dL` 2
                    , Explode S_WASTE ] ]
   , idesc    = "A cord hung with lumps of decaying meat. It's better not to think about the source."
   }
@@ -1589,16 +1550,16 @@ ring10 = ringTemplate
 
 -- ** Armor
 
-armorLeather :: ItemKind
-armorLeather = ItemKind
+pwPullover :: ItemKind
+pwPullover = ItemKind
   { isymbol  = symbolTorsoArmor
-  , iname    = "leather armor"
+  , iname    = "pw pullover"
   , ifreq    = [(COMMON_ITEM, 100), (ARMOR_LOOSE, 1), (STARTING_ARMOR, 100)]
-  , iflavour = zipPlain [Brown]
+  , iflavour = zipPlain [Blue]
   , icount   = 1
   , irarity  = [(1, 9), (10, 2)]
   , iverbHit = "thud"
-  , iweight  = 7000
+  , iweight  = 200
   , idamage  = 0
   , iaspects = [ AddSkill SkHurtMelee (-2)
                , AddSkill SkArmorMelee $ (2 + 1 `dL` 4) * 5
@@ -1606,12 +1567,12 @@ armorLeather = ItemKind
                , SetFlag Durable, SetFlag Equipable
                , EqpSlot EqpSlotArmorMelee ]
   , ieffects = []
-  , idesc    = "A stiff jacket formed from leather boiled in bee wax, padded linen and horse hair. Protects from anything that is not too sharp. Smells much better than the rest of your garment."
+  , idesc    = "A nice pullover with letters PW"
   , ikit     = []
   }
-armorMail :: ItemKind
-armorMail = armorLeather
-  { iname    = "ring armor"
+miniPullover :: ItemKind
+miniPullover = pwPullover
+  { iname    = "mini pullover"
   , ifreq    = [ (COMMON_ITEM, 100), (ARMOR_LOOSE, 1), (ARMOR_RANGED, 50)
                , (STARTING_ARMOR, 50) ]
   , iflavour = zipPlain [Cyan]
@@ -1625,30 +1586,12 @@ armorMail = armorLeather
                , SetFlag Durable, SetFlag Equipable
                , EqpSlot EqpSlotArmorRanged ]
   , ieffects = []
-  , idesc    = "A long shirt with tiny iron rings sewn into it. Discourages foes from attacking your torso, especially with ranged weapons, which can't pierce the rings nor aim between them. The stiff fabric is hard to wash, though."
-  }
-meleeEnhancement :: ItemKind
-meleeEnhancement = ItemKind
-  { isymbol  = symbolTool
-  , iname    = "whetstone"
-  , ifreq    = [(COMMON_ITEM, 100)]
-  , iflavour = zipPlain [Blue]
-  , icount   = 1
-  , irarity  = [(10, 10)]
-  , iverbHit = "smack"
-  , iweight  = 400
-  , idamage  = 0
-  , iaspects = [ AddSkill SkHurtMelee $ (1 `dL` 7) * 5
-               , AddSkill SkArmorMelee 2
-               , SetFlag Equipable, EqpSlot EqpSlotHurtMelee ]
-  , ieffects = []
-  , idesc    = "A portable sharpening stone for keeping your weapons keen and true, without the need to set up camp, fish out tools and assemble a proper sharpening workshop. Provides an extra polish to amor, as well."
-  , ikit     = []
+  , idesc    = "A stylish pullover with orbits and a planet"
   }
 gloveFencing :: ItemKind
 gloveFencing = ItemKind
   { isymbol  = symbolMiscArmor
-  , iname    = "leather glove"
+  , iname    = "winter glove"
   , ifreq    = [ (COMMON_ITEM, 100), (ARMOR_MISC, 1), (ARMOR_RANGED, 50)
                , (STARTING_ARMOR, 50) ]
   , iflavour = zipPlain [White]
@@ -1663,43 +1606,8 @@ gloveFencing = ItemKind
                , EqpSlot EqpSlotHurtMelee
                , toVelocity 50 ]  -- flaps and flutters
   , ieffects = []
-  , idesc    = "A fencing glove from rough leather ensuring a good grip. Also quite effective in averting or even catching slow projectiles."
+  , idesc    = "A glove perfectly fit for cold winters in Warsaw"
   , ikit     = []
-  }
-gloveGauntlet :: ItemKind
-gloveGauntlet = gloveFencing
-  { iname    = "steel gauntlet"
-  , ifreq    = [(COMMON_ITEM, 100), (ARMOR_MISC, 1), (STARTING_ARMOR, 50)]
-  , iflavour = zipPlain [BrCyan]
-  , irarity  = [(1, 9), (10, 3)]
-  , iverbHit = "mow"
-  , iweight  = 300
-  , idamage  = 2 `d` 1
-  , iaspects = [ AddSkill SkArmorMelee $ (1 + 1 `dL` 4) * 5
-               , SetFlag Durable, SetFlag Equipable
-               , EqpSlot EqpSlotArmorMelee
-               , toVelocity 50 ]  -- flaps and flutters
-  , idesc    = "Long leather gauntlet covered in overlapping steel plates."
-  }
-gloveJousting :: ItemKind
-gloveJousting = gloveFencing
-  { iname    = "Tournament Gauntlet"
-  , ifreq    = [(COMMON_ITEM, 100), (ARMOR_MISC, 1)]
-  , iflavour = zipFancy [BrRed]
-  , irarity  = [(1, 3), (10, 3)]
-  , iverbHit = "ram"
-  , iweight  = 3000
-  , idamage  = 3 `d` 1
-  , iaspects = [ SetFlag Unique
-               , AddSkill SkHurtMelee $ (-7 + 1 `dL` 5) * 3
-               , AddSkill SkArmorMelee $ (2 + 1 `d` 2 + 1 `dL` 2) * 5
-               , AddSkill SkArmorRanged $ (1 + 1 `dL` 2) * 3
-                 -- very random on purpose and can even be good on occasion
-                 -- or when ItemRerolled enough times
-               , SetFlag Durable, SetFlag Equipable
-               , EqpSlot EqpSlotArmorMelee
-               , toVelocity 50 ]  -- flaps and flutters
-  , idesc    = "Rigid, steel jousting handgear. If only you had a lance. And a horse to carry it all."
   }
 hatUshanka :: ItemKind
 hatUshanka = ItemKind
@@ -1742,10 +1650,10 @@ capReinforced = ItemKind
   , idesc    = "Boiled leather with a wide brim. It might soften a blow."
   , ikit     = []
   }
-helmArmored :: ItemKind
-helmArmored = ItemKind
+miniBalaclava :: ItemKind
+miniBalaclava = ItemKind
   { isymbol  = symbolMiscArmor
-  , iname    = "bucket helm"
+  , iname    = "mini balaclava"
   , ifreq    = [(COMMON_ITEM, 100), (ARMOR_MISC, 1), (STARTING_ARMOR, 50)]
   , iflavour = zipPlain [BrCyan]
   , icount   = 1
@@ -1763,10 +1671,10 @@ helmArmored = ItemKind
   , idesc    = "Blocks out everything, including your senses."
   , ikit     = []
   }
-smokingJacket :: ItemKind
-smokingJacket = ItemKind
+miniJacket :: ItemKind
+miniJacket = ItemKind
   { isymbol  = symbolClothes
-  , iname    = "smoking jacket"
+  , iname    = "mini jacket"
   , ifreq    = [(COMMON_ITEM, 100), (CLOTHING_MISC, 1), (CHIC_GEAR, 100)]
   , iflavour = zipFancy [BrGreen]
   , icount   = 1
@@ -1780,78 +1688,15 @@ smokingJacket = ItemKind
                , SetFlag Periodic, SetFlag Durable, SetFlag Equipable
                , EqpSlot EqpSlotSpeed ]
   , ieffects = [RefillCalm 1]
-  , idesc    = "Wearing this velvet jacket, anyone would look dashing."
+  , idesc    = "A jacket embellished with a planet and orbits"
   , ikit     = []
   }
--- Shield doesn't protect against ranged attacks to prevent
--- micromanagement: walking with shield, melee without.
--- Their biggest power is pushing enemies, which however reduces
--- to 1 extra damage point if no clear space behind enemy.
--- So they require keen tactical management.
--- Note that AI will pick them up but never wear and will use them at most
--- as a way to push itself. Despite being @Meleeable@, they will not be used
--- as weapons either. This is OK, using shields smartly is totally beyond AI.
-buckler :: ItemKind
-buckler = ItemKind
-  { isymbol  = symbolShield
-  , iname    = "buckler"
-  , ifreq    = [(COMMON_ITEM, 100), (ARMOR_LOOSE, 1)]
-  , iflavour = zipPlain [Blue]
-  , icount   = 1
-  , irarity  = [(4, 5)]
-  , iverbHit = "bash"
-  , iweight  = 2000
-  , idamage  = 0  -- safe to be used on self
-  , iaspects = [ Timeout $ (3 + 1 `d` 3 - 1 `dL` 3) * 2
-               , AddSkill SkArmorMelee 40
-                   -- not enough to compensate; won't be in AI's eqp
-               , AddSkill SkHurtMelee (-30)
-                   -- too harmful; won't be wielded as weapon
-               , SetFlag Durable, SetFlag Meleeable
-               , EqpSlot EqpSlotArmorMelee ]
-  , ieffects = [PushActor (ThrowMod 200 50 1)]  -- 1 step, fast
-  , idesc    = "Heavy and unwieldy. Absorbs a percentage of melee damage, both dealt and sustained. Too small to intercept projectiles with. May serve as a counterweight to suddenly push forth."
-  , ikit     = []
-  }
-shield :: ItemKind
-shield = buckler
-  { iname    = "shield"
-  , irarity  = [(8, 4)]  -- the stronger variants add to total probability
-  , iflavour = zipPlain [Green]
-  , iweight  = 4000
-  , idamage  = 4 `d` 1
-  , iaspects = [ Timeout $ (3 + 1 `d` 3 - 1 `dL` 3) * 4
-               , AddSkill SkArmorMelee 80
-                   -- not enough to compensate; won't be in AI's eqp
-               , AddSkill SkHurtMelee (-70)
-                   -- too harmful; won't be wielded as weapon
-               , SetFlag Durable, SetFlag Meleeable
-               , EqpSlot EqpSlotArmorMelee
-               , toVelocity 50 ]  -- unwieldy to throw
-  , ieffects = [PushActor (ThrowMod 400 50 1)]  -- 2 steps, fast
-  , idesc    = "Large and unwieldy. Absorbs a percentage of melee damage, both dealt and sustained. Too heavy to intercept projectiles with. Useful to push foes out of the way."
-  }
-shield2 :: ItemKind
-shield2 = shield
-  { ifreq    = [(COMMON_ITEM, 3 * 3)]  -- very low base rarity
-  , iweight  = 5000
-  , idamage  = 8 `d` 1
-  , idesc    = "A relic of long-past wars, heavy and with a central spike."
-  }
-shield3 :: ItemKind
-shield3 = shield2
-  { ifreq    = [(COMMON_ITEM, 1 * 3)]  -- very low base rarity
-  , iweight  = 6000
-  , idamage  = 12 `d` 1
-  }
-
--- ** Weapons
 
 knife :: ItemKind
 knife = ItemKind
   { isymbol  = symbolEdged
-  , iname    = "dagger"
-  , ifreq    = [(COMMON_ITEM, 100), (STARTING_WEAPON, 200)]
+  , iname    = "pocket knife"
+  , ifreq    = [(COMMON_ITEM, 100), (STARTING_WEAPON, 150)]
   , iflavour = zipPlain [BrCyan]
   , icount   = 1
   , irarity  = [(2, 45), (4, 1)]
@@ -1866,30 +1711,43 @@ knife = ItemKind
                , EqpSlot EqpSlotWeaponFast
                , toVelocity 40 ]  -- ensuring it hits with the tip costs speed
   , ieffects = []
-  , idesc    = "A short dagger for thrusting and parrying blows. Does not penetrate deeply, but is quick to move and hard to block. Especially useful in conjunction with a larger weapon."
+  , idesc    = "A typical pocket knife, nothing unusual."
   , ikit     = []
   }
-daggerDischarge :: ItemKind
-daggerDischarge = knife
-  { iname    = "The Double Dagger"
-  , ifreq    = [(TREASURE, 20)]
-  , irarity  = [(1, 3), (10, 3)]
-  , iaspects = SetFlag Unique
-               : iaspects knife
-  , ieffects = [Discharge 1 50, Yell]  -- powerful and low timeout, but noisy
-                                       -- and no effect if no weapons charged
-  , idesc    = "A double dagger that a focused fencer can use to catch and twist away an opponent's blade."
+
+pencil :: ItemKind
+pencil = ItemKind
+  { isymbol  = symbolEdged
+  , iname    = "pencil"
+  , ifreq    = [(COMMON_ITEM, 100), (STARTING_WEAPON, 200)]
+  , iflavour = zipPlain [BrYellow]
+  , icount   = 1
+  , irarity  = [(2, 45), (4, 1)]
+  , iverbHit = "cut"
+  , iweight  = 800
+  , idamage  = 6 `d` 1
+  , iaspects = [ Timeout 2
+               , AddSkill SkHurtMelee $ (-1 + 1 `d` 2 + 1 `dL` 2) * 3
+               , AddSkill SkArmorMelee $ (1 `d` 2) * 5
+                   -- very common, so don't make too random
+               , SetFlag Durable, SetFlag Meleeable
+               , EqpSlot EqpSlotWeaponFast
+               , toVelocity 40 ]  -- ensuring it hits with the tip costs speed
+  , ieffects = []
+  , idesc    = "A very sharp pencil"
+  , ikit     = []
   }
-hammerTemplate :: ItemKind
-hammerTemplate = ItemKind
+
+laptopCharger :: ItemKind
+laptopCharger = ItemKind
   { isymbol  = symbolHafted
-  , iname    = "war hammer"
+  , iname    = "laptop charger"
   , ifreq    = [(HAMMER_UNKNOWN, 1)]
-  , iflavour = zipFancy [BrMagenta]  -- avoid "pink"
+  , iflavour = zipFancy [BrBlack]  -- avoid "pink"
   , icount   = 1
   , irarity  = [(3, 25), (5, 1)]
-  , iverbHit = "club"
-  , iweight  = 1600
+  , iverbHit = "swing"
+  , iweight  = 150
   , idamage  = 8 `d` 1  -- we are lying about the dice here, but the dungeon
                         -- is too small and the extra-dice hammers too rare
                         -- to subdivide this identification class by dice
@@ -1897,64 +1755,16 @@ hammerTemplate = ItemKind
                , SetFlag Durable, SetFlag Meleeable
                , toVelocity 40 ]  -- ensuring it hits with the tip costs speed
   , ieffects = []
-  , idesc    = "It may not cause extensive wounds, but neither does it harmlessly glance off heavy armour as blades and polearms tend to. There are so many shapes and types, some looking more like tools than weapons, that at a glance you can't tell what a particular specimen does. It's obvious, though, that any of them requires some time to recover after a swing."  -- if it's really the average kind, the weak kind, the description stays; if not, it's replaced with one of the descriptions below at identification time
+  , idesc    = "Regular laptop charger with a cord, can be swung at enemies."
   , ikit     = []
   }
-hammer1 :: ItemKind
-hammer1 = hammerTemplate
+bigLaptopCharger :: ItemKind
+bigLaptopCharger = laptopCharger
   { ifreq    = [(COMMON_ITEM, 100), (STARTING_WEAPON, 70)]
   , iaspects = [Timeout 5, EqpSlot EqpSlotWeaponBig]
-               ++ iaspects hammerTemplate
-  }
-hammer2 :: ItemKind
-hammer2 = hammerTemplate
-  { ifreq    = [(COMMON_ITEM, 20), (STARTING_WEAPON, 7)]
-  , iverbHit = "gouge"
-  , iaspects = [Timeout 3, EqpSlot EqpSlotWeaponFast]
-               ++ iaspects hammerTemplate
-  , idesc    = "Upon closer inspection, this hammer turns out particularly handy and well balanced, with one thick and sturdy and two long and sharp points compensating the modest size."
-  }
-hammer3 :: ItemKind
-hammer3 = hammerTemplate
-  { ifreq    = [(COMMON_ITEM, 3), (STARTING_WEAPON, 1)]
-  , iverbHit = "puncture"
-  , iweight  = 2400
-  , idamage  = 12 `d` 1
-  , iaspects = [ Timeout 12  -- balance, or @DupItem@ would break the game
-               , SetFlag MetaGame  -- weight gives it away after seen once
-               , EqpSlot EqpSlotWeaponBig]
-               ++ iaspects hammerTemplate
-  , idesc    = "This hammer sports a long metal handle that increases the momentum of the sharpened head's swing, at the cost of long recovery."
-  }
-hammerParalyze :: ItemKind
-hammerParalyze = hammerTemplate
-  { iname    = "The Brute Hammer"
-  , ifreq    = [(TREASURE, 20)]
-  , irarity  = [(5, 1), (8, 6)]
-  , iaspects = [ SetFlag Unique
-               , Timeout 5
-               , EqpSlot EqpSlotWeaponBig ]
-               ++ iaspects hammerTemplate
-  , ieffects = [Paralyze 10]
-  , idesc    = "A huge shapeless lump of meteorite iron alloy on a sturdy pole. Nobody remains standing when this head connects."
-  }
-hammerSpark :: ItemKind
-hammerSpark = hammerTemplate
-  { iname    = "The Grand Smithhammer"
-  , ifreq    = [(TREASURE, 20)]
-  , irarity  = [(5, 1), (8, 6)]
-  , iweight  = 2400
-  , idamage  = 12 `d` 1
-  , iaspects = [ SetFlag Unique
-               , SetFlag MetaGame  -- weight gives it away after seen once
-               , Timeout 10
-               , EqpSlot EqpSlotWeaponBig
-               , AddSkill SkShine 3]
-               ++ iaspects hammerTemplate
-  , ieffects = [Explode S_SPARK]
-      -- we can't use a focused explosion, because it would harm the hammer
-      -- wielder as well, unlike this one
-  , idesc    = "Smiths of old wielded this heavy hammer and its sparks christened many a potent blade."
+               ++ iaspects laptopCharger
+  , idesc    = "Big, 200W laptop charger. Probably for a gaming laptop."
+  , iweight  = 300
   }
 sword :: ItemKind
 sword = ItemKind
@@ -1975,35 +1785,12 @@ sword = ItemKind
   , idesc    = "Difficult to master; deadly when used effectively. The steel is particularly hard and keen, but rusts quickly without regular maintenance."
   , ikit     = []
   }
-swordImpress :: ItemKind
-swordImpress = sword
-  { iname    = "The Master's Sword"
-  , ifreq    = [(TREASURE, 20)]
-  , irarity  = [(5, 1), (8, 6)]
-  , iaspects = SetFlag Unique
-               : iaspects sword
-  , ieffects = [Impress]
-  , idesc    = "A particularly well-balance blade, lending itself to impressive shows of fencing skill."
-  }
-swordNullify :: ItemKind
-swordNullify = sword
-  { iname    = "The Gutting Sword"
-  , ifreq    = [(TREASURE, 20)]
-  , iverbHit = "pierce"
-  , irarity  = [(5, 1), (8, 6)]
-  , iaspects = [SetFlag Unique, Timeout 3, EqpSlot EqpSlotWeaponFast]
-               ++ (iaspects sword \\ [Timeout 7, EqpSlot EqpSlotWeaponBig])
-  , ieffects = [ DropItem 1 maxBound COrgan CONDITION
-               , RefillCalm (-10)
-               , Yell ]
-  , idesc    = "Cold, thin blade that pierces deeply and sends its victim into abrupt, sobering shock."
-  }
-halberd :: ItemKind
-halberd = ItemKind
+cableTray :: ItemKind
+cableTray = ItemKind
   { isymbol  = symbolPolearm
-  , iname    = "war scythe"
+  , iname    = "cable tray"
   , ifreq    = [(COMMON_ITEM, 100), (STARTING_WEAPON, 20)]
-  , iflavour = zipPlain [BrYellow]
+  , iflavour = zipPlain [BrBlue]
   , icount   = 1
   , irarity  = [(5, 1), (8, 12)]
   , iverbHit = "impale"
@@ -2017,101 +1804,12 @@ halberd = ItemKind
                , EqpSlot EqpSlotWeaponBig
                , toVelocity 20 ]  -- not balanced
   , ieffects = []
-  , idesc    = "An improvised weapon made of scythe's blade attached to a long pole. Not often one succeeds in making enough space to swing it freely, but even when stuck between terrain obstacles it blocks approaches effectively and makes using other weapons difficult, both by friends and foes."
+  , idesc    = "A long, aluminium cable tray. Can be used as a weapon."
   , ikit     = []
-  }
-halberd2 :: ItemKind
-halberd2 = halberd
-  { iname    = "halberd"
-  , ifreq    = [(COMMON_ITEM, 3 * 2), (STARTING_WEAPON, 1)]
-  , iweight  = 4000
-  , iaspects = AddSkill SkHurtMelee ((-6 + 1 `dL` 4) * 10)
-                 -- balance, or @DupItem@ would break the game;
-                 -- together with @RerollItem@, it's allowed to, though
-               : (iaspects halberd
-                  \\ [AddSkill SkHurtMelee $ (-6 + 1 `dL` 4) * 5])
-  , idamage  = 18 `d` 1
-  , idesc    = "A long haft with a sharp blade. Designed and refined for war."
-  }
-halberd3 :: ItemKind
-halberd3 = halberd2
-  { iname    = "bardiche"
-  , ifreq    = [(COMMON_ITEM, 1 * 2)]  -- compensating for low base rarity
-  , iverbHit = "carve"
-  , iweight  = 5000
-  , idamage  = 24 `d` 1
-  , idesc    = "The reach of a spear but the edge of an axe."
-  }
-halberdPushActor :: ItemKind
-halberdPushActor = halberd
-  { iname    = "The Swiss Halberd"
-  , ifreq    = [(TREASURE, 20)]
-  , irarity  = [(7, 0), (9, 15)]
-  , iaspects = SetFlag Unique
-               : iaspects halberd
-  , ieffects = [PushActor (ThrowMod 200 100 1)]  -- 2 steps, slow
-  , idesc    = "A versatile polearm, with great reach and leverage. Foes are held at a distance."
   }
 
 -- ** Treasure
 
-gemTemplate :: ItemKind
-gemTemplate = ItemKind
-  { isymbol  = symbolGold
-  , iname    = "gem"
-  , ifreq    = [(GEM_UNKNOWN, 1), (VALUABLE, 100)]
-  , iflavour = zipPlain $ delete BrYellow brightCol  -- natural, so not fancy
-  , icount   = 1
-  , irarity  = [(3, 0), (10, 24)]
-  , iverbHit = "tap"
-  , iweight  = 50
-  , idamage  = 0
-  , iaspects = [PresentAs GEM_UNKNOWN, SetFlag Precious]
-  , ieffects = []
-  , idesc    = "Useless, and still worth around 100 gold each. Would gems of thought and pearls of artful design be valued that much in our age of Science and Progress!"
-  , ikit     = []
-  }
-gem1 :: ItemKind
-gem1 = gemTemplate
-  { ifreq    = [ (TREASURE, 100), (GEM, 100), (ANY_JEWELRY, 10)
-               , (VALUABLE, 100) ]
-  , irarity  = [(3, 0), (6, 12), (10, 8)]
-  , iaspects = [AddSkill SkShine 1, AddSkill SkSpeed (-1)]
-                 -- reflects strongly, distracts; so it glows in the dark,
-                 -- is visible on dark floor, but not too tempting to wear
-               ++ iaspects gemTemplate
-  }
-gem2 :: ItemKind
-gem2 = gem1
-  { ifreq    = [ (TREASURE, 150), (GEM, 100), (ANY_JEWELRY, 10)
-               , (VALUABLE, 100) ]
-  , irarity  = [(5, 0), (7, 25), (10, 8)]
-  }
-gem3 :: ItemKind
-gem3 = gem1
-  { ifreq    = [ (TREASURE, 150), (GEM, 100), (ANY_JEWELRY, 10)
-               , (VALUABLE, 100) ]
-  , irarity  = [(7, 0), (8, 20), (10, 8)]
-  }
-gem4 :: ItemKind
-gem4 = gem1
-  { ifreq    = [ (TREASURE, 150), (GEM, 100), (ANY_JEWELRY, 30)
-               , (VALUABLE, 100) ]
-  , irarity  = [(9, 0), (10, 70)]
-  }
-gem5 :: ItemKind
-gem5 = gem1
-  { isymbol  = symbolSpecial
-  , iname    = "elixir"
-  , ifreq    = [ (TREASURE, 100), (GEM, 25), (ANY_JEWELRY, 10)
-               , (VALUABLE, 100) ]
-  , iflavour = zipPlain [BrYellow]
-  , irarity  = [(1, 40), (10, 10)]
-  , iaspects = [ ELabel "of youth", SetFlag Precious  -- not hidden
-               , AddSkill SkOdor (-1) ]
-  , ieffects = [RefillCalm 10, RefillHP 40]
-  , idesc    = "A crystal vial of amber liquid, supposedly granting eternal youth and fetching 100 gold per piece. The main effect seems to be mild euphoria, but it admittedly smells good and heals minor ailments rather well."
-  }
 currencyTemplate :: ItemKind
 currencyTemplate = ItemKind
   { isymbol  = symbolGold

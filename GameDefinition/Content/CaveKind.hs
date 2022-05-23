@@ -112,7 +112,7 @@ rogue = CaveKind
   , copenChance   = 1%5
   , chidden       = 7
   , cactorCoeff   = 70  -- the maze requires time to explore
-  , cactorFreq    = [(MONSTER, 60), (ANIMAL, 40)]
+  , cactorFreq    = [(MONSTER, 100)]
   , citemNum      = 6 `d` 5 + 10 - 10 `dL` 1
       -- deep down quality over quantity; generally quite random,
       -- for interesting replays at the cost of unreliable balance
@@ -158,7 +158,7 @@ arena = rogue
   , cmaxVoid      = 1%8
   , chidden       = 0
   , cactorCoeff   = 70  -- small open level, don't rush the player
-  , cactorFreq    = [(MONSTER, 30), (ANIMAL, 70)]
+  , cactorFreq    = [(MONSTER, 100)]
   , citemNum      = 4 `d` 5  -- few rooms
   , citemFreq     = [ (IK.COMMON_ITEM, 20), (IK.TREASURE, 40)
                     , (IK.ANY_SCROLL, 40) ]
@@ -200,7 +200,7 @@ laboratory = rogue
   , cmaxVoid      = 1%10
   , cdoorChance   = 1
   , copenChance   = 1%2
-  , cactorFreq    = [(MONSTER, 30), (ANIMAL, 70)]
+  , cactorFreq    = [(MONSTER, 100)]
   , citemNum      = 6 `d` 5  -- reward difficulty
   , citemFreq     = [ (IK.COMMON_ITEM, 20), (IK.TREASURE, 40)
                     , (IK.EXPLOSIVE, 40) ]
@@ -230,7 +230,7 @@ noise = rogue
   , cdoorChance   = 1  -- to avoid lit quasi-door tiles
   , chidden       = 0
   , cactorCoeff   = 100  -- the maze requires time to explore; also, small
-  , cactorFreq    = [(MONSTER, 80), (ANIMAL, 20)]
+  , cactorFreq    = [(MONSTER, 100)]
   , citemNum      = 6 `d` 5  -- an incentive to explore the labyrinth
   , cpassable     = True
   , cplaceFreq    = [(NOISE, 1)]
@@ -251,7 +251,7 @@ mine = noise
   , cfreq         = [(CAVE_MINE, 1)]
   , cnightOdds    = 51  -- easier variant, but looks sinister
   , citemNum      = 10 `d` 4  -- an incentive to explore the final labyrinth
-  , citemFreq     = [(IK.COMMON_ITEM, 20), (GEM, 20)]
+  , citemFreq     = [(IK.COMMON_ITEM, 20)]
                       -- can't be "valuable" or template items generated
   , cplaceFreq    = [(NOISE, 1), (MINE, 99)]
   , clabyrinth    = True
@@ -277,7 +277,7 @@ empty = rogue
   , copenChance   = 0
   , chidden       = 0
   , cactorCoeff   = 8
-  , cactorFreq    = [(ANIMAL, 10), (IMMOBILE_ANIMAL, 90)]
+  , cactorFreq    = []
       -- The healing geysers on lvl 3 act like HP resets. Needed to avoid
       -- cascading failure, if the particular starting conditions were
       -- very hard. Items are not reset, even if they are bad, which provides
@@ -337,7 +337,7 @@ raid = rogue
   , cdoorChance   = 1  -- make sure enemies not seen on turn 1
   , copenChance   = 0  -- make sure enemies not seen on turn 1
   , cactorCoeff   = 300  -- deep level with no kit, so slow spawning
-  , cactorFreq    = [(ANIMAL, 100)]
+  , cactorFreq    = []
   , citemNum      = 18  -- first tutorial mode, so make it consistent
   , citemFreq     = [ (IK.COMMON_ITEM, 100), (IK.S_CURRENCY, 500)
                     , (STARTING_WEAPON, 100) ]
@@ -364,8 +364,9 @@ mini = rogue
   , copenChance   = 0  -- make sure enemies not seen on turn 1
   , cactorCoeff   = 300  -- deep level with no kit, so slow spawning
   , cactorFreq    = [(CAR, 100)]
-  , citemNum      = 30 -- 18 -- first tutorial mode, so make it consistent
-  , citemFreq     = [ (IK.EXPLOSIVE, 80) ]
+  , citemNum      = 50
+  , citemFreq     = [ (IK.EXPLOSIVE, 30000), (IK.COMMON_ITEM, 20)
+                    , (STARTING_WEAPON, 30) ]
   , cmaxStairsNum = 0
   , cescapeFreq   = [(INDOOR_ESCAPE_UP, 1)]
   , cstairFreq    = []

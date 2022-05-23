@@ -163,9 +163,7 @@ rosterMini =
 
 rosterRaid :: [(GroupName c1, [(Int, Dice, GroupName c2)])]
 rosterRaid =
-  [ ( ANIMAL_REPRESENTATIVE  -- starting over escape
-    , [(-2, 2, ANIMAL)] )
-  , ( EXPLORER_SHORT
+  [ ( EXPLORER_SHORT
     , [(-2, 2, HERO)] )
   , ( COMPETITOR_SHORT
     , [(-2, 1, HERO)] )
@@ -173,12 +171,7 @@ rosterRaid =
 
 rosterCrawl :: [(GroupName c1, [(Int, Dice, GroupName c2)])]
 rosterCrawl =
-  [ ( ANIMAL_REPRESENTATIVE  -- starting over escape
-    , -- Fun from the start to avoid empty initial level:
-      [ (-1, 1 + 1 `d` 2, ANIMAL)
-      -- Huge battle at the end:
-      , (-10, 100, MOBILE_ANIMAL) ] )
-  , ( EXPLORER_REPRESENTATIVE
+  [ ( EXPLORER_REPRESENTATIVE
         -- start on stairs so that stash is handy
     , [(-1, 3, HERO)] )
   , ( MONSTER_REPRESENTATIVE
