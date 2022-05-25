@@ -178,7 +178,7 @@ rosterCrawl =
     , [(-4, 1, SCOUT_MONSTER), (-4, 3, MONSTER)] ) ]
 
 cavesMini :: [([Int], [GroupName c])]
-cavesMini = [([-2], [CAVE_MINI])]
+cavesMini = [([-2], [CAVE_PARKING_LOT])]
 
 cavesRaid :: [([Int], [GroupName c])]
 cavesRaid = [([-2], [CAVE_RAID])]

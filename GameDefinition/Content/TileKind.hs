@@ -554,7 +554,7 @@ basicOuterFence = TileKind
 bedrock :: TileKind
 bedrock = TileKind
   { tsymbol  = ' '
-  , tname    = "bedrock"
+  , tname    = "concrete foundations"
   , tfreq    = [(FILLER_WALL, 1)]
   , tcolor   = defFG
   , tcolor2  = defFG
@@ -575,7 +575,7 @@ bedrock = TileKind
 wall :: TileKind
 wall = TileKind
   { tsymbol  = '|'
-  , tname    = "granite wall"
+  , tname    = "concrete wall"
   , tfreq    = [ (S_WALL_LIT, 100)
                , (RECT_WINDOWS_VERTICAL_LIT, 80) ]
   , tcolor   = BrWhite
@@ -610,7 +610,7 @@ wallObscured = TileKind
 wallH :: TileKind
 wallH = TileKind
   { tsymbol  = '-'
-  , tname    = "sandstone wall"
+  , tname    = "concrete wall"
   , tfreq    = [ (S_WALL_HORIZONTAL_LIT, 100)
                , (RECT_WINDOWS_HORIZONTAL_LIT, 80) ]
   , tcolor   = BrWhite
@@ -658,26 +658,26 @@ wallObscuredFrescoedH = TileKind
 pillar :: TileKind
 pillar = TileKind
   { tsymbol  = '0'
-  , tname    = "rock outcrop"
+  , tname    = "concrete pillar"
   , tfreq    = [ (S_PILLAR, 1), (CACHE_OR_NOT, 70)
                , (STAIR_TERMINAL_LIT, 100), (STAIR_TERMINAL_DARK, 100)
                , (EMPTY_SET_LIT, 20), (NOISE_SET_LIT, 700)
                , (POWER_SET_DARK, 700)
                , (BATTLE_SET_DARK, 200), (BRAWL_SET_LIT, 50)
                , (SHOOTOUT_SET_LIT, 10), (ZOO_SET_DARK, 10) ]
-  , tcolor   = BrCyan  -- not BrWhite, to tell from heroes
-  , tcolor2  = Cyan
+  , tcolor   = BrYellow  -- not BrWhite, to tell from heroes
+  , tcolor2  = BrGreen
   , talter   = 100
   , tfeature = []
   }
 pillarCache :: TileKind
 pillarCache = TileKind
   { tsymbol  = '0'
-  , tname    = "smoothed outcrop"
+  , tname    = "painted concrete pillar"
   , tfreq    = [(CACHE_OR_NOT, 30), (CACHE, 1), (STAIR_TERMINAL_DARK, 4)]
                  -- treasure only in dark staircases
-  , tcolor   = BrBlue
-  , tcolor2  = Blue
+  , tcolor   = BrRed
+  , tcolor2  = Magenta
   , talter   = 5
   , tfeature = [ Embed TREASURE_CACHE, Embed TREASURE_CACHE_TRAP
                , ChangeTo CACHE_OR_NOT, ConsideredByAI ]
@@ -689,7 +689,7 @@ lampPost = TileKind
   { tsymbol  = '0'
   , tname    = "lamp post"
   , tfreq    = [(S_LAMP_POST, 1)]
-  , tcolor   = BrYellow
+  , tcolor   = BrRed
   , tcolor2  = Brown
   , talter   = 100
   , tfeature = []
@@ -1078,13 +1078,13 @@ floorCorridor = TileKind
 floorArena :: TileKind
 floorArena = floorCorridor
   { tsymbol  = floorSymbol
-  , tname    = "stone floor"
+  , tname    = "concrete floor"
   , tfreq    = [ (FLOOR_ARENA_LIT, 1), (ARENA_SET_LIT, 1), (EMPTY_SET_LIT, 900)
                , (ZOO_SET_LIT, 600) ]
   }
 floorDamp :: TileKind
 floorDamp = floorArena
-  { tname    = "damp stone floor"
+  { tname    = "damp concrete floor"
   , tfreq    = [ (NOISE_SET_LIT, 600), (POWER_SET_LIT, 600)
                , (DAMP_FLOOR_LIT, 1), (STAIR_TERMINAL_LIT, 20) ]
   }
@@ -1154,7 +1154,7 @@ floorBlue = floorRed
   }
 floorGreen :: TileKind
 floorGreen = floorRed
-  { tname    = "mossy stone path"
+  { tname    = "mossy paved path"
   , tfreq    = [(TRAIL_LIT, 70), (SAFE_TRAIL_LIT, 70)]
   , tcolor   = BrGreen
   , tcolor2  = Green

@@ -1,7 +1,7 @@
 -- | Definitions of of cave kinds. Every level in the game is an instantiated
 -- cave kind.
 module Content.CaveKind
-  ( pattern CAVE_MINI
+  ( pattern CAVE_PARKING_LOT
   , pattern CAVE_ROGUE
   , pattern CAVE_ARENA
   , pattern CAVE_SMOKING
@@ -41,7 +41,7 @@ groupNamesSingleton = []
 
 groupNames :: [GroupName CaveKind]
 groupNames =
-    [ CAVE_MINI
+    [ CAVE_PARKING_LOT
     , CAVE_ROGUE
     , CAVE_ARENA
     , CAVE_SMOKING
@@ -53,8 +53,8 @@ groupNames =
     , CAVE_OUTERMOST
     , CAVE_RAID ]
 
-pattern CAVE_MINI :: GroupName c
-pattern CAVE_MINI = GroupName "caveMini"
+pattern CAVE_PARKING_LOT :: GroupName c
+pattern CAVE_PARKING_LOT = GroupName "caveMini"
 pattern CAVE_ROGUE :: GroupName c
 pattern CAVE_ROGUE = GroupName "caveRogue"
 pattern CAVE_ARENA :: GroupName c
@@ -80,7 +80,7 @@ pattern CAVE_RAID = GroupName "caveRaid"
 
 content :: [CaveKind]
 content =
-    [ mini
+    [ parkingLot
     , rogue
     , arena
     , smoking
@@ -348,10 +348,10 @@ raid = rogue
   , cdesc         = "Mold spreads across the walls and scuttling sounds can be heard in the distance."
   }
 
-mini :: CaveKind
-mini = rogue
+parkingLot :: CaveKind
+parkingLot = rogue
   { cname = "MiNI parking lot"
-  , cfreq = [(CAVE_MINI, 1)]
+  , cfreq = [(CAVE_PARKING_LOT, 1)]
   , cdesc = "Although it's supposed to be a parking lot, it doesn't look like one" 
   , cXminSize     = 75
   , cYminSize     = 21
