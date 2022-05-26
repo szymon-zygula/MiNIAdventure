@@ -60,7 +60,7 @@ standardRules = RuleContent
       , rsymbolPotion     = toContentSymbol '!'
                               -- also concoction, bottle, jar, vial
       , rsymbolFlask      = toContentSymbol '!'
-      , rsymbolScroll     = toContentSymbol '?'
+      , rsymbolPaper     = toContentSymbol '?'
                               -- also book, note, tablet, card
       , rsymbolTorsoArmor = toContentSymbol '['
       , rsymbolMiscArmor  = toContentSymbol '['

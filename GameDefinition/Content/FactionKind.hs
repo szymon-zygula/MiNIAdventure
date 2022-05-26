@@ -42,7 +42,6 @@ import           Game.LambdaHack.Definition.Defs
 import           Game.LambdaHack.Definition.DefsInternal
 
 import Content.ItemKindActor
-import Content.ItemKindOrgan
 
 -- * Group name patterns
 

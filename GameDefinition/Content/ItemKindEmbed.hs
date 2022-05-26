@@ -352,7 +352,7 @@ lectern = ItemKind
   , iweight  = 10000
   , idamage  = 0
   , iaspects = []  -- not Durable, springs at most once
-  , ieffects = [ OneOf [ CreateItem Nothing CGround ANY_SCROLL timerNone
+  , ieffects = [ OneOf [ CreateItem Nothing CGround ANY_PAPER timerNone
                        , Detect DetectAll 20
                        , toOrganBad S_DEFENSELESS $ (1 `dL` 6) * 10
                        , toOrganGood S_DRUNK (20 + 1 `d` 5) ]

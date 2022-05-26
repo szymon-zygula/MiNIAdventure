@@ -161,7 +161,7 @@ arena = rogue
   , cactorFreq    = [(MONSTER, 100)]
   , citemNum      = 4 `d` 5  -- few rooms
   , citemFreq     = [ (IK.COMMON_ITEM, 20), (IK.TREASURE, 40)
-                    , (IK.ANY_SCROLL, 40) ]
+                    , (IK.ANY_PAPER, 40) ]
   , cplaceFreq    = [(ARENA, 1)]
   , cpassable     = True
   , cdefTile      = ARENA_SET_LIT

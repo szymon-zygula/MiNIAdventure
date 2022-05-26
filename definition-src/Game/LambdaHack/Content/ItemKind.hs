@@ -2,7 +2,7 @@
 -- | The type of kinds of weapons, treasure, organs, blasts, etc.
 module Game.LambdaHack.Content.ItemKind
   ( pattern CONDITION, pattern COMMON_ITEM, pattern S_BONUS_HP, pattern S_BRACED, pattern S_ASLEEP, pattern S_IMPRESSED, pattern S_CURRENCY, pattern MOBILE
-  , pattern CRAWL_ITEM, pattern TREASURE, pattern ANY_SCROLL, pattern ANY_GLASS, pattern ANY_POTION, pattern ANY_FLASK, pattern EXPLOSIVE, pattern ANY_JEWELRY, pattern S_SINGLE_SPARK, pattern S_SPARK, pattern S_FRAGRANCE
+  , pattern CRAWL_ITEM, pattern TREASURE, pattern ANY_PAPER, pattern ANY_GLASS, pattern ANY_POTION, pattern ANY_FLASK, pattern EXPLOSIVE, pattern ANY_JEWELRY, pattern S_SINGLE_SPARK, pattern S_SPARK, pattern S_FRAGRANCE
   , pattern HORROR, pattern VALUABLE, pattern UNREPORTED_INVENTORY, pattern AQUATIC
   , ItemKind(..), makeData
   , Aspect(..), Effect(..), Condition(..), DetectKind(..)
@@ -71,7 +71,7 @@ pattern MOBILE = GroupName "mobile"
 
 -- * Optional item groups
 
-pattern S_SINGLE_SPARK, S_SPARK, S_FRAGRANCE, CRAWL_ITEM, TREASURE, ANY_SCROLL, ANY_GLASS, ANY_POTION, ANY_FLASK, EXPLOSIVE, ANY_JEWELRY, VALUABLE, UNREPORTED_INVENTORY, AQUATIC, HORROR :: GroupName ItemKind
+pattern S_SINGLE_SPARK, S_SPARK, S_FRAGRANCE, CRAWL_ITEM, TREASURE, ANY_PAPER, ANY_GLASS, ANY_POTION, ANY_FLASK, EXPLOSIVE, ANY_JEWELRY, VALUABLE, UNREPORTED_INVENTORY, AQUATIC, HORROR :: GroupName ItemKind
 
 -- Used in Preferences.hs
 
@@ -84,7 +84,7 @@ pattern CRAWL_ITEM = GroupName "curious item"
   -- may be a powerful or a mundate item, unlike @TREASURE@ item
 pattern TREASURE = GroupName "treasure"
   -- particularly powerful items, but may appear in any scenario
-pattern ANY_SCROLL = GroupName "scroll"
+pattern ANY_PAPER = GroupName "paper"
 pattern ANY_GLASS = GroupName "glass"
 pattern ANY_POTION = GroupName "potion"
 pattern ANY_FLASK = GroupName "flask"
@@ -331,7 +331,7 @@ data ItemSymbolsUsedInEngine = ItemSymbolsUsedInEngine
   , rsymbolRing       :: ContentSymbol ItemKind
   , rsymbolPotion     :: ContentSymbol ItemKind
   , rsymbolFlask      :: ContentSymbol ItemKind
-  , rsymbolScroll     :: ContentSymbol ItemKind
+  , rsymbolPaper     :: ContentSymbol ItemKind
   , rsymbolTorsoArmor :: ContentSymbol ItemKind
   , rsymbolMiscArmor  :: ContentSymbol ItemKind
   , rsymbolClothes    :: ContentSymbol ItemKind
@@ -354,7 +354,7 @@ emptyItemSymbolsUsedInEngine = ItemSymbolsUsedInEngine
   , rsymbolRing       = toContentSymbol '0'
   , rsymbolPotion     = toContentSymbol '0'
   , rsymbolFlask      = toContentSymbol '0'
-  , rsymbolScroll     = toContentSymbol '0'
+  , rsymbolPaper     = toContentSymbol '0'
   , rsymbolTorsoArmor = toContentSymbol '0'
   , rsymbolMiscArmor  = toContentSymbol '0'
   , rsymbolClothes    = toContentSymbol '0'

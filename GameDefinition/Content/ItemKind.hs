@@ -1,7 +1,7 @@
 -- | Definitions of basic items.
 module Content.ItemKind
   ( pattern HARPOON
-  , pattern EDIBLE_PLANT
+  , pattern FOOD
   , pattern RING_OF_OPPORTUNITY_GRENADIER
   , pattern ARMOR_LOOSE
   , pattern CLOTHING_MISC
@@ -41,8 +41,8 @@ groupNamesSingleton =
     , S_SINGLE_SPARK
     , S_SPARK
     , SODA_UNKNOWN
-    , EDIBLE_PLANT_UNKNOWN
-    , SCROLL_UNKNOWN
+    , FOOD_UNKNOWN
+    , PAPER_UNKNOWN
     , NECKLACE_UNKNOWN
     , RING_UNKNOWN
     , HAMMER_UNKNOWN
@@ -53,7 +53,7 @@ groupNamesSingleton =
 groupNames :: [GroupName ItemKind]
 groupNames =
     [ TREASURE
-    , ANY_SCROLL
+    , ANY_PAPER
     , ANY_GLASS
     , ANY_POTION
     , EXPLOSIVE
@@ -61,7 +61,7 @@ groupNames =
     , VALUABLE
     , UNREPORTED_INVENTORY
     , HARPOON
-    , EDIBLE_PLANT
+    , FOOD
     , RING_OF_OPPORTUNITY_GRENADIER
     , ARMOR_LOOSE
     , CLOTHING_MISC
@@ -72,10 +72,10 @@ groupNames =
 -- They also represent singleton groups.
 pattern SODA_UNKNOWN :: GroupName c
 pattern SODA_UNKNOWN = GroupName "potion unknown"
-pattern EDIBLE_PLANT_UNKNOWN :: GroupName c
-pattern EDIBLE_PLANT_UNKNOWN = GroupName "edible plant unknown"
-pattern SCROLL_UNKNOWN :: GroupName c
-pattern SCROLL_UNKNOWN = GroupName "scroll unknown"
+pattern FOOD_UNKNOWN :: GroupName c
+pattern FOOD_UNKNOWN = GroupName "edible plant unknown"
+pattern PAPER_UNKNOWN :: GroupName c
+pattern PAPER_UNKNOWN = GroupName "paper unknown"
 pattern NECKLACE_UNKNOWN :: GroupName c
 pattern NECKLACE_UNKNOWN = GroupName "necklace unknown"
 pattern RING_UNKNOWN :: GroupName c
@@ -87,8 +87,8 @@ pattern CURRENCY_UNKNOWN = GroupName "currency unknown"
 
 pattern HARPOON :: GroupName c
 pattern HARPOON = GroupName "harpoon"
-pattern EDIBLE_PLANT :: GroupName c
-pattern EDIBLE_PLANT = GroupName "edible plant"
+pattern FOOD :: GroupName c
+pattern FOOD = GroupName "edible plant"
 pattern RING_OF_OPPORTUNITY_GRENADIER :: GroupName c
 pattern RING_OF_OPPORTUNITY_GRENADIER = GroupName "ring of grenadier"
 pattern ARMOR_LOOSE :: GroupName c
@@ -126,33 +126,26 @@ items =
     , soda1
     , soda2
     , iceTea
-    , scrollTemplate
-    , scroll1
-    , scroll2
-    , scroll3
-    , scroll4
-    , scroll5
-    , scroll6
-    , scroll7
-    , scroll8
-    , scroll9
-    , scroll10
-    , scroll11
-    , scroll12
-    , scroll13
-    , ediblePlantTemplate
-    , ediblePlant1
-    , ediblePlant2
-    , ediblePlant3
-    , ediblePlant4
-    , ediblePlant5
-    , ediblePlant6
-    , ediblePlant7
+    , paperTemplate
+    , paper1
+    , paper2
+    , paper3
+    , paper4
+    , paper5
+    , paper6
+    , paper7
+    , paper8
+    , paper9
+    , paper10
+    , paper11
+    , paper12
+    , paper13
+    , foodTemplate
+    , food1
+    , food2
     , light1
     , light2
     , light3
-    , blanket
-    , gorget
     , necklaceTemplate
     , necklace1
     , necklace2
@@ -192,9 +185,7 @@ items =
     , sword
     , cableTray
     , currencyTemplate
-    , currency
-    , jumpingPole
-    , seeingItem]
+    , currency ]
 
 -- Keep the dice rolls and sides in aspects small so that not too many
 -- distinct items are generated (for display in item lore and for narrative
@@ -224,8 +215,8 @@ symbolRing :: ContentSymbol c
 symbolRing       = rsymbolRing $ ritemSymbols standardRules
 symbolPotion :: ContentSymbol c
 symbolPotion     = rsymbolPotion $ ritemSymbols standardRules
-symbolScroll :: ContentSymbol c
-symbolScroll     = rsymbolScroll $ ritemSymbols standardRules
+symbolPaper :: ContentSymbol c
+symbolPaper     = rsymbolPaper $ ritemSymbols standardRules
 symbolTorsoArmor :: ContentSymbol c
 symbolTorsoArmor = rsymbolTorsoArmor $ ritemSymbols standardRules
 symbolMiscArmor :: ContentSymbol c
@@ -238,8 +229,6 @@ symbolEdged :: ContentSymbol c
 symbolEdged      = rsymbolEdged $ ritemSymbols standardRules
 symbolHafted :: ContentSymbol c
 symbolHafted     = rsymbolHafted $ ritemSymbols standardRules
-symbolWand :: ContentSymbol c
-symbolWand       = rsymbolWand $ ritemSymbols standardRules
 _symbolStaff :: ContentSymbol c
 _symbolStaff     = toContentSymbol '_'
 symbolFood :: ContentSymbol c
@@ -551,53 +540,53 @@ iceTea = sodaTemplate
 -- Readable or otherwise communicating consumables require high apply skill
 -- to be consumed.
 
-scrollTemplate :: ItemKind
-scrollTemplate = ItemKind
-  { isymbol  = symbolScroll
-  , iname    = "scroll"
-  , ifreq    = [(SCROLL_UNKNOWN, 1)]
+paperTemplate :: ItemKind
+paperTemplate = ItemKind
+  { isymbol  = symbolPaper
+  , iname    = "paper"
+  , ifreq    = [(PAPER_UNKNOWN, 1)]
   , iflavour = zipFancy stdCol ++ zipPlain stdCol
   , icount   = 1 `dL` 3
   , irarity  = [(1, 14), (10, 7)]
   , iverbHit = "thump"
   , iweight  = 50
   , idamage  = 0
-  , iaspects = [ PresentAs SCROLL_UNKNOWN
+  , iaspects = [ PresentAs PAPER_UNKNOWN
                , toVelocity 30 ]  -- bad shape, even rolled up
   , ieffects = []
   , idesc    = "Scraps of haphazardly scribbled mysteries from beyond. Is this equation an alchemical recipe? Is this diagram an extradimensional map? Is this formula a secret call sign?"
   , ikit     = []
   }
-scroll1 :: ItemKind
-scroll1 = scrollTemplate
-  { iname    = "the Scroll"
-  , ifreq    = [(TREASURE, 100), (ANY_SCROLL, 100)]
+paper1 :: ItemKind
+paper1 = paperTemplate
+  { iname    = "the Paper"
+  , ifreq    = [(TREASURE, 100), (ANY_PAPER, 100)]
   , icount   = 1
   , irarity  = [(5, 9), (10, 9)]  -- mixed blessing, so found early for a unique
   , iaspects = [SetFlag Unique, ELabel "of Reckless Beacon"]
-               ++ iaspects scrollTemplate
+               ++ iaspects paperTemplate
   , ieffects = [Summon HERO 1]
-  , idesc    = "The bright flame and sweet-smelling smoke of this heavily infused scroll should attract natural creatures inhabiting the area, including human survivors, if any."
+  , idesc    = "The bright flame and sweet-smelling smoke of this heavily infused paper should attract natural creatures inhabiting the area, including human survivors, if any."
   }
-scroll2 :: ItemKind
-scroll2 = scrollTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_SCROLL, 100)]
+paper2 :: ItemKind
+paper2 = paperTemplate
+  { ifreq    = [(COMMON_ITEM, 100), (ANY_PAPER, 100)]
   , irarity  = [(1, 6), (10, 2)]
   , ieffects = [Ascend False]
   }
-scroll3 :: ItemKind
-scroll3 = scrollTemplate
+paper3 :: ItemKind
+paper3 = paperTemplate
   -- needs to be common to show at least a portion of effects
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_SCROLL, 100)]
+  { ifreq    = [(COMMON_ITEM, 100), (ANY_PAPER, 100)]
   , icount   = 3 `dL` 1
   , irarity  = [(1, 14)]
   , ieffects = [OneOf [ Teleport 5, Paralyze 10, InsertMove 30
                       , Detect DetectEmbed 12, Detect DetectHidden 20 ]]
   }
-scroll4 :: ItemKind
-scroll4 = scrollTemplate
+paper4 :: ItemKind
+paper4 = paperTemplate
   -- needs to be common to show at least a portion of effects
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_SCROLL, 100)]
+  { ifreq    = [(COMMON_ITEM, 100), (ANY_PAPER, 100)]
   , icount   = 3 `dL` 1
   , irarity  = [(10, 14)]
   , ieffects = [ Impress
@@ -607,144 +596,107 @@ scroll4 = scrollTemplate
                        , Detect DetectLoot 20  -- the most useful of detections
                        , CreateItem Nothing CGround COMMON_ITEM timerNone ] ]
   }
-scroll5 :: ItemKind
-scroll5 = scrollTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_SCROLL, 100)]
+paper5 :: ItemKind
+paper5 = paperTemplate
+  { ifreq    = [(COMMON_ITEM, 100), (ANY_PAPER, 100)]
   , irarity  = [(1, 6)]  -- powerful, but low counts at the depths it appears on
   , ieffects = [InsertMove $ 20 + 1 `dL` 20]
   }
-scroll6 :: ItemKind
-scroll6 = scrollTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_SCROLL, 100)]
+paper6 :: ItemKind
+paper6 = paperTemplate
+  { ifreq    = [(COMMON_ITEM, 100), (ANY_PAPER, 100)]
   , irarity  = [(10, 11)]
   , ieffects = [PullActor (ThrowMod 800 75 1)]  -- 6 steps, 1.5 turns
   }
-scroll7 :: ItemKind
-scroll7 = scrollTemplate
-  { iname    = "the Scroll"
-  , ifreq    = [(TREASURE, 100), (ANY_SCROLL, 100)]
+paper7 :: ItemKind
+paper7 = paperTemplate
+  { iname    = "the Paper"
+  , ifreq    = [(TREASURE, 100), (ANY_PAPER, 100)]
   , icount   = 1
   , irarity  = [(10, 12)]
   , iaspects = [SetFlag Unique, ELabel "of Rescue Proclamation"]
-               ++ iaspects scrollTemplate
+               ++ iaspects paperTemplate
   , ieffects = [Summon HERO 1]
   , idesc    = "A survivor of past exploration missions is found that enjoys, apparently, complete physiological integrity. We can pronounce him a comrade in arms and let him join our party."
   }
-scroll8 :: ItemKind
-scroll8 = scrollTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_SCROLL, 100)]
+paper8 :: ItemKind
+paper8 = paperTemplate
+  { ifreq    = [(COMMON_ITEM, 100), (ANY_PAPER, 100)]
   , irarity  = [(10, 4)]  -- powerful, even if not ideal; scares newbies
   , ieffects = [Detect DetectAll 20]
   }
-scroll9 :: ItemKind
-scroll9 = scrollTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_SCROLL, 100)]
+paper9 :: ItemKind
+paper9 = paperTemplate
+  { ifreq    = [(COMMON_ITEM, 100), (ANY_PAPER, 100)]
   , iaspects = ELabel "of cue interpretation"
-               : iaspects scrollTemplate
+               : iaspects paperTemplate
   , ieffects = [Detect DetectActor 20]
   }
-scroll10 :: ItemKind
-scroll10 = scrollTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_SCROLL, 100)]
+paper10 :: ItemKind
+paper10 = paperTemplate
+  { ifreq    = [(COMMON_ITEM, 100), (ANY_PAPER, 100)]
   , icount   = 3 `dL` 1
   , irarity  = [(1, 20)]  -- uncommon deep down, where all is known
   , iaspects = ELabel "of scientific explanation"
-               : iaspects scrollTemplate
+               : iaspects paperTemplate
   , ieffects = [Identify `AndEffect` RefillCalm 10]
   , idesc    = "The most pressing existential concerns are met with a deeply satisfying scientific answer."
   }
-scroll11 :: ItemKind
-scroll11 = scrollTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_SCROLL, 100)]
+paper11 :: ItemKind
+paper11 = paperTemplate
+  { ifreq    = [(COMMON_ITEM, 100), (ANY_PAPER, 100)]
   , irarity  = [(10, 20)]  -- at gameover a crucial item may be missing
   , iaspects = ELabel "of transmutation"
-               : iaspects scrollTemplate
+               : iaspects paperTemplate
   , ieffects = [PolyItem `AndEffect` Explode S_FIRECRACKER]
   }
-scroll12 :: ItemKind
-scroll12 = scrollTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_SCROLL, 100)]
+paper12 :: ItemKind
+paper12 = paperTemplate
+  { ifreq    = [(COMMON_ITEM, 100), (ANY_PAPER, 100)]
   , irarity  = [(10, 15)]
   , iaspects = ELabel "of transfiguration"
-               : iaspects scrollTemplate
+               : iaspects paperTemplate
   , ieffects = [RerollItem]
   }
-scroll13 :: ItemKind
-scroll13 = scrollTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_SCROLL, 100)]
+paper13 :: ItemKind
+paper13 = paperTemplate
+  { ifreq    = [(COMMON_ITEM, 100), (ANY_PAPER, 100)]
   , irarity  = [(10, 15)]
   , iaspects = ELabel "of similarity"
-               : iaspects scrollTemplate
+               : iaspects paperTemplate
   , ieffects = [DupItem]
   }
 
 -- Foods require only minimal apply skill to consume.
 
-ediblePlantTemplate :: ItemKind
-ediblePlantTemplate = ItemKind
+foodTemplate :: ItemKind
+foodTemplate = ItemKind
   { isymbol  = symbolFood
-  , iname    = "edible plant"
-  , ifreq    = [(EDIBLE_PLANT_UNKNOWN, 1)]
+  , iname    = "food"
+  , ifreq    = [(FOOD_UNKNOWN, 1)]
   , iflavour = zipFancy stdCol
   , icount   = 1 `dL` 5
   , irarity  = [(1, 12), (10, 6)]
   , iverbHit = "thump"
   , iweight  = 50
   , idamage  = 0
-  , iaspects = [ PresentAs EDIBLE_PLANT_UNKNOWN
+  , iaspects = [ PresentAs FOOD_UNKNOWN
                , toVelocity 30 ]  -- low density, often falling apart
   , ieffects = []
   , idesc    = "Withered but fragrant bits of a colorful plant. Taste tolerably and break down easily, but only eating may reveal the full effects."
   , ikit     = []
   }
-ediblePlant1 :: ItemKind
-ediblePlant1 = ediblePlantTemplate
-  { iname    = "overripe berry"
-  , ifreq    = [(COMMON_ITEM, 100), (EDIBLE_PLANT, 100)]
+food1 :: ItemKind
+food1 = foodTemplate
+  { iname    = "candy bar"
+  , ifreq    = [(COMMON_ITEM, 100), (FOOD, 100)]
   , ieffects = [RefillHP 1, toOrganBad S_IMMOBILE (5 + 1 `d` 5)]
   }
-ediblePlant2 :: ItemKind
-ediblePlant2 = ediblePlantTemplate
-  { iname    = "frayed fungus"
-  , ifreq    = [(COMMON_ITEM, 100), (EDIBLE_PLANT, 100)]
-  , ieffects = [toOrganNoTimer S_POISONED]
-  }
-ediblePlant3 :: ItemKind
-ediblePlant3 = ediblePlantTemplate
-  { iname    = "thick leaf"
-  , ifreq    = [(COMMON_ITEM, 100), (EDIBLE_PLANT, 100)]
-  , ieffects = [DropItem 1 maxBound COrgan S_POISONED]
-  }
-ediblePlant4 :: ItemKind
-ediblePlant4 = ediblePlantTemplate
-  { iname    = "shrunk fruit"
-  , ifreq    = [(COMMON_ITEM, 100), (EDIBLE_PLANT, 100)]
-  , ieffects = [toOrganBad S_BLIND (10 + 1 `d` 10)]
-  }
-ediblePlant5 :: ItemKind
-ediblePlant5 = ediblePlantTemplate
-  { iname    = "fragrant herb"
-  , ifreq    = [(COMMON_ITEM, 100), (EDIBLE_PLANT, 100)]
-  , icount   = 1 `dL` 9
-  , irarity  = [(1, 12), (10, 5)]
-  , iaspects = ELabel "of lethargy"
-               : iaspects ediblePlantTemplate
-  , ieffects = [ toOrganBad S_SLOWED (20 + 1 `d` 5)
-               , toOrganNoTimer S_REGENERATING
-               , toOrganNoTimer S_REGENERATING  -- x2
-               , RefillCalm 5 ]
-  }
-ediblePlant6 :: ItemKind
-ediblePlant6 = ediblePlantTemplate
-  { iname    = "dull flower"
-  , ifreq    = [(COMMON_ITEM, 100), (EDIBLE_PLANT, 100)]
-  , ieffects = [PutToSleep]
-  }
-ediblePlant7 :: ItemKind
-ediblePlant7 = ediblePlantTemplate
-  { iname    = "spicy bark"
-  , ifreq    = [(COMMON_ITEM, 100), (EDIBLE_PLANT, 100)]
-  , ieffects = [InsertMove 20, toOrganBad S_FRENZIED (40 + 1 `d` 10)]
+food2 :: ItemKind
+food2 = foodTemplate
+  { iname    = "sandwich"
+  , ifreq    = [(COMMON_ITEM, 100), (FOOD, 100)]
+  , ieffects = [RefillHP 5, toOrganBad S_IMMOBILE (2 + 1 `d` 3)]
   }
 
 -- ** Lights
@@ -807,51 +759,9 @@ light3 = ItemKind
   , idesc    = "Very bright and very heavy brass lantern."
   , ikit     = []
   }
-blanket :: ItemKind
-blanket = ItemKind
-  { isymbol  = symbolLight
-  , iname    = "wool blanket"
-  , ifreq    = [ (COMMON_ITEM, 100), (LIGHT_ATTENUATOR, 100)
-               , (FIREPROOF_CLOTH, 1) ]
-  , iflavour = zipPlain [BrBlack]
-  , icount   = 1
-  , irarity  = [(1, 1)]  -- not every playthrough needs one
-  , iverbHit = "swoosh"
-  , iweight  = 1000
-  , idamage  = 0
-  , iaspects = [ AddSkill SkShine (-10)
-               , AddSkill SkArmorMelee 3, AddSkill SkMaxCalm 5
-               , SetFlag Lobable, SetFlag Equipable
-               , EqpSlot EqpSlotArmorMelee ]
-                   -- not Fragile; reusable douse implement;
-                   -- douses torch, lamp and lantern in one action,
-                   -- both in equipment and when thrown at the floor
-  , ieffects = []
-  , idesc    = "Warm, comforting, and concealing, woven from soft wool."
-  , ikit     = []
-  }
 
 -- ** Periodic jewelry
 
--- This looks like a necklace, but is not periodic. Instead, it auto-activates
--- when under melee attack.
-gorget :: ItemKind
-gorget = necklaceTemplate
-  { iname    = "Old Gorget"
-  , ifreq    = [(COMMON_ITEM, 25), (TREASURE, 25)]
-  , iflavour = zipFancy [BrCyan]  -- looks exactly the same as one of necklaces,
-                                  -- but it's OK, it's an artifact
-  , iaspects = [ SetFlag Unique
-               , Timeout $ 7 - 1 `dL` 4
-                   -- the dL dice need to be in negative positions
-                   -- for negative stats, such as @Timeout@, so that
-                   -- the @RerollItem@ effect makes the item better, not worse
-               , AddSkill SkArmorMelee 3, AddSkill SkHearing 3
-               , SetFlag UnderMelee, SetFlag Durable ]
-               ++ delete (SetFlag Periodic) iaspects_necklaceTemplate
-  , ieffects = [RefillCalm 15]
-  , idesc    = "Highly ornamental, cold, large steel medallion on a chain. Unlikely to offer much protection as an armor piece, but the old worn engraving reassures the wearer."
-  }
 -- Morally these are the aspects, but we also need to add a fake @Timeout@,
 -- to let clients know that the not identified item is periodic jewelry.
 iaspects_necklaceTemplate :: [Aspect]
@@ -1324,10 +1234,9 @@ knife = ItemKind
   , iaspects = [ Timeout 2
                , AddSkill SkHurtMelee $ (-1 + 1 `d` 2 + 1 `dL` 2) * 3
                , AddSkill SkArmorMelee $ (1 `d` 2) * 5
-                   -- very common, so don't make too random
                , SetFlag Durable, SetFlag Meleeable
                , EqpSlot EqpSlotWeaponFast
-               , toVelocity 40 ]  -- ensuring it hits with the tip costs speed
+               , toVelocity 40 ]
   , ieffects = []
   , idesc    = "A typical pocket knife, nothing unusual."
   , ikit     = []
@@ -1347,10 +1256,9 @@ pencil = ItemKind
   , iaspects = [ Timeout 2
                , AddSkill SkHurtMelee $ (-1 + 1 `d` 2 + 1 `dL` 2) * 3
                , AddSkill SkArmorMelee $ (1 `d` 2) * 5
-                   -- very common, so don't make too random
                , SetFlag Durable, SetFlag Meleeable
                , EqpSlot EqpSlotWeaponFast
-               , toVelocity 40 ]  -- ensuring it hits with the tip costs speed
+               , toVelocity 40 ]
   , ieffects = []
   , idesc    = "A very sharp pencil"
   , ikit     = []
@@ -1366,12 +1274,9 @@ laptopCharger = ItemKind
   , irarity  = [(3, 25), (5, 1)]
   , iverbHit = "swing"
   , iweight  = 150
-  , idamage  = 8 `d` 1  -- we are lying about the dice here, but the dungeon
-                        -- is too small and the extra-dice hammers too rare
-                        -- to subdivide this identification class by dice
-  , iaspects = [ PresentAs HAMMER_UNKNOWN
+  , idamage  = 8 `d` 1  , iaspects = [ PresentAs HAMMER_UNKNOWN
                , SetFlag Durable, SetFlag Meleeable
-               , toVelocity 40 ]  -- ensuring it hits with the tip costs speed
+               , toVelocity 40 ]
   , ieffects = []
   , idesc    = "Regular laptop charger with a cord, can be swung at enemies."
   , ikit     = []
@@ -1398,7 +1303,7 @@ sword = ItemKind
   , iaspects = [ Timeout 7
                , SetFlag Durable, SetFlag Meleeable
                , EqpSlot EqpSlotWeaponBig
-               , toVelocity 40 ]  -- ensuring it hits with the tip costs speed
+               , toVelocity 40 ]
   , ieffects = []
   , idesc    = "Difficult to master; deadly when used effectively. The steel is particularly hard and keen, but rusts quickly without regular maintenance."
   , ikit     = []
@@ -1416,11 +1321,10 @@ cableTray = ItemKind
   , idamage  = 12 `d` 1
   , iaspects = [ Timeout 10
                , AddSkill SkHurtMelee $ (-5 + 1 `dL` 3) * 5
-                   -- useless against armor at game start
                , AddSkill SkArmorMelee 20
                , SetFlag Durable, SetFlag Meleeable
                , EqpSlot EqpSlotWeaponBig
-               , toVelocity 20 ]  -- not balanced
+               , toVelocity 20 ]
   , ieffects = []
   , idesc    = "A long, aluminium cable tray. Can be used as a weapon."
   , ikit     = []
@@ -1449,59 +1353,4 @@ currency = currencyTemplate
   { ifreq    = [(TREASURE, 100), (S_CURRENCY, 100), (VALUABLE, 1)]
   , iaspects = [AddSkill SkShine 1, AddSkill SkSpeed (-1)]
                ++ iaspects currencyTemplate
-  }
-
--- ** Tools to be actively used, but not worn
-
-jumpingPole :: ItemKind
-jumpingPole = ItemKind
-  { isymbol  = symbolWand
-  , iname    = "jumping pole"
-  , ifreq    = [(COMMON_ITEM, 90)]
-  , iflavour = zipFancy [White]
-  , icount   = 1
-  , irarity  = [(1, 3)]
-  , iverbHit = "prod"
-  , iweight  = 10000
-  , idamage  = 0
-  , iaspects = [ Timeout $ (2 + 1 `d` 2 - 1 `dL` 2) * 5
-               , SetFlag Durable ]
-  , ieffects = [toOrganGood S_HASTED 1]
-                 -- This works and doesn't cause AI loops. @InsertMove@
-                 -- would produce an activation that doesn't change game state.
-                 -- Hasting for an absolute number of turns would cause
-                 -- an explosion of time when several poles are accumulated.
-                 -- Here it speeds AI up for exactly the turn spent activating,
-                 -- so when AI applies it repeatedly, it gets its time back and
-                 -- is not stuck. In total, the exploration speed is unchanged,
-                 -- but it's useful when fleeing in the dark to make distance
-                 -- and when initiating combat, so it's OK that AI uses it.
-                 -- Timeout is rather high, because for factions with leaders
-                 -- some time is often gained, so this could be useful
-                 -- even during melee, which would be tiresome to employ.
-  , idesc    = "Makes you vulnerable at take-off, but then you are free like a bird."
-  , ikit     = []
-  }
-seeingItem :: ItemKind
-seeingItem = ItemKind
-  { isymbol  = symbolFood
-  , iname    = "giant pupil"
-  , ifreq    = [(COMMON_ITEM, 100)]
-  , iflavour = zipPlain [Red]
-  , icount   = 1
-  , irarity  = [(1, 2)]
-  , iverbHit = "gaze at"
-  , iweight  = 100
-  , idamage  = 0
-  , iaspects = [ Timeout 3
-               , AddSkill SkSight 10  -- a spyglass for quick wields
-               , AddSkill SkMaxCalm 30  -- to diminish clipping sight by Calm
-               , AddSkill SkShine 2  -- to lit corridors when flying
-               , SetFlag Periodic ]
-  , ieffects = [ Detect DetectActor 20  -- rare enough
-               , When (TriggeredBy ActivationPeriodic) $ SeqEffect
-                   [ toOrganNoTimer S_POISONED  -- really can't be worn
-                   , Summon MOBILE_MONSTER 1 ] ]
-  , idesc    = "A slimy, dilated green pupil torn out from some giant eye. Clear and focused, as if still alive."
-  , ikit     = []
   }

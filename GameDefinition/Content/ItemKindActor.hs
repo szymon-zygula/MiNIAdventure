@@ -17,7 +17,6 @@ module Content.ItemKindActor
   , pattern ADD_SIGHT, pattern ARMOR_RANGED, pattern ADD_NOCTO_1
   , pattern WEAK_ARROW
   , pattern LIGHT_ATTENUATOR
-  , pattern FIREPROOF_CLOTH
   , pattern RING_OF_OPPORTUNITY_SNIPER
   , pattern ANY_ARROW
   , pattern STARTING_ARMOR
@@ -66,7 +65,6 @@ actorsGN =
     , ADD_NOCTO_1
     , WEAK_ARROW
     , LIGHT_ATTENUATOR
-    , FIREPROOF_CLOTH
     , RING_OF_OPPORTUNITY_SNIPER
     , ANY_ARROW
     , STARTING_ARMOR
@@ -114,8 +112,6 @@ pattern WEAK_ARROW :: GroupName c
 pattern WEAK_ARROW = GroupName "weak arrow"
 pattern LIGHT_ATTENUATOR :: GroupName c
 pattern LIGHT_ATTENUATOR = GroupName "light attenuator"
-pattern FIREPROOF_CLOTH :: GroupName c
-pattern FIREPROOF_CLOTH = GroupName "fireproof cloth"
 pattern RING_OF_OPPORTUNITY_SNIPER :: GroupName c
 pattern RING_OF_OPPORTUNITY_SNIPER = GroupName "ring of sniper"
 pattern ANY_ARROW :: GroupName c
@@ -241,8 +237,7 @@ escapist = warrior
                   , (STARTING_ARMOR, CEqp)
                   , (WEAK_ARROW, CStash)  -- mostly for probing
                   , (LIGHT_ATTENUATOR, CStash)
-                  , (S_WOODEN_TORCH, CStash)
-                  , (FIREPROOF_CLOTH, CStash) ]
+                  , (S_WOODEN_TORCH, CStash) ]
   -- , idesc    = ""
   }
 ambusher :: ItemKind

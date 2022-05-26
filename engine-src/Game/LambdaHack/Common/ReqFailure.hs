@@ -232,7 +232,7 @@ permittedApply corule localTime skill calmE mstore
        && (IK.isymbol itemKind /= IK.rsymbolFood (RK.ritemSymbols corule)
            || mstore /= Just CGround) -> Left ApplyFood
      | skill < 3
-       && IK.isymbol itemKind == IK.rsymbolScroll (RK.ritemSymbols corule) ->
+       && IK.isymbol itemKind == IK.rsymbolPaper (RK.ritemSymbols corule) ->
          Left ApplyRead
      | skill < 4
        && let arItem = aspectRecordFull itemFull
