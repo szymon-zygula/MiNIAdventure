@@ -29,18 +29,12 @@ module Content.ItemKindBlast
   , pattern S_SPARSE_SHOWER
   , pattern S_MELEE_PROTECTIVE_BALM
   , pattern S_RANGE_PROTECTIVE_BALM
-  , pattern S_DEFENSELESSNESS_RUNOUT
   , pattern S_RESOLUTION_DUST
   , pattern S_HASTE_SPRAY
   , pattern S_VIOLENT_SLOWNESS_MIST
   , pattern S_SLOWNESS_MIST
   , pattern S_FOCUSED_SLOWNESS_MIST
-  , pattern S_EYE_DROP
   , pattern S_IRON_FILING
-  , pattern S_SMELLY_DROPLET
-  , pattern S_EYE_SHINE
-  , pattern S_YOUTH_SPRINKLE
-  , pattern S_POISON_CLOUD
   , pattern S_PING_PLASH
   , pattern S_VIOLENT_BURNING_OIL_2
   , pattern S_VIOLENT_BURNING_OIL_3
@@ -105,18 +99,12 @@ blastsGNSingleton =
    , S_SPARSE_SHOWER
    , S_MELEE_PROTECTIVE_BALM
    , S_RANGE_PROTECTIVE_BALM
-   , S_DEFENSELESSNESS_RUNOUT
    , S_RESOLUTION_DUST
    , S_HASTE_SPRAY
    , S_VIOLENT_SLOWNESS_MIST
    , S_SLOWNESS_MIST
    , S_FOCUSED_SLOWNESS_MIST
-   , S_EYE_DROP
    , S_IRON_FILING
-   , S_SMELLY_DROPLET
-   , S_EYE_SHINE
-   , S_YOUTH_SPRINKLE
-   , S_POISON_CLOUD
    , S_PING_PLASH
    , S_VIOLENT_BURNING_OIL_2
    , S_VIOLENT_BURNING_OIL_3
@@ -195,8 +183,6 @@ pattern S_MELEE_PROTECTIVE_BALM :: GroupName c
 pattern S_MELEE_PROTECTIVE_BALM = GroupName "melee protective balm"
 pattern S_RANGE_PROTECTIVE_BALM :: GroupName c
 pattern S_RANGE_PROTECTIVE_BALM = GroupName "ranged protective balm"
-pattern S_DEFENSELESSNESS_RUNOUT :: GroupName c
-pattern S_DEFENSELESSNESS_RUNOUT = GroupName "PhD defense question"
 pattern S_RESOLUTION_DUST :: GroupName c
 pattern S_RESOLUTION_DUST = GroupName "resolution dust"
 pattern S_HASTE_SPRAY :: GroupName c
@@ -207,18 +193,8 @@ pattern S_SLOWNESS_MIST :: GroupName c
 pattern S_SLOWNESS_MIST = GroupName "nitrogen mist"
 pattern S_FOCUSED_SLOWNESS_MIST :: GroupName c
 pattern S_FOCUSED_SLOWNESS_MIST = GroupName "focused nitrogen mist"
-pattern S_EYE_DROP :: GroupName c
-pattern S_EYE_DROP = GroupName "eye drop"
 pattern S_IRON_FILING :: GroupName c
 pattern S_IRON_FILING = GroupName "iron filing"
-pattern S_SMELLY_DROPLET :: GroupName c
-pattern S_SMELLY_DROPLET = GroupName "smelly droplet"
-pattern S_EYE_SHINE :: GroupName c
-pattern S_EYE_SHINE = GroupName "eye shine"
-pattern S_YOUTH_SPRINKLE :: GroupName c
-pattern S_YOUTH_SPRINKLE = GroupName "youth sprinkle"
-pattern S_POISON_CLOUD :: GroupName c
-pattern S_POISON_CLOUD = GroupName "poison cloud"
 pattern S_PING_PLASH :: GroupName c
 pattern S_PING_PLASH = GroupName "ping and flash"
 pattern S_VIOLENT_BURNING_OIL_2 :: GroupName c
@@ -300,18 +276,12 @@ blasts =
   , sparseShower
   , protectingBalmMelee
   , protectingBalmRanged
-  , defenselessnessRunout
   , resolutionDust
   , hasteSpray
   , spreadNitrogen
   , spreadNitrogen8
   , focusedNitrogen
-  , eyeDrop
   , ironFiling
-  , smellyDroplet
-  , eyeShine
-  , youthSprinkle
-  , poisonCloud
   , pingFlash
   , blastNoSkMove
   , blastNoSkMelee
@@ -962,22 +932,6 @@ protectingBalmRanged = ItemKind
   , idesc    = "Grease that protects from flying death."
   , ikit     = []
   }
-defenselessnessRunout :: ItemKind
-defenselessnessRunout = ItemKind
-  { isymbol  = toContentSymbol '?'
-  , iname    = "PhD defense question"
-  , ifreq    = [(S_DEFENSELESSNESS_RUNOUT, 1)]
-  , iflavour = zipFancy [BrRed]
-  , icount   = 16
-  , irarity  = [(1, 1)]
-  , iverbHit = "nag"
-  , iweight  = 1
-  , idamage  = 0
-  , iaspects = [toLinger 10, SetFlag Fragile, SetFlag Blast]
-  , ieffects = [toOrganBad S_DEFENSELESS (3 + 1 `d` 3)]
-  , idesc    = "Only the most learned make use of this."
-  , ikit     = []
-  }
 resolutionDust :: ItemKind
 resolutionDust = ItemKind
   { isymbol  = toContentSymbol '`'
@@ -1053,22 +1007,6 @@ focusedNitrogen = ItemKind
   , idesc    = "Colourless and colder than ice."
   , ikit     = []
   }
-eyeDrop :: ItemKind
-eyeDrop = ItemKind
-  { isymbol  = toContentSymbol '`'
-  , iname    = "eye drop"
-  , ifreq    = [(S_EYE_DROP, 1)]
-  , iflavour = zipFancy [BrCyan]
-  , icount   = 16
-  , irarity  = [(1, 1)]
-  , iverbHit = "cleanse"
-  , iweight  = 1
-  , idamage  = 0
-  , iaspects = [toLinger 10, SetFlag Fragile, SetFlag Blast]
-  , ieffects = [toOrganGood S_FAR_SIGHTED (3 + 1 `d` 3)]
-  , idesc    = "Not to be taken orally."
-  , ikit     = []
-  }
 ironFiling :: ItemKind
 ironFiling = ItemKind  -- fast, short, strongly blinding blast
   { isymbol  = toContentSymbol '`'
@@ -1083,72 +1021,6 @@ ironFiling = ItemKind  -- fast, short, strongly blinding blast
   , iaspects = [toLinger 10, SetFlag Fragile, SetFlag Blast]
   , ieffects = [toOrganBad S_BLIND (10 + 1 `d` 10)]
   , idesc    = "A shaving of bright metal."
-  , ikit     = []
-  }
-smellyDroplet :: ItemKind
-smellyDroplet = ItemKind
-  { isymbol  = toContentSymbol '`'
-  , iname    = "smelly droplet"
-  , ifreq    = [(S_SMELLY_DROPLET, 1)]
-  , iflavour = zipFancy [Blue]
-  , icount   = 16
-  , irarity  = [(1, 1)]
-  , iverbHit = "sensitize"
-  , iweight  = 1
-  , idamage  = 0
-  , iaspects = [toLinger 10, SetFlag Fragile, SetFlag Blast]
-  , ieffects = [toOrganGood S_KEEN_SMELLING (5 + 1 `d` 3)]
-  , idesc    = "A viscous lump that stains the skin."
-  , ikit     = []
-  }
-eyeShine :: ItemKind
-eyeShine = ItemKind
-  { isymbol  = toContentSymbol '`'
-  , iname    = "eye shine"
-  , ifreq    = [(S_EYE_SHINE, 1)]
-  , iflavour = zipFancy [Cyan]
-  , icount   = 16
-  , irarity  = [(1, 1)]
-  , iverbHit = "smear"
-  , iweight  = 1
-  , idamage  = 0
-  , iaspects = [toLinger 10, SetFlag Fragile, SetFlag Blast]
-  , ieffects = [toOrganGood S_SHINY_EYED (3 + 1 `d` 3)]
-  , idesc    = "They almost glow in the dark."
-  , ikit     = []
-  }
-youthSprinkle :: ItemKind
-youthSprinkle = ItemKind
-  { isymbol  = toContentSymbol '`'
-  , iname    = "youth sprinkle"
-  , ifreq    = [(S_YOUTH_SPRINKLE, 1)]
-  , iflavour = zipFancy [BrGreen]
-  , icount   = 16
-  , irarity  = [(1, 1)]
-  , iverbHit = "sprinkle"
-  , iweight  = 1
-  , idamage  = 0
-  , iaspects = [toLinger 10, SetFlag Fragile, SetFlag Blast]
-  , ieffects = [ toOrganGood S_ROSE_SMELLING (40 + 1 `d` 20)
-               , toOrganNoTimer S_REGENERATING ]
-  , idesc    = "Bright and smelling of the Spring."
-  , ikit     = []
-  }
-poisonCloud :: ItemKind
-poisonCloud = ItemKind
-  { isymbol  = toContentSymbol '`'
-  , iname    = "poison cloud"
-  , ifreq    = [(S_POISON_CLOUD, 1)]
-  , iflavour = zipFancy [BrMagenta]
-  , icount   = 11  -- low, to be less deadly in a tunnel, compared to single hit
-  , irarity  = [(1, 1)]
-  , iverbHit = "poison"
-  , iweight  = 0  -- lingers, blocking path
-  , idamage  = 0
-  , iaspects = [ ToThrow $ ThrowMod 10 100 2  -- 2 steps, 2 turns
-               , SetFlag Fragile, SetFlag Blast ]
-  , ieffects = [toOrganNoTimer S_POISONED]
-  , idesc    = "Choking gas that stings the eyes."
   , ikit     = []
   }
 pingFlash :: ItemKind

@@ -381,7 +381,7 @@ server = computer
   , iflavour = zipPlain [Cyan]
   , iweight  = 2000
   , ifreq    = [(COMPUTER, 25), (SERVER, 75), (MOBILE, 1)]
-  , iaspects = [ AddSkill SkMaxHP 25, AddSkill SkMaxCalm 40
+  , iaspects = [ AddSkill SkMaxHP 30, AddSkill SkMaxCalm 40
                , AddSkill SkSpeed 4, AddSkill SkNocto 1
                , AddSkill SkAggression 5
                , AddSkill SkAlter (-2)

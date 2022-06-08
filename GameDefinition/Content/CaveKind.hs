@@ -3,6 +3,7 @@
 module Content.CaveKind
   ( pattern CAVE_PARKING_LOT
   , pattern CAVE_MINI_LABORATORY
+  , pattern CAVE_SERVER_ROOM
   , pattern CAVE_ROGUE
   , pattern CAVE_ARENA
   , pattern CAVE_SMOKING
@@ -43,6 +44,7 @@ groupNamesSingleton = []
 groupNames :: [GroupName CaveKind]
 groupNames =
     [ CAVE_PARKING_LOT
+    , CAVE_SERVER_ROOM
     , CAVE_MINI_LABORATORY
     , CAVE_ROGUE
     , CAVE_ARENA
@@ -59,6 +61,8 @@ pattern CAVE_PARKING_LOT :: GroupName c
 pattern CAVE_PARKING_LOT = GroupName "caveParkingLot"
 pattern CAVE_MINI_LABORATORY :: GroupName c
 pattern CAVE_MINI_LABORATORY = GroupName "caveMiniLaboratory"
+pattern CAVE_SERVER_ROOM :: GroupName c
+pattern CAVE_SERVER_ROOM = GroupName "caveServerRoom"
 pattern CAVE_ROGUE :: GroupName c
 pattern CAVE_ROGUE = GroupName "caveRogue"
 pattern CAVE_ARENA :: GroupName c
@@ -86,6 +90,7 @@ content :: [CaveKind]
 content =
     [ parkingLot
     , miniLaboratory
+    , serverRoom
     , rogue
     , arena
     , smoking
@@ -363,14 +368,14 @@ parkingLot = rogue
   , ccellSize     = DiceXY (4 `d` 4 + 12) 12
   , cminPlaceSize = DiceXY (4 `d` 2 + 8) 10
   , cmaxPlaceSize = DiceXY 32 40
-  , cdarkOdds     = 0  -- all rooms lit, for a gentle start
+  , cdarkOdds     = 0
   , cmaxVoid      = 1%10
-  , cdoorChance   = 1  -- make sure enemies not seen on turn 1
-  , copenChance   = 0  -- make sure enemies not seen on turn 1
-  , cactorCoeff   = 300  -- deep level with no kit, so slow spawning
+  , cdoorChance   = 1
+  , copenChance   = 0
+  , cactorCoeff   = 300
   , cactorFreq    = [(CAR, 100)]
   , citemNum      = 50
-  , citemFreq     = [ (IK.EXPLOSIVE, 30000), (IK.COMMON_ITEM, 20)
+  , citemFreq     = [ (IK.EXPLOSIVE, 20000), (IK.COMMON_ITEM, 20)
                     , (STARTING_WEAPON, 30) ]
   , cmaxStairsNum = 0
   , cescapeFreq   = [(INDOOR_ESCAPE_UP, 1)]
@@ -382,21 +387,44 @@ miniLaboratory :: CaveKind
 miniLaboratory = rogue
   { cname = "MiNI laboratory"
   , cfreq = [(CAVE_MINI_LABORATORY, 1)]
-  , cdesc = "A laboratory full of computers for writing useful programs" 
+  , cdesc = "Laboratory full of computers for writing useful programs" 
   , cXminSize     = 50
   , cYminSize     = 21
   , ccellSize     = DiceXY (2 `d` 4 + 6) 6
   , cminPlaceSize = DiceXY (2 `d` 2 + 4) 5
   , cmaxPlaceSize = DiceXY 16 20
-  , cdarkOdds     = 0  -- all rooms lit, for a gentle start
+  , cdarkOdds     = 0
   , cmaxVoid      = 1%10
-  , cdoorChance   = 1  -- make sure enemies not seen on turn 1
-  , copenChance   = 0  -- make sure enemies not seen on turn 1
-  , cactorCoeff   = 300  -- deep level with no kit, so slow spawning
-  , cactorFreq    = [(COMPUTER, 500), (SERVER, 2000)]
+  , cdoorChance   = 1
+  , copenChance   = 0
+  , cactorCoeff   = 300
+  , cactorFreq    = [(COMPUTER, 200), (SERVER, 25)]
   , citemNum      = 50
-  , citemFreq     = [ (IK.EXPLOSIVE, 30000), (IK.COMMON_ITEM, 20)
-                    , (STARTING_WEAPON, 30) ]
+  , citemFreq     = [ (IK.COMMON_ITEM, 1), (STARTING_WEAPON, 1) ]
+  , cmaxStairsNum = 0
+  , cescapeFreq   = [(INDOOR_ESCAPE_UP, 1)]
+  , cstairFreq    = []
+  , cstairAllowed = []
+  }
+
+serverRoom :: CaveKind
+serverRoom = rogue
+  { cname = "MiNI server room complex"
+  , cfreq = [(CAVE_SERVER_ROOM, 1)]
+  , cdesc = "Server room complex full of servers for performing useful calculations" 
+  , cXminSize     = 65
+  , cYminSize     = 21
+  , ccellSize     = DiceXY (3 `d` 5 + 7) 8
+  , cminPlaceSize = DiceXY (3 `d` 3 + 5) 6
+  , cmaxPlaceSize = DiceXY 20 24
+  , cdarkOdds     = 0
+  , cmaxVoid      = 1%10
+  , cdoorChance   = 1
+  , copenChance   = 0
+  , cactorCoeff   = 300
+  , cactorFreq    = [(COMPUTER, 20), (SERVER, 500)]
+  , citemNum      = 50
+  , citemFreq     = [ (IK.EXPLOSIVE, 5), (IK.COMMON_ITEM, 2), (STARTING_WEAPON, 2) ]
   , cmaxStairsNum = 0
   , cescapeFreq   = [(INDOOR_ESCAPE_UP, 1)]
   , cstairFreq    = []

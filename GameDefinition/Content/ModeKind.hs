@@ -121,9 +121,9 @@ screensaverMini = mini
 rosterMini :: [(GroupName c1, [(Int, Dice, GroupName c2)])]
 rosterMini =
   [ ( COMPUTER_REPRESENTATIVE
-    , [(-2, 2, COMPUTER)] )
+    , [(-2, 4, SERVER)] )
   , ( EXPLORER_SHORT
-    , [(-2, 2, HERO)] ) ]
+    , [(-2, 4, HERO)] ) ]
 
 rosterCrawl :: [(GroupName c1, [(Int, Dice, GroupName c2)])]
 rosterCrawl =
@@ -132,7 +132,7 @@ rosterCrawl =
   ]
 
 cavesMini :: [([Int], [GroupName c])]
-cavesMini = [([-2], [CAVE_MINI_LABORATORY])]
+cavesMini = [([-2], [CAVE_SERVER_ROOM])]
 
 listCrawl :: [([Int], [GroupName CaveKind])]
 listCrawl =
