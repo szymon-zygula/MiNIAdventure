@@ -2,6 +2,7 @@
 -- and computer-controlled.
 module Content.FactionKind
   ( pattern CAR_REPRESENTATIVE
+  , pattern COMPUTER_REPRESENTATIVE
   , pattern EXPLORER_REPRESENTATIVE
   , pattern EXPLORER_SHORT
   , pattern EXPLORER_MEDIUM
@@ -13,16 +14,6 @@ module Content.FactionKind
   , pattern COMPETITOR_REPRESENTATIVE
   , pattern COMPETITOR_SHORT
   , pattern CIVILIAN_REPRESENTATIVE
-  , pattern CONVICT_REPRESENTATIVE
-  , pattern MONSTER_REPRESENTATIVE
-  , pattern MONSTER_ANTI
-  , pattern MONSTER_ANTI_CAPTIVE
-  , pattern MONSTER_ANTI_PACIFIST
-  , pattern MONSTER_CAPTIVE
-  , pattern MONSTER_CAPTIVE_NARRATING
-  , pattern HORROR_REPRESENTATIVE
-  , pattern HORROR_CAPTIVE
-  , pattern HORROR_PACIFIST
   , pattern REPRESENTATIVE
   , groupNamesSingleton, groupNames
   , content
@@ -48,6 +39,7 @@ import Content.ItemKindActor
 groupNamesSingleton :: [GroupName FactionKind]
 groupNamesSingleton =
     [ CAR_REPRESENTATIVE
+    , COMPUTER_REPRESENTATIVE
     , EXPLORER_REPRESENTATIVE
     , EXPLORER_SHORT
     , EXPLORER_MEDIUM
@@ -58,17 +50,7 @@ groupNamesSingleton =
     , EXPLORER_PACIFIST
     , COMPETITOR_REPRESENTATIVE
     , COMPETITOR_SHORT
-    , CIVILIAN_REPRESENTATIVE
-    , CONVICT_REPRESENTATIVE
-    , MONSTER_REPRESENTATIVE
-    , MONSTER_ANTI
-    , MONSTER_ANTI_CAPTIVE
-    , MONSTER_ANTI_PACIFIST
-    , MONSTER_CAPTIVE
-    , MONSTER_CAPTIVE_NARRATING
-    , HORROR_REPRESENTATIVE
-    , HORROR_CAPTIVE
-    , HORROR_PACIFIST]
+    , CIVILIAN_REPRESENTATIVE ]
 
 groupNames :: [GroupName FactionKind]
 groupNames = [REPRESENTATIVE]
@@ -77,6 +59,8 @@ pattern REPRESENTATIVE :: GroupName FactionKind
 pattern REPRESENTATIVE = GroupName "representative"
 pattern CAR_REPRESENTATIVE :: GroupName c
 pattern CAR_REPRESENTATIVE = GroupName "car"
+pattern COMPUTER_REPRESENTATIVE :: GroupName c
+pattern COMPUTER_REPRESENTATIVE = GroupName "computer"
 pattern EXPLORER_REPRESENTATIVE :: GroupName c
 pattern EXPLORER_REPRESENTATIVE = GroupName "explorer"
 pattern EXPLORER_SHORT :: GroupName c
@@ -99,26 +83,6 @@ pattern COMPETITOR_SHORT :: GroupName c
 pattern COMPETITOR_SHORT = GroupName "competitor short"
 pattern CIVILIAN_REPRESENTATIVE :: GroupName c
 pattern CIVILIAN_REPRESENTATIVE = GroupName "civilian"
-pattern CONVICT_REPRESENTATIVE :: GroupName c
-pattern CONVICT_REPRESENTATIVE = GroupName "convict"
-pattern MONSTER_REPRESENTATIVE :: GroupName c
-pattern MONSTER_REPRESENTATIVE = GroupName "monster"
-pattern MONSTER_ANTI :: GroupName c
-pattern MONSTER_ANTI = GroupName "monster anti"
-pattern MONSTER_ANTI_CAPTIVE :: GroupName c
-pattern MONSTER_ANTI_CAPTIVE = GroupName "monster anti captive"
-pattern MONSTER_ANTI_PACIFIST :: GroupName c
-pattern MONSTER_ANTI_PACIFIST = GroupName "monster anti pacifist"
-pattern MONSTER_CAPTIVE :: GroupName c
-pattern MONSTER_CAPTIVE = GroupName "monster captive"
-pattern MONSTER_CAPTIVE_NARRATING :: GroupName c
-pattern MONSTER_CAPTIVE_NARRATING = GroupName "monster captive narrating"
-pattern HORROR_REPRESENTATIVE :: GroupName c
-pattern HORROR_REPRESENTATIVE = GroupName "horror"
-pattern HORROR_CAPTIVE :: GroupName c
-pattern HORROR_CAPTIVE = GroupName "horror captive"
-pattern HORROR_PACIFIST :: GroupName c
-pattern HORROR_PACIFIST = GroupName "horror pacifist"
 
 -- * Teams
 
@@ -126,22 +90,17 @@ teamCompetitor :: TeamContinuity
 teamCompetitor = TeamContinuity 2
 teamCivilian :: TeamContinuity
 teamCivilian = TeamContinuity 3
-teamConvict :: TeamContinuity
-teamConvict = TeamContinuity 4
-teamMonster :: TeamContinuity
-teamMonster = TeamContinuity 5
-teamHorror :: TeamContinuity
-teamHorror = TeamContinuity 7
 teamCars :: TeamContinuity
 teamCars = TeamContinuity 8
-teamOther :: TeamContinuity
-teamOther = TeamContinuity 10
+teamComputers :: TeamContinuity
+teamComputers = TeamContinuity 9
 
 -- * Content
 
 content :: [FactionKind]
 content =
     [ factCar
+    , factComputer
     , factExplorer
     , factExplorerShort
     , factExplorerMedium
@@ -152,22 +111,10 @@ content =
     , factExplorerPacifist
     , factCompetitor
     , factCompetitorShort
-    , factCivilian
-    , factConvict
-    , factMonster
-    , factMonsterAnti
-    , factMonsterAntiCaptive
-    , factMonsterAntiPacifist
-    , factMonsterCaptive
-    , factMonsterCaptiveNarrating
-    , factHorror
-    , factHorrorCaptive
-    , factHorrorPacifist ]
+    , factCivilian ]
 
 
 -- * Content
-
--- ** teamExplorer
 
 factCar :: FactionKind
 factCar = FactionKind
@@ -185,7 +132,27 @@ factCar = FactionKind
   , fhasPointman = True
   , fhasUI = False
   , finitUnderAI = True
-  , fenemyTeams = [teamExplorer, teamCompetitor, teamCivilian, teamConvict]
+  , fenemyTeams = [teamExplorer, teamCompetitor, teamCivilian]
+  , falliedTeams = []
+  }
+
+factComputer :: FactionKind
+factComputer = FactionKind
+  { fname = "Batch of computers"
+  , ffreq = [(COMPUTER_REPRESENTATIVE, 1), (REPRESENTATIVE, 1)]
+  , fteam = teamComputers
+  , fgroups = [ (COMPUTER, 100) ]
+  , fskillsOther = zeroSkills
+  , fcanEscape = False
+  , fneverEmpty = False
+  , fhiCondPoly = hiDweller
+  , fhasGender = False
+  , finitDoctrine = TExplore
+  , fspawnsFast = True
+  , fhasPointman = True
+  , fhasUI = False
+  , finitUnderAI = True
+  , fenemyTeams = [teamExplorer, teamCompetitor, teamCivilian]
   , falliedTeams = []
   }
 
@@ -205,14 +172,14 @@ factExplorer = FactionKind
   , fhasPointman = True
   , fhasUI = True
   , finitUnderAI = False
-  , fenemyTeams = [teamCompetitor, teamMonster, teamHorror]
+  , fenemyTeams = [teamCompetitor]
   , falliedTeams = []
   }
 factExplorerShort :: FactionKind
 factExplorerShort = factExplorer
   { ffreq = [(EXPLORER_SHORT, 1)]
   , fhiCondPoly = hiHeroShort
-  , fenemyTeams = [teamMonster, teamHorror]
+  , fenemyTeams = []
   }
 factExplorerMedium :: FactionKind
 factExplorerMedium = factExplorer
@@ -258,7 +225,7 @@ factCompetitor = factExplorer
   , fteam = teamCompetitor
   , fhasUI = False
   , finitUnderAI = True
-  , fenemyTeams = [teamExplorer, teamMonster, teamHorror]
+  , fenemyTeams = [teamExplorer]
   , falliedTeams = []
   }
 factCompetitorShort :: FactionKind
@@ -266,7 +233,7 @@ factCompetitorShort = factCompetitor
   { fname = "Indigo Founder"  -- early
   , ffreq = [(COMPETITOR_SHORT, 1)]
   , fhiCondPoly = hiHeroShort
-  , fenemyTeams = [teamMonster, teamHorror]
+  , fenemyTeams = []
   }
 
 -- ** teamCivilian
@@ -287,108 +254,6 @@ factCivilian = FactionKind
   , fhasPointman = False  -- unorganized
   , fhasUI = False
   , finitUnderAI = True
-  , fenemyTeams = [teamMonster, teamHorror]
-  , falliedTeams = []
-  }
-
--- ** teamConvict, different demographics
-
-factConvict :: FactionKind
-factConvict = factCivilian
-  { fname = "Hunam Convict"
-  , ffreq = [(CONVICT_REPRESENTATIVE, 1), (REPRESENTATIVE, 1)]
-  , fteam = teamConvict
-  , fhasPointman = True  -- convicts organize better
-  , finitUnderAI = True
-  , fenemyTeams = [teamMonster, teamHorror]
-  , falliedTeams = []
-  }
-
--- ** teamMonster
-
-factMonster :: FactionKind
-factMonster = FactionKind
-  { fname = "Monster Hive"
-  , ffreq = [(MONSTER_REPRESENTATIVE, 1), (REPRESENTATIVE, 1)]
-  , fteam = teamMonster
-  , fgroups = [ (MONSTER, 100)
-              , (MOBILE_MONSTER, 1) ]
-  , fskillsOther = zeroSkills
-  , fcanEscape = False
-  , fneverEmpty = False
-  , fhiCondPoly = hiDweller
-  , fhasGender = False
-  , finitDoctrine = TExplore
-  , fspawnsFast = True
-  , fhasPointman = True
-  , fhasUI = False
-  , finitUnderAI = True
-  , fenemyTeams = [teamExplorer, teamCompetitor, teamCivilian, teamConvict]
-  , falliedTeams = []
-  }
--- This has continuity @teamMonster@, despite being playable.
-factMonsterAnti :: FactionKind
-factMonsterAnti = factMonster
-  { ffreq = [(MONSTER_ANTI, 1)]
-  , fhasUI = True
-  , finitUnderAI = False
-  }
-factMonsterAntiCaptive :: FactionKind
-factMonsterAntiCaptive = factMonsterAnti
-  { ffreq = [(MONSTER_ANTI_CAPTIVE, 1)]
-  , fneverEmpty = True
-  }
-factMonsterAntiPacifist :: FactionKind
-factMonsterAntiPacifist = factMonsterAntiCaptive
-  { ffreq = [(MONSTER_ANTI_PACIFIST, 1)]
-  , fenemyTeams = []
-  , falliedTeams = []
-  }
-factMonsterCaptive :: FactionKind
-factMonsterCaptive = factMonster
-  { ffreq = [(MONSTER_CAPTIVE, 1)]
-  , fneverEmpty = True
-  }
-factMonsterCaptiveNarrating :: FactionKind
-factMonsterCaptiveNarrating = factMonsterAntiCaptive
-  { ffreq = [(MONSTER_CAPTIVE_NARRATING, 1)]
-  , fhasUI = True
-  }
-
--- ** teamHorror, not much of a continuity intended, but can't be ignored
-
--- | A special faction, for summoned actors that don't belong to any
--- of the main factions of a given game. E.g., animals summoned during
--- a brawl game between two hero factions land in the horror faction.
--- In every game, either all factions for which summoning items exist
--- should be present or a horror faction should be added to host them.
-factHorror :: FactionKind
-factHorror = FactionKind
-  { fname = "Horror Den"
-  , ffreq = [(HORROR_REPRESENTATIVE, 1), (REPRESENTATIVE, 1)]
-  , fteam = teamHorror
-  , fgroups = [(IK.HORROR, 100)]
-  , fskillsOther = zeroSkills
-  , fcanEscape = False
-  , fneverEmpty = False
-  , fhiCondPoly = []
-  , fhasGender = False
-  , finitDoctrine = TPatrol  -- disoriented
-  , fspawnsFast = False
-  , fhasPointman = False
-  , fhasUI = False
-  , finitUnderAI = True
-  , fenemyTeams = [teamExplorer, teamCompetitor, teamCivilian, teamConvict]
-  , falliedTeams = []
-  }
-factHorrorCaptive :: FactionKind
-factHorrorCaptive = factHorror
-  { ffreq = [(HORROR_CAPTIVE, 1)]
-  , fneverEmpty = True
-  }
-factHorrorPacifist :: FactionKind
-factHorrorPacifist = factHorrorCaptive
-  { ffreq = [(HORROR_PACIFIST, 1)]
   , fenemyTeams = []
   , falliedTeams = []
   }

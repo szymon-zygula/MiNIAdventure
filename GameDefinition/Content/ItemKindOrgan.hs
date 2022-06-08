@@ -2,6 +2,7 @@
 -- | Actor organ definitions.
 module Content.ItemKindOrgan
   ( pattern S_TIRE
+  , pattern S_EXHAUST_FAN
   , pattern S_FIST
   , pattern S_FOOT
   , pattern S_HOOKED_CLAW
@@ -10,10 +11,6 @@ module Content.ItemKindOrgan
   , pattern S_SMALL_JAW
   , pattern S_JAW
   , pattern S_LARGE_JAW
-  , pattern S_ANTLER
-  , pattern S_HORN
-  , pattern S_RHINO_HORN
-  , pattern S_TENTACLE
   , pattern S_TIP
   , pattern S_LIP
   , pattern S_THORN
@@ -30,14 +27,9 @@ module Content.ItemKindOrgan
   , pattern S_BARK
   , pattern S_NOSTRIL
   , pattern S_RATLLE
-  , pattern S_INSECT_MORTALITY
   , pattern S_SAPIENT_BRAIN
   , pattern S_CAR_COMPUTER
-  , pattern S_ANIMAL_BRAIN
-  , pattern S_SCENT_GLAND
-  , pattern S_BOILING_VENT
-  , pattern S_ARSENIC_VENT
-  , pattern S_SULFUR_VENT
+  , pattern S_CPU
   , pattern S_CAMERA
   , pattern S_EYE_3
   , pattern S_EYE_6
@@ -48,8 +40,6 @@ module Content.ItemKindOrgan
   , pattern S_EAR_3
   , pattern S_EAR_6
   , pattern S_EAR_8
-  , pattern S_SPEED_GLAND_5
-  , pattern S_SPEED_GLAND_10 
   , pattern S_TOOTH
   , pattern S_LASH
   , pattern S_RIGHT_TORSION
@@ -81,6 +71,7 @@ import Content.RuleKind
 organsGNSingleton :: [GroupName ItemKind]
 organsGNSingleton =
     [ S_TIRE
+    , S_EXHAUST_FAN
     , S_FIST
     , S_FOOT
     , S_HOOKED_CLAW
@@ -89,10 +80,6 @@ organsGNSingleton =
     , S_SMALL_JAW
     , S_JAW
     , S_LARGE_JAW
-    , S_ANTLER
-    , S_HORN
-    , S_RHINO_HORN
-    , S_TENTACLE
     , S_TIP
     , S_LIP
     , S_THORN
@@ -109,14 +96,9 @@ organsGNSingleton =
     , S_BARK
     , S_NOSTRIL
     , S_RATLLE
-    , S_INSECT_MORTALITY
     , S_SAPIENT_BRAIN
     , S_CAR_COMPUTER
-    , S_ANIMAL_BRAIN
-    , S_SCENT_GLAND
-    , S_BOILING_VENT
-    , S_ARSENIC_VENT
-    , S_SULFUR_VENT
+    , S_CPU
     , S_CAMERA
     , S_EYE_3
     , S_EYE_6
@@ -127,8 +109,6 @@ organsGNSingleton =
     , S_EAR_3
     , S_EAR_6
     , S_EAR_8
-    , S_SPEED_GLAND_5
-    , S_SPEED_GLAND_10
     , S_TOOTH
     , S_LASH
     , S_RIGHT_TORSION
@@ -137,6 +117,8 @@ organsGNSingleton =
 
 pattern S_TIRE :: GroupName c
 pattern S_TIRE = GroupName "tire"
+pattern S_EXHAUST_FAN :: GroupName c
+pattern S_EXHAUST_FAN = GroupName "exhaust fan"
 pattern S_FIST :: GroupName c
 pattern S_FIST = GroupName "fist"
 pattern S_FOOT :: GroupName c
@@ -153,14 +135,6 @@ pattern S_JAW :: GroupName c
 pattern S_JAW = GroupName "jaw"
 pattern S_LARGE_JAW :: GroupName c
 pattern S_LARGE_JAW = GroupName "large jaw"
-pattern S_ANTLER :: GroupName c
-pattern S_ANTLER = GroupName "antler"
-pattern S_HORN :: GroupName c
-pattern S_HORN = GroupName "horn"
-pattern S_RHINO_HORN :: GroupName c
-pattern S_RHINO_HORN = GroupName "rhino horn"
-pattern S_TENTACLE :: GroupName c
-pattern S_TENTACLE = GroupName "tentacle"
 pattern S_TIP :: GroupName c
 pattern S_TIP = GroupName "tip"
 pattern S_LIP :: GroupName c
@@ -193,22 +167,12 @@ pattern S_NOSTRIL :: GroupName c
 pattern S_NOSTRIL = GroupName "nostril"
 pattern S_RATLLE :: GroupName c
 pattern S_RATLLE = GroupName "rattle"
-pattern S_INSECT_MORTALITY :: GroupName c
-pattern S_INSECT_MORTALITY = GroupName "insect mortality"
 pattern S_SAPIENT_BRAIN :: GroupName c
 pattern S_SAPIENT_BRAIN = GroupName "sapient brain"
 pattern S_CAR_COMPUTER :: GroupName c
 pattern S_CAR_COMPUTER = GroupName "car computer"
-pattern S_ANIMAL_BRAIN :: GroupName c
-pattern S_ANIMAL_BRAIN = GroupName "animal brain"
-pattern S_SCENT_GLAND :: GroupName c
-pattern S_SCENT_GLAND = GroupName "scent gland"
-pattern S_BOILING_VENT :: GroupName c
-pattern S_BOILING_VENT = GroupName "boiling vent"
-pattern S_ARSENIC_VENT :: GroupName c
-pattern S_ARSENIC_VENT = GroupName "arsenic vent"
-pattern S_SULFUR_VENT :: GroupName c
-pattern S_SULFUR_VENT = GroupName "sulfur vent"
+pattern S_CPU :: GroupName c
+pattern S_CPU = GroupName "cpu"
 pattern S_CAMERA :: GroupName c
 pattern S_CAMERA = GroupName "camera"
 pattern S_EYE_3 :: GroupName c
@@ -229,10 +193,6 @@ pattern S_EAR_6 :: GroupName c
 pattern S_EAR_6 = GroupName "ear 6"
 pattern S_EAR_8 :: GroupName c
 pattern S_EAR_8 = GroupName "ear 8"
-pattern S_SPEED_GLAND_5 :: GroupName c
-pattern S_SPEED_GLAND_5 = GroupName "speed gland 5"
-pattern S_SPEED_GLAND_10 :: GroupName c
-pattern S_SPEED_GLAND_10 = GroupName "speed gland 10"
 
 -- * LH-specific
 pattern S_TOOTH :: GroupName c
@@ -251,6 +211,7 @@ pattern S_PUPIL = GroupName "pupil"
 organs :: [ItemKind]
 organs =
     [ tire
+    , exhaustFan
     , fist
     , foot
     , hookedClaw
@@ -259,10 +220,6 @@ organs =
     , smallJaw
     , jaw
     , largeJaw
-    , antler
-    , horn
-    , rhinoHorn
-    , tentacle
     , tip
     , lip
     , thorn
@@ -289,16 +246,9 @@ organs =
     , ear6
     , ear8
     , rattleOrgan
-    , insectMortality
     , sapientBrain
     , carComputer
-    , animalBrain
-    , speedGland5
-    , speedGland10
-    , scentGland
-    , boilingVent
-    , arsenicVent
-    , sulfurVent
+    , cpu
     , bonusHP
     , braced
     , asleep
@@ -350,6 +300,22 @@ tire = ItemKind
   , iaspects = [SetFlag Durable, SetFlag Meleeable]
   , ieffects = []
   , idesc    = "Summer rubber tire"
+  , ikit     = []
+  }
+exhaustFan :: ItemKind
+exhaustFan = ItemKind
+  { isymbol  = toContentSymbol '*'
+  , iname    = "exhaust fan"
+  , ifreq    = [(S_EXHAUST_FAN, 1)]
+  , iflavour = zipPlain [BrBlack]
+  , icount   = 3
+  , irarity  = [(1, 1)]
+  , iverbHit = "swirl"
+  , iweight  = 50
+  , idamage  = 2 `d` 1
+  , iaspects = [SetFlag Durable, SetFlag Meleeable]
+  , ieffects = []
+  , idesc    = "A cooling exhaust fan, watch out for your fingers!"
   , ikit     = []
   }
 fist :: ItemKind
@@ -404,17 +370,6 @@ smallJaw = fist
   , idesc    = "Filled with small, even teeth."
   }
 
--- * Cooldown melee damage organs without effects
-tentacle :: ItemKind
-tentacle = fist  -- two copies only
-  { iname    = "tentacle"
-  , ifreq    = [(S_TENTACLE, 1)]
-  , iverbHit = "slap"
-  , idamage  = 4 `d` 1
-  , iaspects = Timeout 3  -- minimal timeout that lets other organs show
-               : iaspects fist
-  , idesc    = "Damp and dextrous."
-  }
 jaw :: ItemKind
 jaw = fist
   { iname    = "jaw"
@@ -425,17 +380,6 @@ jaw = fist
   , iaspects = Timeout (2 + 1 `d` 2)  -- no effect, but limit raw damage
                : iaspects fist
   , idesc    = "Delivers a powerful bite."
-  }
-horn :: ItemKind
-horn = fist
-  { iname    = "horn"
-  , ifreq    = [(S_HORN, 1)]
-  , iverbHit = "impale"
-  , idamage  = 5 `d` 1
-  , iaspects = [ Timeout 7  -- no effect, but limit raw damage; two copies
-               , AddSkill SkArmorMelee 10 ]  -- bonus doubled
-               ++ iaspects fist
-  , idesc    = "Sharp and long, for defence or attack."
   }
 largeJaw :: ItemKind
 largeJaw = fist
@@ -514,32 +458,6 @@ hookedClaw = fist
                : iaspects fist
   , ieffects = [toOrganBad S_SLOWED 2]
   , idesc    = "A curved talon."
-  }
-antler :: ItemKind
-antler = fist
-  { isymbol  = symbolWand
-  , iname    = "antler"
-  , ifreq    = [(S_ANTLER, 1)]
-  , iverbHit = "ram"
-  , idamage  = 4 `d` 1
-  , iaspects = [ Timeout $ 3 + (1 `d` 3) * 3
-               , AddSkill SkArmorMelee 10 ]  -- bonus doubled
-               ++ iaspects fist
-  , ieffects = [PushActor (ThrowMod 100 50 1)]  -- 1 step, slow
-  , idesc    = ""
-  }
-rhinoHorn :: ItemKind
-rhinoHorn = fist
-  { isymbol  = symbolWand
-  , iname    = "ugly horn"  -- made of keratin, unlike real horns
-  , ifreq    = [(S_RHINO_HORN, 1)]
-  , icount   = 1  -- single, unlike real horns
-  , iverbHit = "gore"
-  , idamage  = 5 `d` 1
-  , iaspects = [Timeout 5, AddSkill SkHurtMelee 20]
-               ++ iaspects fist
-  , ieffects = [Impress, Yell]  -- the owner is a mid-boss, after all
-  , idesc    = "Very solid, considering it has the same composition as fingernails."
   }
 largeTail :: ItemKind
 largeTail = fist
@@ -719,17 +637,6 @@ rattleOrgan = armoredSkin
   , ieffects = [Yell, RefillCalm 5]
   , idesc    = ""
   }
-insectMortality :: ItemKind
-insectMortality = armoredSkin
-  { iname    = "insect mortality"
-  , ifreq    = [(S_INSECT_MORTALITY, 1)]
-  , iverbHit = "age"
-  , iaspects = [ AddSkill SkAggression 2  -- try to attack before you die
-               , Timeout $ 30 + (1 `d` 3) * 10  -- die very slowly
-               , SetFlag Periodic, SetFlag Durable ]
-  , ieffects = [RefillHP (-1), Yell]
-  , idesc    = ""
-  }
 sapientBrain :: ItemKind
 sapientBrain = armoredSkin
   { iname    = "sapient brain"
@@ -749,100 +656,28 @@ carComputer = armoredSkin
   , ifreq    = [(S_CAR_COMPUTER, 1)]
   , iverbHit = "blank"
   , iaspects = [AddSkill sk 1 | sk <- [SkMove .. SkApply]]
-               ++ [AddSkill SkMove 4]  -- can move at once when waking up
-               ++ [AddSkill SkAlter 2]  -- can use normal stairs; can't dig
-               ++ [AddSkill SkWait 2]  -- can brace and sleep
-               -- No @SkApply@ bonus, so can only apply foods. Note, however,
-               -- that AI doesn't risk applying unIded items, so in early
-               -- game animals won't eat anything.
-               ++ [AddSkill SkDisplace (-1)]  -- no melee tactics
-               ++ [AddSkill SkMoveItem (-1)]  -- no item gathering
-               ++ [AddSkill SkProject (-1)]  -- nor item flinging
+               ++ [AddSkill SkMove 4]
+               ++ [AddSkill SkAlter 2]
+               ++ [AddSkill SkWait 2]
+               ++ [AddSkill SkDisplace (-1)]
+               ++ [AddSkill SkMoveItem (-1)]
+               ++ [AddSkill SkProject (-1)]
                ++ [SetFlag Durable]
-  , idesc    = ""
+  , idesc    = "A primitive computer used in cars"
   }
-animalBrain :: ItemKind
-animalBrain = armoredSkin
-  { iname    = "animal brain"
-  , ifreq    = [(S_ANIMAL_BRAIN, 1)]
+cpu :: ItemKind
+cpu = armoredSkin
+  { iname    = "cpu"
+  , ifreq    = [(S_CPU, 1)]
   , iverbHit = "blank"
   , iaspects = [AddSkill sk 1 | sk <- [SkMove .. SkApply]]
-               ++ [AddSkill SkMove 4]  -- can move at once when waking up
-               ++ [AddSkill SkAlter 2]  -- can use normal stairs; can't dig
-               ++ [AddSkill SkWait 2]  -- can brace and sleep
-               -- No @SkApply@ bonus, so can only apply foods. Note, however,
-               -- that AI doesn't risk applying unIded items, so in early
-               -- game animals won't eat anything.
-               ++ [AddSkill SkDisplace (-1)]  -- no melee tactics
-               ++ [AddSkill SkMoveItem (-1)]  -- no item gathering
-               ++ [AddSkill SkProject (-1)]  -- nor item flinging
+               ++ [AddSkill SkMove 4]
+               ++ [AddSkill SkAlter 2]
+               ++ [AddSkill SkDisplace (-1)]
+               ++ [AddSkill SkMoveItem (-1)]
+               ++ [AddSkill SkProject (-1)]
                ++ [SetFlag Durable]
-  , idesc    = ""
-  }
-speedGland :: Int -> GroupName ItemKind -> ItemKind
-speedGland n grp = armoredSkin
-  { isymbol  = symbolWand
-  , iname    = "speed gland"
-  , ifreq    = [(grp, 1)]
-  , iverbHit = "spit at"
-  , iaspects = [ Timeout $ intToDice (100 `div` n)
-               , AddSkill SkSpeed $ intToDice n
-               , SetFlag Periodic, SetFlag Durable ]
-  , ieffects = [RefillHP 1]
-  , idesc    = ""
-  }
-speedGland5 = speedGland 5 S_SPEED_GLAND_5
-speedGland10 = speedGland 10 S_SPEED_GLAND_10
-scentGland = armoredSkin
-  { isymbol  = symbolWand
-  , iname    = "scent gland"
-  , ifreq    = [(S_SCENT_GLAND, 1)]
-  , icount   = 10 + 1 `d` 3  -- runs out
-  , iverbHit = "spray at"
-  , iaspects = [ Timeout $ (1 `d` 3) * 10
-               , SetFlag Periodic, SetFlag Fragile ]  -- not Durable
-  , ieffects = [ VerbNoLonger "look spent" "."
-               , ApplyPerfume
-               , Explode S_DISTRESSING_ODOR ]
-                   -- keep explosion at the end to avoid the ambiguity of
-                   -- "of ([foo explosion] of [bar])"
-  , idesc    = ""
-  }
-sulfurVent :: ItemKind
-sulfurVent = armoredSkin
-  { isymbol  = toContentSymbol 'v'
-  , iname    = "vent"
-  , ifreq    = [(S_SULFUR_VENT, 1)]
-  , iflavour = zipPlain [BrYellow]
-  , iverbHit = "menace"
-  , iaspects = [ Timeout $ (2 + 1 `d` 3) * 5
-               , SetFlag Periodic, SetFlag Durable ]
-  , ieffects = [RefillHP 2, Explode S_DENSE_SHOWER]
-  , idesc    = ""
-  }
-boilingVent :: ItemKind
-boilingVent = armoredSkin
-  { isymbol  = toContentSymbol 'v'
-  , iname    = "vent"
-  , ifreq    = [(S_BOILING_VENT, 1)]
-  , iflavour = zipPlain [Blue]
-  , iverbHit = "menace"
-  , iaspects = [ Timeout $ (2 + 1 `d` 3) * 5
-               , SetFlag Periodic, SetFlag Durable ]
-  , ieffects = [RefillHP 2, Explode S_BOILING_WATER]
-  , idesc    = ""
-  }
-arsenicVent :: ItemKind
-arsenicVent = armoredSkin
-  { isymbol  = toContentSymbol 'v'
-  , iname    = "vent"
-  , ifreq    = [(S_ARSENIC_VENT, 1)]
-  , iflavour = zipPlain [Cyan]
-  , iverbHit = "menace"
-  , iaspects = [ Timeout $ (2 + 1 `d` 3) * 5
-               , SetFlag Periodic, SetFlag Durable ]
-  , ieffects = [RefillHP 2, Explode S_SPARSE_SHOWER]
-  , idesc    = ""
+  , idesc    = "The central processing unit"
   }
 
 -- * Special

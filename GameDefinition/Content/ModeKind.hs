@@ -54,7 +54,7 @@ content =
   , raid
   , crawl
   , screensaverRaid
-  , screensaverCrawl]
+  ]
 
 -- What other symmetric (two only-one-moves factions) and asymmetric vs crowd
 -- scenarios make sense (e.g., are good for a tutorial or for standalone
@@ -144,13 +144,6 @@ screensaverRaid = raid
   , mattract = True
   }
 
-screensaverCrawl :: ModeKind
-screensaverCrawl = crawl
-  { mname   = "auto-crawl (long)"
-  , mfreq   = []
-  , mattract = True
-  }
-
 rosterMini :: [(GroupName c1, [(Int, Dice, GroupName c2)])]
 rosterMini =
   [ ( CAR_REPRESENTATIVE  -- starting over escape
@@ -158,24 +151,20 @@ rosterMini =
   , ( EXPLORER_SHORT
     , [(-2, 2, HERO)] )
   , ( COMPETITOR_SHORT
-    , [(-2, 1, HERO)] )
-  , (HORROR_REPRESENTATIVE, []) ]  -- for summoned monsters
+    , [(-2, 1, HERO)] ) ]
 
 rosterRaid :: [(GroupName c1, [(Int, Dice, GroupName c2)])]
 rosterRaid =
   [ ( EXPLORER_SHORT
     , [(-2, 2, HERO)] )
   , ( COMPETITOR_SHORT
-    , [(-2, 1, HERO)] )
-  , (HORROR_REPRESENTATIVE, []) ]  -- for summoned monsters
+    , [(-2, 1, HERO)] ) ]
 
 rosterCrawl :: [(GroupName c1, [(Int, Dice, GroupName c2)])]
 rosterCrawl =
   [ ( EXPLORER_REPRESENTATIVE
-        -- start on stairs so that stash is handy
     , [(-1, 3, HERO)] )
-  , ( MONSTER_REPRESENTATIVE
-    , [(-4, 1, SCOUT_MONSTER), (-4, 3, MONSTER)] ) ]
+  ]
 
 cavesMini :: [([Int], [GroupName c])]
 cavesMini = [([-2], [CAVE_PARKING_LOT])]

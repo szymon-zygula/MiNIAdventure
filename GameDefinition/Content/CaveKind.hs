@@ -112,7 +112,7 @@ rogue = CaveKind
   , copenChance   = 1%5
   , chidden       = 7
   , cactorCoeff   = 70  -- the maze requires time to explore
-  , cactorFreq    = [(MONSTER, 100)]
+  , cactorFreq    = []
   , citemNum      = 6 `d` 5 + 10 - 10 `dL` 1
       -- deep down quality over quantity; generally quite random,
       -- for interesting replays at the cost of unreliable balance
@@ -158,7 +158,7 @@ arena = rogue
   , cmaxVoid      = 1%8
   , chidden       = 0
   , cactorCoeff   = 70  -- small open level, don't rush the player
-  , cactorFreq    = [(MONSTER, 100)]
+  , cactorFreq    = []
   , citemNum      = 4 `d` 5  -- few rooms
   , citemFreq     = [ (IK.COMMON_ITEM, 20), (IK.TREASURE, 40)
                     , (IK.ANY_PAPER, 40) ]
@@ -200,7 +200,7 @@ laboratory = rogue
   , cmaxVoid      = 1%10
   , cdoorChance   = 1
   , copenChance   = 1%2
-  , cactorFreq    = [(MONSTER, 100)]
+  , cactorFreq    = []
   , citemNum      = 6 `d` 5  -- reward difficulty
   , citemFreq     = [ (IK.COMMON_ITEM, 20), (IK.TREASURE, 40)
                     , (IK.EXPLOSIVE, 40) ]
@@ -230,7 +230,7 @@ noise = rogue
   , cdoorChance   = 1  -- to avoid lit quasi-door tiles
   , chidden       = 0
   , cactorCoeff   = 100  -- the maze requires time to explore; also, small
-  , cactorFreq    = [(MONSTER, 100)]
+  , cactorFreq    = []
   , citemNum      = 6 `d` 5  -- an incentive to explore the labyrinth
   , cpassable     = True
   , cplaceFreq    = [(NOISE, 1)]
@@ -304,7 +304,7 @@ outermost = shallowRogue
   , cYminSize     = 21
   , cdarkOdds     = 0  -- all rooms lit, for a gentle start
   , cactorCoeff   = 100  -- already animals start there; also, pity on the noob
-  , cactorFreq    = filter ((/= MONSTER) . fst) $ cactorFreq rogue
+  , cactorFreq    = cactorFreq rogue
   , citemNum      = 12 `d` 2  -- lure them in with loot; relatively consisten
   , citemFreq     = filter ((/= IK.TREASURE) . fst) $ citemFreq rogue
   , cminStairDist = 10  -- distance from the escape

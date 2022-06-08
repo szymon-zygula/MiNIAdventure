@@ -10,11 +10,11 @@ module Content.ItemKindActor
   , pattern BRAWLER_HERO
   , pattern SOLDIER_HERO
   , pattern CIVILIAN
-  , pattern MONSTER
-  , pattern MOBILE_MONSTER
-  , pattern SCOUT_MONSTER
   , pattern CAR
-  , pattern ADD_SIGHT, pattern ARMOR_RANGED, pattern ADD_NOCTO_1
+  , pattern COMPUTER
+  , pattern ADD_SIGHT
+  , pattern ARMOR_RANGED
+  , pattern ADD_NOCTO_1
   , pattern WEAK_ARROW
   , pattern LIGHT_ATTENUATOR
   , pattern RING_OF_OPPORTUNITY_SNIPER
@@ -55,11 +55,8 @@ actorsGN =
     , BRAWLER_HERO
     , SOLDIER_HERO
     , CIVILIAN
-    , MONSTER
-    , MOBILE_MONSTER
-    , SCOUT_MONSTER
     , CAR
-    , MOBILE_CAR
+    , COMPUTER
     , ADD_SIGHT
     , ARMOR_RANGED
     , ADD_NOCTO_1
@@ -86,16 +83,10 @@ pattern SOLDIER_HERO :: GroupName c
 pattern SOLDIER_HERO = GroupName "soldier"
 pattern CIVILIAN :: GroupName c
 pattern CIVILIAN = GroupName "civilian"
-pattern MONSTER :: GroupName c
-pattern MONSTER = GroupName "monstrosity"
-pattern MOBILE_MONSTER :: GroupName c
-pattern MOBILE_MONSTER = GroupName "mobile monstrosity"
-pattern SCOUT_MONSTER :: GroupName c
-pattern SCOUT_MONSTER = GroupName "scout monstrosity"
 pattern CAR :: GroupName c
 pattern CAR = GroupName "car"
-pattern MOBILE_CAR :: GroupName c
-pattern MOBILE_CAR = GroupName "mobile car"
+pattern COMPUTER :: GroupName c
+pattern COMPUTER = GroupName "computer"
 
 pattern S_WOODEN_TORCH :: GroupName c
 pattern S_WOODEN_TORCH = GroupName "wooden torch"
@@ -141,25 +132,17 @@ actors =
   , civilian3
   , civilian4
   , civilian5
-  , eye
-  , fastEye
-  , nose
-  , elbow
-  , torsor
   , toyota
   , skoda
   , tesla
-  , blackVolga ]
-
--- Note that the actors that appear in the crawl scenario should
--- be generated with at most ordinary ammo. Otherwise, farming them
--- may be rational though boring endeavour. Any exceptions to that
--- should be well thought of. E.g., unique guaranteed items on bosses
--- are safe, just as restricted kinds of weak items.
+  , blackVolga
+  , pc
+  , laptop
+  , macbook
+  , server ]
 
 -- * Hunams
 
--- TODO: bring back S_EAR_3 when character progression permits hearing boosts.
 humanOrgans :: [(GroupName ItemKind, CStore)]
 humanOrgans = [ (S_FIST, COrgan), (S_FOOT, COrgan)
               , (S_EYE_6, COrgan), (S_EAR_6, COrgan)
@@ -296,142 +279,13 @@ civilian5 = civilian
   -- , idesc    = ""
   }
 
--- * Monsters
-
--- They have bright colours, because they are not natural.
-
-eye :: ItemKind
-eye = ItemKind
-  { isymbol  = toContentSymbol 'e'
-  , iname    = "reducible eye"
-  , ifreq    = [ (MONSTER, 100), (MOBILE, 1)
-               , (MOBILE_MONSTER, 100), (SCOUT_MONSTER, 10) ]
-  , iflavour = zipFancy [BrRed]
-  , icount   = 1
-  , irarity  = [(3, 0), (4, 10), (10, 8)]
-  , iverbHit = "thud"
-  , iweight  = 80000
-  , idamage  = 0
-  , iaspects = [ AddSkill SkMaxHP 16, AddSkill SkMaxCalm 70
-               , AddSkill SkSpeed 20, AddSkill SkNocto 2
-               , AddSkill SkAggression 1
-               , AddSkill SkProject 2  -- can lob
-               , AddSkill SkApply 1  -- can use even cultural artifacts
-               , SetFlag Durable ]
-  , ieffects = []
-  , idesc    = "Under your stare, it reduces to the bits that define its essence. Under introspection, the bits slow down and solidify into an arbitrary form again. It must be huge inside, for holographic principle to manifest so overtly."  -- holographic principle is an anachronism for XIX or most of XX century, but "the cosmological scale effects" is too weak
-  , ikit     = [ (S_LASH, COrgan), (S_PUPIL, COrgan)  -- at least one non-timed
-               , (S_SAPIENT_BRAIN, COrgan) ]  -- no hearing, it's all eyes
-  }
-fastEye :: ItemKind
-fastEye = ItemKind
-  { isymbol  = toContentSymbol 'j'
-  , iname    = "injective jaw"
-  , ifreq    = [ (MONSTER, 100), (MOBILE, 1)
-               , (MOBILE_MONSTER, 100), (SCOUT_MONSTER, 60) ]
-  , iflavour = zipFancy [BrBlue]
-  , icount   = 1
-  , irarity  = [(3, 0), (4, 6), (10, 12)]
-  , iverbHit = "thud"
-  , iweight  = 80000
-  , idamage  = 0
-  , iaspects = [ AddSkill SkMaxHP 5, AddSkill SkMaxCalm 70
-               , AddSkill SkSpeed 30, AddSkill SkNocto 2
-               , AddSkill SkAggression 1
-               , SetFlag Durable ]
-  , ieffects = []
-  , idesc    = "Hungers but never eats. Bites but never swallows. Burrows its own image through, but never carries anything back."  -- rather weak: not about injective objects, but puny, concrete, injective functions  --- where's the madness in that?
-  , ikit     = [ (S_TOOTH, COrgan), (S_LIP, COrgan)  -- at least one non-timed
-               , (S_SPEED_GLAND_10, COrgan)
-               , (S_VISION_6, COrgan), (S_EAR_3, COrgan)
-               , (S_SAPIENT_BRAIN, COrgan) ]
-  }
-nose :: ItemKind
-nose = ItemKind  -- depends solely on smell
-  { isymbol  = toContentSymbol 'n'
-  , iname    = "point-free nose"
-  , ifreq    = [(MONSTER, 100), (MOBILE, 1), (MOBILE_MONSTER, 100)]
-  , iflavour = zipFancy [BrGreen]
-  , icount   = 1
-  , irarity  = [(3, 0), (4, 5), (10, 7)]
-  , iverbHit = "thud"
-  , iweight  = 80000
-  , idamage  = 0
-  , iaspects = [ AddSkill SkMaxHP 30, AddSkill SkMaxCalm 30
-               , AddSkill SkSpeed 18, AddSkill SkNocto 2
-               , AddSkill SkAggression 1
-               , AddSkill SkProject (-1)  -- can't project
-               , SetFlag Durable ]
-  , ieffects = []
-  , idesc    = "No mouth, yet it devours everything around, constantly sniffing itself inward; pure movement structure, no constant point to focus one's maddened gaze on."
-  , ikit     = [ (S_TIP, COrgan), (S_LIP, COrgan)  -- at least one non-timed
-               , (S_NOSTRIL, COrgan)
-               , (S_SAPIENT_BRAIN, COrgan) ]  -- no sight nor hearing
-  }
-elbow :: ItemKind
-elbow = ItemKind
-  { isymbol  = toContentSymbol 'e'
-  , iname    = "commutative elbow"
-  , ifreq    = [ (MONSTER, 100), (MOBILE, 1)
-               , (MOBILE_MONSTER, 100), (SCOUT_MONSTER, 30) ]
-  , iflavour = zipFancy [BrMagenta]
-  , icount   = 1
-  , irarity  = [(3, 0), (4, 1), (10, 12)]
-  , iverbHit = "thud"
-  , iweight  = 80000
-  , idamage  = 0
-  , iaspects = [ AddSkill SkMaxHP 8, AddSkill SkMaxCalm 80
-               , AddSkill SkSpeed 20, AddSkill SkNocto 2
-               , AddSkill SkProject 2  -- can lob
-               , AddSkill SkApply 1  -- can even use cultural artifacts
-               , AddSkill SkMelee (-1)
-               , SetFlag Durable ]
-  , ieffects = []
-  , idesc    = "An arm strung like a bow. A few edges, but none keen enough. A few points, but none piercing. Deadly objects zip out of the void."
-  , ikit     = [ (S_SPEED_GLAND_5, COrgan), (S_BARK, COrgan)
-               , (S_VISION_12, COrgan), (S_EAR_8, COrgan)
-                   -- too powerful to get stronger sight
-               , (S_SAPIENT_BRAIN, COrgan)
-               , (ANY_ARROW, CStash), (ANY_ARROW, CStash)
-               , (WEAK_ARROW, CStash), (WEAK_ARROW, CStash) ]
-  }
-torsor :: ItemKind
-torsor = ItemKind
-  { isymbol  = toContentSymbol 'T'
-  , iname    = "The Forgetful Torsor"
-  , ifreq    = [(MONSTER, 100), (MOBILE, 1)]
-  , iflavour = zipFancy [BrCyan]
-  , icount   = 1
-  , irarity  = [(9, 0), (10, 1000)]  -- unique
-  , iverbHit = "thud"
-  , iweight  = 80000
-  , idamage  = 0
-  , iaspects = [ SetFlag Unique
-               , AddSkill SkMaxHP 300, AddSkill SkMaxCalm 100
-               , AddSkill SkSpeed 15, AddSkill SkNocto 2
-               , AddSkill SkAggression 3
-               , AddSkill SkProject 2  -- can lob
-               , AddSkill SkApply 1  -- can even use cultural artifacts
-               , AddSkill SkAlter (-1)  -- can't exit the gated level; a boss,
-                                        -- but can dig rubble, ice
-               , SetFlag Durable ]
-  , ieffects = []
-  , idesc    = "A principal homogeneous manifold, that acts freely and with enormous force, but whose stabilizers are trivial, making it rather helpless without a support group."
-  , ikit     = [ (S_RIGHT_TORSION, COrgan), (S_LEFT_TORSION, COrgan)
-               , (S_PUPIL, COrgan)
-               , (S_TENTACLE, COrgan)  -- low timeout, so rarely a stall
-               , (S_EAR_8, COrgan)
-               , (S_SAPIENT_BRAIN, COrgan)
-               ]
-  }
-
 -- * Cars
 
 car :: ItemKind
 car = ItemKind
   { isymbol  = toContentSymbol 't'
   , iname    = "car"
-  , ifreq    = [(CAR, 100), (MOBILE, 1), (MOBILE_CAR, 100)]
+  , ifreq    = [(CAR, 100), (MOBILE, 1)]
   , iflavour = zipPlain [Blue]
   , icount   = 1
   , irarity  = [(1, 4), (10, 2)]
@@ -454,7 +308,7 @@ skoda :: ItemKind
 skoda = car
   { isymbol  = toContentSymbol 's'
   , iname    = "Skoda"
-  , iweight  = 7000000
+  , iweight  = 700000
   , iflavour = zipPlain [Green]
   , iaspects = [ AddSkill SkMaxHP 20, AddSkill SkMaxCalm 60
                , AddSkill SkSpeed 12, AddSkill SkNocto 2
@@ -468,7 +322,7 @@ toyota :: ItemKind
 toyota = car
   { isymbol  = toContentSymbol 't'
   , iname    = "Toyota"
-  , iweight  = 8000000
+  , iweight  = 800000
   , iflavour = zipPlain [Blue]
   , iaspects = [ AddSkill SkMaxHP 30, AddSkill SkMaxCalm 60
                , AddSkill SkSpeed 16, AddSkill SkNocto 2
@@ -483,7 +337,7 @@ tesla = car
   { isymbol  = toContentSymbol 'T'
   , iname    = "Tesla"
   , iflavour = zipPlain [Red]
-  , iweight  = 6000000
+  , iweight  = 600000
   , iaspects = [ AddSkill SkMaxHP 40, AddSkill SkMaxCalm 60
                , AddSkill SkSpeed 30, AddSkill SkNocto 2
                , AddSkill SkAggression 2
@@ -498,11 +352,91 @@ blackVolga = car
   { isymbol  = toContentSymbol 'V'
   , iname    = "black Volga"
   , iflavour = zipPlain [BrBlack]
-  , iweight  = 9000000
+  , iweight  = 900000
   , iaspects = [ AddSkill SkMaxHP 50, AddSkill SkMaxCalm 60
                , AddSkill SkSpeed 20, AddSkill SkNocto 2
                , AddSkill SkAggression 2
                , AddSkill SkAlter (-2)
                , SetFlag Durable ]
   , idesc    = "Mysterious and legendary vehicle, who knows what it itentions are?"
+  }
+
+-- * Computers
+
+computer :: ItemKind
+computer = ItemKind
+  { isymbol  = toContentSymbol '#'
+  , iname    = "computer"
+  , ifreq    = [(COMPUTER, 100), (MOBILE, 1)]
+  , iflavour = zipPlain [Blue]
+  , icount   = 1
+  , irarity  = []
+  , iverbHit = "shhhhwuuuu"
+  , iweight  = 5000
+  , idamage  = 0
+  , iaspects = [ AddSkill SkMaxHP 15, AddSkill SkMaxCalm 10
+               , AddSkill SkSpeed 8, AddSkill SkNocto 4
+               , AddSkill SkAggression 5
+               , AddSkill SkAlter (-2)
+               , SetFlag Durable ]
+  , ieffects = [ ]
+  , idesc    = "computer description"
+  , ikit     = [ (S_CAMERA, COrgan), (S_CPU, COrgan), (S_EXHAUST_FAN, COrgan) ]
+  }
+
+pc :: ItemKind
+pc = computer
+  { isymbol  = toContentSymbol 'D'
+  , iname    = "desktop computer"
+  , irarity  = [(0.5, 5), (10, 2)]
+  , iflavour = zipPlain [BrBlack]
+  , iweight  = 6000
+  , idesc    = "An old school desktop computer, perfect for writing Haskell programs."
+  }
+
+laptop :: ItemKind
+laptop = computer
+  { isymbol  = toContentSymbol 'L'
+  , iname    = "laptop"
+  , irarity  = [(0.5, 5), (10, 2)]
+  , iflavour = zipPlain [BrRed]
+  , iweight  = 2000
+  , iaspects = [ AddSkill SkMaxHP 10, AddSkill SkMaxCalm 20
+               , AddSkill SkSpeed 12, AddSkill SkNocto 3
+               , AddSkill SkAggression 8
+               , AddSkill SkAlter (-2)
+               , SetFlag Durable ]
+  , ieffects = [ OnSmash $ Explode S_FIRECRACKER ] -- Batteries explode with colorful fire
+  , idesc    = "A swift laptop, great for playing Minecraft during boring lectures."
+  }
+
+macbook :: ItemKind
+macbook = computer
+  { isymbol  = toContentSymbol 'M'
+  , iname    = "macbook"
+  , irarity  = [(0.5, 5), (10, 2)]
+  , iflavour = zipPlain [White]
+  , iweight  = 1500
+  , iaspects = [ AddSkill SkMaxHP 8, AddSkill SkMaxCalm 20
+               , AddSkill SkSpeed 16, AddSkill SkNocto 3
+               , AddSkill SkAggression 20
+               , AddSkill SkAlter (-2)
+               , SetFlag Durable ]
+  , ieffects = [ OnSmash $ Explode S_FIRECRACKER ] -- Batteries explode with colorful fire
+  , idesc    = "An ever thin and swift kind of laptop."
+  }
+
+server :: ItemKind
+server = computer
+  { isymbol  = toContentSymbol '#'
+  , iname    = "server"
+  , irarity  = [(0.5, 1), (10, 6)]
+  , iflavour = zipPlain [Cyan]
+  , iweight  = 2000
+  , iaspects = [ AddSkill SkMaxHP 25, AddSkill SkMaxCalm 40
+               , AddSkill SkSpeed 4, AddSkill SkNocto 1
+               , AddSkill SkAggression 5
+               , AddSkill SkAlter (-2)
+               , SetFlag Durable ]
+  , idesc    = "A giant server rack. Unbearably loud."
   }
