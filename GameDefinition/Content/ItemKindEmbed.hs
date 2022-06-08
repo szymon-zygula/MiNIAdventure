@@ -206,7 +206,6 @@ fireBig = fireSmall
   , ifreq    = [(BIG_FIRE, 1)]
   , iflavour = zipPlain [Red]
   , ieffects = [ Burn 2
-               , CreateItem Nothing CGround S_WOODEN_TORCH timerNone
                , Explode S_SPARK ]
   , idesc    = "Glowing with light and warmth."
   , ikit     = []

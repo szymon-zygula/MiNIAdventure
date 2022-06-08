@@ -1,7 +1,6 @@
 -- | Definitions of basic items.
 module Content.ItemKind
   ( pattern FOOD
-  , pattern RING_OF_OPPORTUNITY_GRENADIER
   , pattern ARMOR_LOOSE
   , pattern CLOTHING_MISC
   , pattern CHIC_GEAR
@@ -42,8 +41,6 @@ groupNamesSingleton =
     , SODA_UNKNOWN
     , FOOD_UNKNOWN
     , PAPER_UNKNOWN
-    , NECKLACE_UNKNOWN
-    , RING_UNKNOWN
     , HAMMER_UNKNOWN
     , CURRENCY_UNKNOWN]
     ++ actorsGNSingleton ++ organsGNSingleton
@@ -56,11 +53,9 @@ groupNames =
     , ANY_GLASS
     , ANY_POTION
     , EXPLOSIVE
-    , ANY_JEWELRY
     , VALUABLE
     , UNREPORTED_INVENTORY
     , FOOD
-    , RING_OF_OPPORTUNITY_GRENADIER
     , ARMOR_LOOSE
     , CLOTHING_MISC
     , CHIC_GEAR]
@@ -74,10 +69,6 @@ pattern FOOD_UNKNOWN :: GroupName c
 pattern FOOD_UNKNOWN = GroupName "edible plant unknown"
 pattern PAPER_UNKNOWN :: GroupName c
 pattern PAPER_UNKNOWN = GroupName "paper unknown"
-pattern NECKLACE_UNKNOWN :: GroupName c
-pattern NECKLACE_UNKNOWN = GroupName "necklace unknown"
-pattern RING_UNKNOWN :: GroupName c
-pattern RING_UNKNOWN = GroupName "ring unknown"
 pattern HAMMER_UNKNOWN :: GroupName c
 pattern HAMMER_UNKNOWN = GroupName "hammer unknown"
 pattern CURRENCY_UNKNOWN :: GroupName c
@@ -85,8 +76,6 @@ pattern CURRENCY_UNKNOWN = GroupName "currency unknown"
 
 pattern FOOD :: GroupName c
 pattern FOOD = GroupName "edible plant"
-pattern RING_OF_OPPORTUNITY_GRENADIER :: GroupName c
-pattern RING_OF_OPPORTUNITY_GRENADIER = GroupName "ring of grenadier"
 pattern ARMOR_LOOSE :: GroupName c
 pattern ARMOR_LOOSE = GroupName "loose armor"
 pattern CLOTHING_MISC :: GroupName c
@@ -107,7 +96,7 @@ items =
     [ computerMouse
     , paralizingProj
     , diablotekSupply
-    , concussionBomb
+    , iphoneBattery
     , flashBomb
     , swollenLithiumIon
     , sodaTemplate
@@ -125,45 +114,12 @@ items =
     , paper8
     , paper9
     , paper10
-    , paper11
-    , paper12
-    , paper13
     , foodTemplate
     , food1
     , food2
-    , light1
-    , light2
-    , light3
-    , necklaceTemplate
-    , necklace1
-    , necklace2
-    , necklace3
-    , necklace4
-    , necklace5
-    , necklace6
-    , necklace7
-    , necklace8
-    , necklace9
-    , necklace10
-    , motionScanner
-    , imageItensifier
-    , sightSharpening
-    , ringTemplate
-    , ring1
-    , ring2
-    , ring3
-    , ring4
-    , ring5
-    , ring6
-    , ring7
-    , ring8
-    , ring9
-    , ring10
     , pwPullover
     , miniPullover
-    , gloveFencing
     , hatUshanka
-    , capReinforced
     , miniBalaclava
     , miniJacket
     , laptopCharger
@@ -179,14 +135,8 @@ symbolProjectile :: ContentSymbol ItemKind
 symbolProjectile = rsymbolProjectile $ ritemSymbols standardRules
 _symbolLauncher :: ContentSymbol c
 _symbolLauncher  = toContentSymbol '}'
-symbolLight :: ContentSymbol c
-symbolLight      = rsymbolLight $ ritemSymbols standardRules
 symbolGold :: ContentSymbol c
 symbolGold       = rsymbolGold $ ritemSymbols standardRules
-symbolNecklace :: ContentSymbol c
-symbolNecklace   = rsymbolNecklace $ ritemSymbols standardRules
-symbolRing :: ContentSymbol c
-symbolRing       = rsymbolRing $ ritemSymbols standardRules
 symbolPotion :: ContentSymbol c
 symbolPotion     = rsymbolPotion $ ritemSymbols standardRules
 symbolPaper :: ContentSymbol c
@@ -226,7 +176,7 @@ computerMouse = ItemKind
                , SetFlag Fragile
                , toVelocity 50 ]
   , ieffects = []
-  , idesc    = "A computer mouse that someone left unattended."
+  , idesc    = "Computer mouse that someone left unattended."
   , ikit     = []
   }
 
@@ -259,7 +209,7 @@ paralizingProj = ItemKind
 
 diablotekSupply :: ItemKind
 diablotekSupply = ItemKind
-  { isymbol  = symbolProjectile
+  { isymbol  = '='
   , iname    = "diablotek power supply"
   , ifreq    = [(COMMON_ITEM, 100), (EXPLOSIVE, 200)]
   , iflavour = zipPlain [Red]
@@ -271,60 +221,46 @@ diablotekSupply = ItemKind
   , iaspects = [ SetFlag Lobable, SetFlag Fragile ]
   , ieffects = [ Explode S_FOCUSED_FRAGMENTATION
                , OnSmash $ Explode S_VIOLENT_FRAGMENTATION ]
-  , idesc    = "A particulary unstable power supply"
+  , idesc    = "Particulary unstable power supply"
   , ikit     = []
   }
-concussionBomb :: ItemKind
-concussionBomb = diablotekSupply
-  { iname    = "satchel"
-      -- slightly stabilized nitroglycerine in a soft satchel, hence
-      -- no fragmentation, but huge shock wave despite small size and lack of
-      -- strong container to build up pressure (hence only mild hearing loss);
-      -- indoors helps the shock wave; unstable enough that no fuze required
+iphoneBattery :: ItemKind
+iphoneBattery = diablotekSupply
+  { iname    = "battery"
+  , isymbol  = ','
   , iflavour = zipPlain [Magenta]
   , iverbHit = "flap"
-  , iweight  = 400
-  , iaspects = [ ELabel "of mining charges"
-               , SetFlag Lobable, SetFlag Fragile
-               , toVelocity 70 ]  -- flappy and so slow
+  , iweight  = 50
+  , iaspects = [ SetFlag Lobable, SetFlag Fragile
+               , toVelocity 200 ]
   , ieffects = [ Explode S_FOCUSED_CONCUSSION
                , OnSmash (Explode S_VIOLENT_CONCUSSION) ]
-  , idesc    = "Avoid sudden movements."
+  , idesc    = "Particularly swollen, small battery"
   }
--- Not flashbang, because powerful bang without fragmentation is harder
--- to manufacture (requires an oxidizer and steel canister with holes).
--- The bang would also paralyze and/or lower the movement skill
--- (out of balance due to ear trauma).
 flashBomb :: ItemKind
 flashBomb = diablotekSupply
-  { iname    = "magnesium ribbon"  -- filled with magnesium flash powder
-  , iflavour = zipPlain [BrYellow]  -- avoid @BrWhite@; looks wrong in dark
+  { iname    = "magnesium ribbon"
+  , isymbol  = '+'
+  , iflavour = zipPlain [BrYellow]
   , iverbHit = "flash"
   , iweight  = 400
   , iaspects = [ SetFlag Lobable, SetFlag Fragile
-               , toVelocity 70 ]  -- bad shape for throwing
+               , toVelocity 70 ]
   , ieffects = [Explode S_FOCUSED_FLASH, OnSmash (Explode S_VIOLENT_FLASH)]
-  , idesc    = "For dramatic entrances and urgent exits."
+  , idesc    = "Produces bright light"
   }
 swollenLithiumIon :: ItemKind
 swollenLithiumIon = diablotekSupply
   { iname = "battery"
+  , isymbol = '|'
   , iflavour = zipPlain [BrMagenta]
   , irarity  = [(1, 5), (5, 6)]
   , iverbHit = "sizzle"
-  , iweight  = 1000
+  , iweight  = 250
   , iaspects = [SetFlag Lobable, SetFlag Fragile]
   , ieffects = [Explode S_LITHIUM_ION, OnSmash (Explode S_LITHIUM_ION)]
-  , idesc    = "Swollen battery, looks dangerous"
+  , idesc    = "Large, swollen battery, looks dangerous"
   }
-
--- ** Exploding consumables.
-
--- Not identified, because they are perfect for the id-by-use fun,
--- due to effects. They are fragile and upon hitting the ground explode
--- for effects roughly corresponding to their normal effects.
--- Whether to hit with them or explode them close to the target
--- is intended to be an interesting tactical decision.
 
 sodaTemplate :: ItemKind
 sodaTemplate = ItemKind
@@ -339,7 +275,7 @@ sodaTemplate = ItemKind
   , idamage  = 0
   , iaspects = [ PresentAs SODA_UNKNOWN, SetFlag Lobable, SetFlag Fragile, toVelocity 50 ]
   , ieffects = []
-  , idesc    = "A soft drink can"
+  , idesc    = "Soft drink can"
   , ikit     = []
   }
 soda1 :: ItemKind
@@ -356,23 +292,18 @@ soda2 = sodaTemplate
   , ieffects = [ RefillHP 25
                , DropItem maxBound maxBound COrgan CONDITION
                , OnSmash (Explode S_HEALING_MIST_2) ]
-  , idesc    = "A soft drink bottle"
+  , idesc    = "Soft drink bottle"
   }
 iceTea :: ItemKind
 iceTea = sodaTemplate
   { iname    = "ice tea bottle"
   , ifreq    = [(COMMON_ITEM, 100), (ANY_POTION, 100), (ANY_GLASS, 100)]
   , irarity  = [(1, 6), (10, 10)]
-  , idesc    = "A soft drink bottle"
+  , idesc    = "Soft drink bottle"
   , ieffects = [ RefillCalm 30
                , DropItem maxBound maxBound COrgan CONDITION
                , OnSmash (Explode S_HEALING_MIST)]
   }
-
--- ** Non-exploding consumables, not specifically designed for throwing
-
--- Readable or otherwise communicating consumables require high apply skill
--- to be consumed.
 
 paperTemplate :: ItemKind
 paperTemplate = ItemKind
@@ -476,30 +407,6 @@ paper10 = paperTemplate
   , ieffects = [Identify `AndEffect` RefillCalm 10]
   , idesc    = "The most pressing existential concerns are met with a deeply satisfying scientific answer."
   }
-paper11 :: ItemKind
-paper11 = paperTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_PAPER, 100)]
-  , irarity  = [(10, 20)]  -- at gameover a crucial item may be missing
-  , iaspects = ELabel "of transmutation"
-               : iaspects paperTemplate
-  , ieffects = [PolyItem `AndEffect` Explode S_LITHIUM_ION]
-  }
-paper12 :: ItemKind
-paper12 = paperTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_PAPER, 100)]
-  , irarity  = [(10, 15)]
-  , iaspects = ELabel "of transfiguration"
-               : iaspects paperTemplate
-  , ieffects = [RerollItem]
-  }
-paper13 :: ItemKind
-paper13 = paperTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_PAPER, 100)]
-  , irarity  = [(10, 15)]
-  , iaspects = ELabel "of similarity"
-               : iaspects paperTemplate
-  , ieffects = [DupItem]
-  }
 
 -- Foods require only minimal apply skill to consume.
 
@@ -533,383 +440,6 @@ food2 = foodTemplate
   , ieffects = [RefillHP 5, toOrganBad S_IMMOBILE (2 + 1 `d` 3)]
   }
 
--- ** Lights
-
-light1 :: ItemKind
-light1 = ItemKind
-  { isymbol  = symbolLight
-  , iname    = "wooden torch"
-  , ifreq    = [ (COMMON_ITEM, 100), (LIGHT_ATTENUATOR, 100)
-               , (S_WOODEN_TORCH, 1) ]
-  , iflavour = zipPlain [Brown]
-  , icount   = 1 `dL` 4
-  , irarity  = [(1, 40), (4, 1)]
-  , iverbHit = "scorch"
-  , iweight  = 1000
-  , idamage  = 0
-  , iaspects = [ AddSkill SkShine 3  -- no malus, to lessen micromanagement
-               , SetFlag Lobable, SetFlag Equipable
-               , EqpSlot EqpSlotShine ]
-                   -- not Fragile; reusable flare
-  , ieffects = [Burn 1]
-  , idesc    = "A heavy smoking wooden torch, improvised using a cloth soaked in tar, burning in an unsteady glow."
-  , ikit     = []
-  }
-light2 :: ItemKind
-light2 = ItemKind
-  { isymbol  = symbolLight
-  , iname    = "oil lamp"
-  , ifreq    = [(COMMON_ITEM, 100), (LIGHT_ATTENUATOR, 100)]
-  , iflavour = zipPlain [BrYellow]
-  , icount   = 1 `dL` 2
-  , irarity  = [(4, 10)]
-  , iverbHit = "burn"
-  , iweight  = 1500
-  , idamage  = 1 `d` 1
-  , iaspects = [ AddSkill SkShine 3
-               , SetFlag Lobable, SetFlag Fragile, SetFlag Equipable
-               , EqpSlot EqpSlotShine ]
-  , ieffects = [ Explode S_FOCUSED_BURNING_OIL_2
-               , OnSmash (Explode S_VIOLENT_BURNING_OIL_2) ]
-  , idesc    = "A small clay lamp filled with plant oil feeding a tiny wick."
-  , ikit     = []
-  }
-light3 :: ItemKind
-light3 = ItemKind
-  { isymbol  = symbolLight
-  , iname    = "brass lantern"
-  , ifreq    = [(COMMON_ITEM, 100), (LIGHT_ATTENUATOR, 100)]
-  , iflavour = zipPlain [Red]
-  , icount   = 1
-  , irarity  = [(10, 6)]
-  , iverbHit = "burn"
-  , iweight  = 3000
-  , idamage  = 2 `d` 1
-  , iaspects = [ AddSkill SkShine 4
-               , SetFlag Lobable, SetFlag Fragile, SetFlag Equipable
-               , EqpSlot EqpSlotShine ]
-  , ieffects = [ Explode S_FOCUSED_BURNING_OIL_4
-               , OnSmash (Explode S_VIOLENT_BURNING_OIL_4) ]
-  , idesc    = "Very bright and very heavy brass lantern."
-  , ikit     = []
-  }
-
--- ** Periodic jewelry
-
--- Morally these are the aspects, but we also need to add a fake @Timeout@,
--- to let clients know that the not identified item is periodic jewelry.
-iaspects_necklaceTemplate :: [Aspect]
-iaspects_necklaceTemplate =
-  [ PresentAs NECKLACE_UNKNOWN
-  , SetFlag Periodic, SetFlag Precious, SetFlag Equipable
-  , toVelocity 50 ]  -- not dense enough
--- Not identified, because id by use, e.g., via periodic activations. Fun.
-necklaceTemplate :: ItemKind
-necklaceTemplate = ItemKind
-  { isymbol  = symbolNecklace
-  , iname    = "necklace"
-  , ifreq    = [(NECKLACE_UNKNOWN, 1)]
-  , iflavour = zipFancy stdCol ++ zipPlain brightCol
-  , icount   = 1
-  , irarity  = [(4, 3), (10, 6)]
-  , iverbHit = "whip"
-  , iweight  = 30
-  , idamage  = 0
-  , iaspects = Timeout 1000000
-                 -- fake, needed to display "charging"; the timeout itself
-                 -- won't be displayed thanks to periodic; as a side-effect,
-                 -- it can't be activated until identified, which is better
-                 -- than letting the player try to activate before the real
-                 -- cooldown is over and waste turn
-               : iaspects_necklaceTemplate
-  , ieffects = []
-  , idesc    = "Menacing Greek symbols shimmer with increasing speed along a chain of fine encrusted links. After a tense build-up, a prismatic arc shoots towards the ground and the iridescence subdues, becomes ordered and resembles a harmless ornament again, for a time."
-  , ikit     = []
-  }
-necklace1 :: ItemKind
-necklace1 = necklaceTemplate
-  { iname    = "the Necklace"
-  , ifreq    = [(TREASURE, 100), (ANY_JEWELRY, 100)]
-  , irarity  = [(10, 3)]
-  , iaspects = [ SetFlag Unique, ELabel "of Aromata"
-               , Timeout $ (4 - 1 `dL` 3) * 10
-                   -- priceless, so worth the long wait and Calm drain
-               , SetFlag Durable ]
-               ++ iaspects_necklaceTemplate
-  , ieffects = [ RefillCalm (-5)
-               , When (TriggeredBy ActivationPeriodic) $ RefillHP 1 ]
-  , idesc    = "A cord of freshly dried herbs and healing berries."
-  }
-necklace2 :: ItemKind
-necklace2 = necklaceTemplate
-  { iname    = "the Necklace"
-  , ifreq    = [(TREASURE, 100), (ANY_JEWELRY, 100)]
-      -- too nasty to call it just a COMMON_ITEM
-  , irarity  = [(10, 3)]
-  , iaspects = [ SetFlag Unique, ELabel "of Live Bait"
-               , Timeout 30
-               , AddSkill SkOdor 2
-               , SetFlag Durable ]
-               ++ iaspects_necklaceTemplate
-  , ieffects = [ DropItem 1 1 COrgan CONDITION  -- mildly useful when applied
-               , When (TriggeredBy ActivationPeriodic) $ SeqEffect
-                   [ Impress
-                   , Explode S_WASTE ] ]
-  , idesc    = "A cord hung with lumps of decaying meat. It's better not to think about the source."
-  }
-necklace3 :: ItemKind
-necklace3 = necklaceTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_JEWELRY, 100)]
-  , iaspects = [ ELabel "of fearful listening"
-               , Timeout 40
-                   -- has to be larger than Calm drain or item not removable;
-                   -- equal is not enough if enemies drained Calm already
-               , AddSkill SkHearing 6 ]
-               ++ iaspects_necklaceTemplate
-  , ieffects = [ Detect DetectActor 20  -- can be applied; destroys the item
-               , When (TriggeredBy ActivationPeriodic) $ RefillCalm (-30) ]
-  }
-necklace4 :: ItemKind
-necklace4 = necklaceTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_JEWELRY, 100)]
-  , iaspects = [ ELabel "of escape"
-               , Timeout $ (7 - 1 `dL` 5) * 10 ]
-               ++ iaspects_necklaceTemplate
-  , ieffects = [ Teleport $ 14 + 3 `d` 3  -- can be applied; destroys the item
-               , Detect DetectExit 20
-               , Yell ]  -- drawback when used for quick exploring
-  , idesc    = "A supple chain that slips through your fingers."
-  }
-necklace5 :: ItemKind
-necklace5 = necklaceTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_JEWELRY, 100)]
-  , iaspects = [ ELabel "of greed"
-               , Timeout ((2 + 1 `d` 3) * 10) ]
-               ++ iaspects_necklaceTemplate
-  , ieffects = [ Detect DetectLoot 20
-               , toOrganBad S_PARSIMONIOUS (5 + 1 `d` 3)  -- hard to flee
-               , When (TriggeredBy ActivationPeriodic) $ Teleport 40 ]  -- risky
-  }
-necklace6 :: ItemKind
-necklace6 = necklaceTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_JEWELRY, 100)]
-  , iaspects = Timeout ((3 + 1 `d` 3 - 1 `dL` 3) * 2)
-               : iaspects_necklaceTemplate  -- OP if Durable; free blink
-  , ieffects = [Teleport $ 3 `d` 2]
-  }
-necklace7 :: ItemKind
-necklace7 = necklaceTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_JEWELRY, 100)]
-  , iaspects = Timeout ((1 `d` 3) * 2)
-               : iaspects_necklaceTemplate
-  , ieffects = [PushActor (ThrowMod 100 50 1)]  -- 1 step, slow
-                  -- the @50@ is only for the case of very light actor, etc.
-  }
-necklace8 :: ItemKind
-necklace8 = necklaceTemplate
-  { iname    = "the Necklace"
-  , ifreq    = [(TREASURE, 100), (ANY_JEWELRY, 100)]
-  , irarity  = [(10, 1)]  -- different gameplay for the actor that wears it
-  , iaspects = [ SetFlag Unique, ELabel "of Overdrive"
-               , Timeout 4
-               , AddSkill SkMaxHP 25  -- give incentive to cope with impatience
-               , SetFlag Durable ]
-               ++ iaspects_necklaceTemplate
-  , ieffects = [ InsertMove $ 9 + 1 `d` 11  -- unpredictable
-               , toOrganBad S_IMPATIENT 4]
-                 -- The same duration as timeout, to avoid spurious messages
-                 -- as well as unlimited accumulation of the duration.
-  , idesc    = "A string of beads in various colours, with no discernable pattern."
-  }
-necklace9 :: ItemKind
-necklace9 = necklaceTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_JEWELRY, 100)]
-  , irarity  = [(4, 3)]  -- entirely optional
-  , iaspects = Timeout ((1 + 1 `d` 3) * 5)  -- low timeout for offensive use
-               : iaspects_necklaceTemplate
-  , ieffects = [Explode S_SPARK]
-  }
-necklace10 :: ItemKind
-necklace10 = necklaceTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_JEWELRY, 100)]
-  , iaspects = Timeout ((3 + 1 `d` 3) * 10)
-               : iaspects_necklaceTemplate
-                   -- high timeout to prevent spam obscuring messages
-                   -- when other actors act and annoying bumping into
-                   -- projectiles caused by own necklace when walking
-  , ieffects = [Explode S_FRAGRANCE]
-  }
-motionScanner :: ItemKind
-motionScanner = necklaceTemplate
-  { iname    = "draft detector"
-  , ifreq    = [(COMMON_ITEM, 100), (ADD_NOCTO_1, 20)]
-  , irarity  = [(5, 2)]
-  , iverbHit = "jingle"
-  , iweight  = 300  -- almost gives it away
-  , iaspects = [ Timeout $ 4 + 1 `dL` 6
-                   -- positive dL dice, since the periodic effect is detrimental
-               , AddSkill SkNocto 1
-               , AddSkill SkArmorMelee $ (-4 + 1 `dL` 3) * 5
-               , EqpSlot EqpSlotMiscBonus ]
-               ++ iaspects_necklaceTemplate
-  , ieffects = [Explode S_PING_PLASH]
-  , idesc    = "A silk flag with a bell for detecting sudden draft changes. May indicate a nearby corridor crossing or a fast enemy approaching in the dark. The bell is very noisy and casts light reflection flashes."
-  }
-
--- ** Non-periodic jewelry
-
-imageItensifier :: ItemKind
-imageItensifier = ItemKind
-  { isymbol  = symbolRing
-  , iname    = "light cone"
-  , ifreq    = [(TREASURE, 100), (ADD_NOCTO_1, 80)]
-  , iflavour = zipFancy [BrYellow]
-  , icount   = 1
-  , irarity  = [(5, 2)]
-  , iverbHit = "bang"
-  , iweight  = 500
-  , idamage  = 0
-  , iaspects = [ AddSkill SkNocto 1
-               , AddSkill SkArmorMelee $ (-6 + 1 `dL` 3) * 5
-               , SetFlag Precious, SetFlag Equipable
-               , EqpSlot EqpSlotMiscBonus ]
-  , ieffects = []
-  , idesc    = "Contraption of lenses and mirrors on a polished brass headband for capturing and strengthening light in dark environment. Hampers vision in daylight. Stackable."
-  , ikit     = []
-  }
-sightSharpening :: ItemKind
-sightSharpening = ringTemplate  -- small and round, so mistaken for a ring
-  { iname    = "sharp monocle"
-  , ifreq    = [(TREASURE, 20), (ADD_SIGHT, 1)]
-      -- it's has to be very rare, because it's powerful and not unique,
-      -- and also because it looks exactly as one of necklaces, so it would
-      -- be misleading when seen on the map
-  , irarity  = [(7, 1), (10, 12)]  -- low @ifreq@
-  , iweight  = 50  -- heavier that it looks, due to glass
-  , iaspects = [ AddSkill SkSight $ 1 + 1 `dL` 2
-               , AddSkill SkHurtMelee $ (1 `d` 3) * 3
-               , EqpSlot EqpSlotSight ]
-               ++ iaspects ringTemplate
-  , idesc    = "Lets you better focus your weaker eye."
-  }
--- Don't add standard effects to rings, because they go in and out
--- of eqp and so activating them would require UI tedium: looking for
--- them in eqp and stash or even activating a wrong item by mistake.
---
--- By general mechanisms, due to not having effects that could identify
--- them by observing the effect, rings are identified on pickup.
--- That's unlike necklaces, which provide the fun of id-by-use, because they
--- have effects and when the effects are triggered, they get identified.
-ringTemplate :: ItemKind
-ringTemplate = ItemKind
-  { isymbol  = symbolRing
-  , iname    = "ring"
-  , ifreq    = [(RING_UNKNOWN, 1)]
-  , iflavour = zipPlain stdCol ++ zipFancy darkCol
-  , icount   = 1
-  , irarity  = [(10, 2)]  -- the default very low
-  , iverbHit = "knock"
-  , iweight  = 15
-  , idamage  = 0
-  , iaspects = [PresentAs RING_UNKNOWN, SetFlag Precious, SetFlag Equipable]
-  , ieffects = []
-  , idesc    = "It looks like an ordinary object, but it's in fact a generator of exceptional effects: adding to some of your natural qualities and subtracting from others."
-  , ikit     = []
-  }
-ring1 :: ItemKind
-ring1 = ringTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_JEWELRY, 100)]
-  , irarity  = [(8, 4)]
-  , iaspects = [ AddSkill SkSpeed $ 1 `dL` 2
-               , AddSkill SkMaxHP (-20)
-               , EqpSlot EqpSlotSpeed ]
-               ++ iaspects ringTemplate
-  }
-ring2 :: ItemKind
-ring2 = ringTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_JEWELRY, 100)]
-  , irarity  = [(8, 4)]
-  , iaspects = [ AddSkill SkSpeed $ 1 + 1 `dL` 3
-               , AddSkill SkArmorMelee (-40)
-               , EqpSlot EqpSlotSpeed ]
-               ++ iaspects ringTemplate
-  }
-ring3 :: ItemKind
-ring3 = ringTemplate
-  { iname    = "the Ring"
-  , ifreq    = [(TREASURE, 100), (ANY_JEWELRY, 100)]
-  , iaspects = [ SetFlag Unique, ELabel "of Rush"
-               , AddSkill SkSpeed $ (1 + 1 `dL` 2) * 2
-               , AddSkill SkMaxHP (-20)
-               , AddSkill SkArmorMelee (-20)
-               , SetFlag Durable, EqpSlot EqpSlotSpeed ]
-               ++ iaspects ringTemplate
-  , idesc    = "Roughly-shaped metal with shallow scratches marking it."
-  }
-ring4 :: ItemKind
-ring4 = ringTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_JEWELRY, 100)]
-  , irarity  = [(3, 4), (10, 8)]
-  , iaspects = [ AddSkill SkHurtMelee $ (2 + 1 `d` 3 + (1 `dL` 2) * 2 ) * 3
-               , AddSkill SkMaxHP (-10)
-               , EqpSlot EqpSlotHurtMelee ]
-               ++ iaspects ringTemplate
-  }
-ring5 :: ItemKind
-ring5 = ringTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_JEWELRY, 100)]
-  , iaspects = [ AddSkill SkHurtMelee $ (4 + 1 `d` 3 + (1 `dL` 2) * 2 ) * 3
-               , AddSkill SkArmorMelee (-20)
-               , EqpSlot EqpSlotHurtMelee ]
-               ++ iaspects ringTemplate
-  }
-ring6 :: ItemKind
-ring6 = ringTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_JEWELRY, 100)]
-  , irarity  = [(10, 8)]
-  , iaspects = [ AddSkill SkMaxHP $ 5 + (1 `d` 2 + 1 `dL` 2) * 5
-               , AddSkill SkMaxCalm $ -30 + (1 `dL` 3) * 5
-               , EqpSlot EqpSlotMaxHP ]
-               ++ iaspects ringTemplate
-  }
-ring7 :: ItemKind
-ring7 = ringTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_JEWELRY, 100)]
-  , irarity  = [(5, 1), (10, 9)]  -- needed after other items drop Calm
-  , iaspects = [ AddSkill SkMaxCalm $ 30 + (1 `dL` 4) * 5
-               , AddSkill SkHearing 6
-               , EqpSlot EqpSlotMiscBonus ]
-               ++ iaspects ringTemplate
-  , idesc    = "Cold, solid to the touch, perfectly round, engraved with solemn, strangely comforting, worn out words."
-  }
-ring8 :: ItemKind
-ring8 = ringTemplate  -- weak skill per eqp slot, so can be without drawbacks
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_JEWELRY, 100)]
-  , irarity  = [(10, 3)]
-  , iaspects = [ AddSkill SkShine 1
-               , EqpSlot EqpSlotShine ]
-               ++ iaspects ringTemplate
-  , idesc    = "A sturdy ring with a large, shining stone."
-  }
-ring9 :: ItemKind
-ring9 = ringTemplate
-  { ifreq    = [(RING_OF_OPPORTUNITY_SNIPER, 1) ]  -- only for scenarios
-  , irarity  = [(1, 1)]
-  , iaspects = [ ELabel "of opportunity sniper"
-               , AddSkill SkProject 8
-               , EqpSlot EqpSlotProject ]
-               ++ iaspects ringTemplate
-  }
-ring10 :: ItemKind
-ring10 = ringTemplate
-  { ifreq    = [(RING_OF_OPPORTUNITY_GRENADIER, 1) ]  -- only for scenarios
-  , irarity  = [(1, 1)]
-  , iaspects = [ ELabel "of opportunity grenadier"
-               , AddSkill SkProject 11
-               , EqpSlot EqpSlotProject ]
-               ++ iaspects ringTemplate
-  }
-
 -- ** Armor
 
 pwPullover :: ItemKind
@@ -929,7 +459,7 @@ pwPullover = ItemKind
                , SetFlag Durable, SetFlag Equipable
                , EqpSlot EqpSlotArmorMelee ]
   , ieffects = []
-  , idesc    = "A nice pullover with letters PW"
+  , idesc    = "Nice pullover with letters PW"
   , ikit     = []
   }
 miniPullover :: ItemKind
@@ -948,28 +478,7 @@ miniPullover = pwPullover
                , SetFlag Durable, SetFlag Equipable
                , EqpSlot EqpSlotArmorRanged ]
   , ieffects = []
-  , idesc    = "A stylish pullover with orbits and a planet"
-  }
-gloveFencing :: ItemKind
-gloveFencing = ItemKind
-  { isymbol  = symbolMiscArmor
-  , iname    = "winter glove"
-  , ifreq    = [ (COMMON_ITEM, 100), (ARMOR_MISC, 1), (ARMOR_RANGED, 50)
-               , (STARTING_ARMOR, 50) ]
-  , iflavour = zipPlain [White]
-  , icount   = 1
-  , irarity  = [(5, 9), (10, 9)]
-  , iverbHit = "flap"
-  , iweight  = 100
-  , idamage  = 1 `d` 1
-  , iaspects = [ AddSkill SkHurtMelee $ (2 + 1 `d` 2 + 1 `dL` 2) * 3
-               , AddSkill SkArmorRanged $ (1 `dL` 2) * 3
-               , SetFlag Durable, SetFlag Equipable
-               , EqpSlot EqpSlotHurtMelee
-               , toVelocity 50 ]  -- flaps and flutters
-  , ieffects = []
-  , idesc    = "A glove perfectly fit for cold winters in Warsaw"
-  , ikit     = []
+  , idesc    = "Stylish pullover with orbits and a planet"
   }
 hatUshanka :: ItemKind
 hatUshanka = ItemKind
@@ -990,26 +499,6 @@ hatUshanka = ItemKind
                , toVelocity 50 ]  -- flaps and flutters
   , ieffects = [RefillCalm 1]
   , idesc    = "Soft and warm fur. It keeps your ears warm."
-  , ikit     = []
-  }
-capReinforced :: ItemKind
-capReinforced = ItemKind
-  { isymbol  = symbolMiscArmor
-  , iname    = "leather cap"
-  , ifreq    = [(COMMON_ITEM, 100), (ARMOR_MISC, 1), (STARTING_ARMOR, 50)]
-  , iflavour = zipPlain [BrYellow]
-  , icount   = 1
-  , irarity  = [(6, 9), (10, 3)]
-  , iverbHit = "cut"
-  , iweight  = 1000
-  , idamage  = 0
-  , iaspects = [ AddSkill SkArmorMelee $ (1 `d` 2) * 5
-               , AddSkill SkProject 1
-                   -- the brim shields against blinding by light sources, etc.
-               , SetFlag Durable, SetFlag Equipable
-               , EqpSlot EqpSlotProject ]
-  , ieffects = []
-  , idesc    = "Boiled leather with a wide brim. It might soften a blow."
   , ikit     = []
   }
 miniBalaclava :: ItemKind
@@ -1050,7 +539,7 @@ miniJacket = ItemKind
                , SetFlag Periodic, SetFlag Durable, SetFlag Equipable
                , EqpSlot EqpSlotSpeed ]
   , ieffects = [RefillCalm 1]
-  , idesc    = "A jacket embellished with a planet and orbits"
+  , idesc    = "Jacket embellished with a planet and orbits"
   , ikit     = []
   }
 
@@ -1072,7 +561,7 @@ knife = ItemKind
                , EqpSlot EqpSlotWeaponFast
                , toVelocity 40 ]
   , ieffects = []
-  , idesc    = "A typical pocket knife, nothing unusual."
+  , idesc    = "Typical pocket knife, nothing unusual."
   , ikit     = []
   }
 
@@ -1094,7 +583,7 @@ pencil = ItemKind
                , EqpSlot EqpSlotWeaponFast
                , toVelocity 40 ]
   , ieffects = []
-  , idesc    = "A very sharp pencil"
+  , idesc    = "Very sharp pencil"
   , ikit     = []
   }
 
@@ -1160,16 +649,14 @@ cableTray = ItemKind
                , EqpSlot EqpSlotWeaponBig
                , toVelocity 20 ]
   , ieffects = []
-  , idesc    = "A long, aluminium cable tray. Can be used as a weapon."
+  , idesc    = "Long, aluminium cable tray. Can be used as a weapon."
   , ikit     = []
   }
-
--- ** Treasure
 
 currencyTemplate :: ItemKind
 currencyTemplate = ItemKind
   { isymbol  = symbolGold
-  , iname    = "gold piece"
+  , iname    = "ECTS point"
   , ifreq    = [(CURRENCY_UNKNOWN, 1), (VALUABLE, 1)]
   , iflavour = zipPlain [BrYellow]
   , icount   = 10 + 1 `d` 20 + 1 `dL` 20
@@ -1179,7 +666,7 @@ currencyTemplate = ItemKind
   , idamage  = 0
   , iaspects = [PresentAs CURRENCY_UNKNOWN, SetFlag Precious]
   , ieffects = []
-  , idesc    = "Reliably valuable in every civilized plane of existence."
+  , idesc    = "Everything you might need for a successful career"
   , ikit     = []
   }
 currency :: ItemKind

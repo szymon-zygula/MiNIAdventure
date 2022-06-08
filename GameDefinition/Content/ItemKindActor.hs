@@ -1,7 +1,6 @@
 -- | Actor (or rather actor body trunk) definitions.
 module Content.ItemKindActor
-  ( pattern S_WOODEN_TORCH
-  , pattern S_COMPUTER_MOUSE
+  ( pattern S_COMPUTER_MOUSE
   , pattern HERO
   , pattern SCOUT_HERO
   , pattern BRAWLER_HERO
@@ -10,11 +9,7 @@ module Content.ItemKindActor
   , pattern CAR
   , pattern COMPUTER
   , pattern SERVER
-  , pattern ADD_SIGHT
   , pattern ARMOR_RANGED
-  , pattern ADD_NOCTO_1
-  , pattern LIGHT_ATTENUATOR
-  , pattern RING_OF_OPPORTUNITY_SNIPER
   , pattern STARTING_ARMOR
   , pattern STARTING_WEAPON
   , actorsGN
@@ -39,7 +34,7 @@ import Content.ItemKindBlast
 
 actorsGNSingleton :: [GroupName ItemKind]
 actorsGNSingleton =
-       [S_WOODEN_TORCH, S_COMPUTER_MOUSE]
+       [S_COMPUTER_MOUSE]
 
 actorsGN :: [GroupName ItemKind]
 actorsGN =
@@ -51,11 +46,7 @@ actorsGN =
     , CAR
     , COMPUTER
     , SERVER
-    , ADD_SIGHT
     , ARMOR_RANGED
-    , ADD_NOCTO_1
-    , LIGHT_ATTENUATOR
-    , RING_OF_OPPORTUNITY_SNIPER
     , STARTING_ARMOR
     , STARTING_WEAPON ]
 
@@ -76,21 +67,11 @@ pattern COMPUTER = GroupName "computer"
 pattern SERVER :: GroupName c
 pattern SERVER = GroupName "server"
 
-pattern S_WOODEN_TORCH :: GroupName c
-pattern S_WOODEN_TORCH = GroupName "wooden torch"
 pattern S_COMPUTER_MOUSE :: GroupName c
 pattern S_COMPUTER_MOUSE = GroupName "computer mouse"
 
-pattern ADD_SIGHT :: GroupName c
-pattern ADD_SIGHT = GroupName "sight improvement"
 pattern ARMOR_RANGED :: GroupName c
 pattern ARMOR_RANGED = GroupName "ranged armor"
-pattern ADD_NOCTO_1 :: GroupName c
-pattern ADD_NOCTO_1 = GroupName "noctovision improvement"
-pattern LIGHT_ATTENUATOR :: GroupName c
-pattern LIGHT_ATTENUATOR = GroupName "light attenuator"
-pattern RING_OF_OPPORTUNITY_SNIPER :: GroupName c
-pattern RING_OF_OPPORTUNITY_SNIPER = GroupName "ring of sniper"
 pattern STARTING_ARMOR :: GroupName c
 pattern STARTING_ARMOR = GroupName "starting armor"
 pattern STARTING_WEAPON :: GroupName c
@@ -180,9 +161,7 @@ scout :: ItemKind
 scout = warrior
   { ifreq    = [(SCOUT_HERO, 100), (MOBILE, 1)]
   , ikit     = humanOrgans
-               ++ [ (ADD_SIGHT, CEqp)
-                  , (ARMOR_RANGED, CEqp)
-                  , (ADD_NOCTO_1, CStash) ]
+               ++ [ (ARMOR_RANGED, CEqp) ]
   -- , idesc    = ""
   }
 brawler :: ItemKind
