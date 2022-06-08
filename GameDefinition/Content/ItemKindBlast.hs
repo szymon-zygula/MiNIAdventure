@@ -1,6 +1,6 @@
 -- | Blast definitions.
 module Content.ItemKindBlast
-  ( pattern S_FIRECRACKER
+  ( pattern S_LITHIUM_ION
   , pattern S_VIOLENT_FRAGMENTATION
   , pattern S_FRAGMENTATION
   , pattern S_FOCUSED_FRAGMENTATION
@@ -39,7 +39,6 @@ module Content.ItemKindBlast
   , pattern S_IRON_FILING
   , pattern S_SMELLY_DROPLET
   , pattern S_EYE_SHINE
-  , pattern S_WHISKEY_SPRAY
   , pattern S_YOUTH_SPRINKLE
   , pattern S_POISON_CLOUD
   , pattern S_PING_PLASH
@@ -77,7 +76,7 @@ import Content.ItemKindTemporary
 
 blastsGNSingleton :: [GroupName ItemKind]
 blastsGNSingleton =
-   [ S_FIRECRACKER
+   [ S_LITHIUM_ION
    , S_VIOLENT_FRAGMENTATION
    , S_FRAGMENTATION
    , S_FOCUSED_FRAGMENTATION
@@ -116,7 +115,6 @@ blastsGNSingleton =
    , S_IRON_FILING
    , S_SMELLY_DROPLET
    , S_EYE_SHINE
-   , S_WHISKEY_SPRAY
    , S_YOUTH_SPRINKLE
    , S_POISON_CLOUD
    , S_PING_PLASH
@@ -129,7 +127,7 @@ blastsGNSingleton =
    , S_FOCUSED_BURNING_OIL_2
    , S_FOCUSED_BURNING_OIL_3
    , S_FOCUSED_BURNING_OIL_4]
-  ++ map firecrackerAt [1..4]
+  ++ map lithiumIonAt [1..4]
   ++ map blastNoStatOf noStatGN
   ++ map blastBonusStatOf bonusStatGN
 
@@ -139,8 +137,8 @@ blastsGN =
 
 pattern ARMOR_MISC :: GroupName ItemKind
 
-pattern S_FIRECRACKER :: GroupName c
-pattern S_FIRECRACKER = GroupName "firecracker"
+pattern S_LITHIUM_ION :: GroupName c
+pattern S_LITHIUM_ION = GroupName "lithiumIon"
 pattern S_VIOLENT_FRAGMENTATION :: GroupName c
 pattern S_VIOLENT_FRAGMENTATION = GroupName "violent fragmentation"
 pattern S_FRAGMENTATION :: GroupName c
@@ -217,8 +215,6 @@ pattern S_SMELLY_DROPLET :: GroupName c
 pattern S_SMELLY_DROPLET = GroupName "smelly droplet"
 pattern S_EYE_SHINE :: GroupName c
 pattern S_EYE_SHINE = GroupName "eye shine"
-pattern S_WHISKEY_SPRAY :: GroupName c
-pattern S_WHISKEY_SPRAY = GroupName "whiskey spray"
 pattern S_YOUTH_SPRINKLE :: GroupName c
 pattern S_YOUTH_SPRINKLE = GroupName "youth sprinkle"
 pattern S_POISON_CLOUD :: GroupName c
@@ -244,8 +240,8 @@ pattern S_FOCUSED_BURNING_OIL_3 = GroupName "focused burning oil 3"
 pattern S_FOCUSED_BURNING_OIL_4 :: GroupName c
 pattern S_FOCUSED_BURNING_OIL_4 = GroupName "focused burning oil 4"
 
-firecrackerAt :: Int -> GroupName ItemKind
-firecrackerAt n = GroupName $ "firecracker" <+> tshow n
+lithiumIonAt :: Int -> GroupName ItemKind
+lithiumIonAt n = GroupName $ "lithiumIon" <+> tshow n
 
 blastNoStatOf :: GroupName ItemKind -> GroupName ItemKind
 blastNoStatOf grp = GroupName $ fromGroupName grp <+> "mist"
@@ -268,11 +264,11 @@ blasts =
   , focusedBurningOil2
   , focusedBurningOil3
   , focusedBurningOil4
-  , firecracker1
-  , firecracker2
-  , firecracker3
-  , firecracker4
-  , firecracker5
+  , lithiumIon1
+  , lithiumIon2
+  , lithiumIon3
+  , lithiumIon4
+  , lithiumIon5
   , spreadFragmentation
   , spreadFragmentation8
   , focusedFragmentation
@@ -314,7 +310,6 @@ blasts =
   , ironFiling
   , smellyDroplet
   , eyeShine
-  , whiskeySpray
   , youthSprinkle
   , poisonCloud
   , pingFlash
@@ -406,13 +401,13 @@ focusedBurningOil3 :: ItemKind
 focusedBurningOil3 = focusedBurningOil 3 S_FOCUSED_BURNING_OIL_3 S_BURNING_OIL_3
 focusedBurningOil4 :: ItemKind
 focusedBurningOil4 = focusedBurningOil 4 S_FOCUSED_BURNING_OIL_4 S_BURNING_OIL_4
-firecracker :: Int -> ItemKind
-firecracker n = ItemKind
+lithiumIon :: Int -> ItemKind
+lithiumIon n = ItemKind
   { isymbol  = toContentSymbol '*'
-  , iname    = "firecracker"
+  , iname    = "lithiumIon"
   , ifreq    = [(if n == 5
-                 then S_FIRECRACKER
-                 else firecrackerAt n, 1)]
+                 then S_LITHIUM_ION
+                 else lithiumIonAt n, 1)]
   , iflavour = zipPlain [brightCol !! ((n + 2) `mod` length brightCol)]
   , icount   = if n <= 3 then 1 `d` min 2 n else 2 + 1 `d` 2
   , irarity  = [(1, 1)]
@@ -424,20 +419,20 @@ firecracker n = ItemKind
                , AddSkill SkShine $ intToDice $ 1 + n `div` 2 ]
   , ieffects = [if n >= 4 then Burn 1 else RefillCalm (-2)]
                ++ [Discharge 1 30 | n >= 3]
-               ++ [OnSmash $ Explode $ firecrackerAt (n - 1) | n >= 2]
+               ++ [OnSmash $ Explode $ lithiumIonAt (n - 1) | n >= 2]
   , idesc    = "Scraps of burnt paper, covering little pockets of black powder, buffeted by colorful explosions."
   , ikit     = []
   }
-firecracker5 :: ItemKind
-firecracker5 = firecracker 5
-firecracker4 :: ItemKind
-firecracker4 = firecracker 4
-firecracker3 :: ItemKind
-firecracker3 = firecracker 3
-firecracker2 :: ItemKind
-firecracker2 = firecracker 2
-firecracker1 :: ItemKind
-firecracker1 = firecracker 1
+lithiumIon5 :: ItemKind
+lithiumIon5 = lithiumIon 5
+lithiumIon4 :: ItemKind
+lithiumIon4 = lithiumIon 4
+lithiumIon3 :: ItemKind
+lithiumIon3 = lithiumIon 3
+lithiumIon2 :: ItemKind
+lithiumIon2 = lithiumIon 2
+lithiumIon1 :: ItemKind
+lithiumIon1 = lithiumIon 1
 
 -- * Focused blasts
 
@@ -1120,22 +1115,6 @@ eyeShine = ItemKind
   , iaspects = [toLinger 10, SetFlag Fragile, SetFlag Blast]
   , ieffects = [toOrganGood S_SHINY_EYED (3 + 1 `d` 3)]
   , idesc    = "They almost glow in the dark."
-  , ikit     = []
-  }
-whiskeySpray :: ItemKind
-whiskeySpray = ItemKind
-  { isymbol  = toContentSymbol '`'
-  , iname    = "whiskey spray"
-  , ifreq    = [(S_WHISKEY_SPRAY, 1)]
-  , iflavour = zipFancy [Brown]
-  , icount   = 16
-  , irarity  = [(1, 1)]
-  , iverbHit = "inebriate"
-  , iweight  = 1
-  , idamage  = 0
-  , iaspects = [toLinger 10, SetFlag Fragile, SetFlag Blast]
-  , ieffects = [toOrganGood S_DRUNK (3 + 1 `d` 3)]
-  , idesc    = "It burns in the best way."
   , ikit     = []
   }
 youthSprinkle :: ItemKind

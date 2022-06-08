@@ -1,24 +1,20 @@
 -- | Actor (or rather actor body trunk) definitions.
 module Content.ItemKindActor
   ( pattern S_WOODEN_TORCH
-  , pattern S_SANDSTONE_ROCK
+  , pattern S_COMPUTER_MOUSE
   , pattern HERO
   , pattern SCOUT_HERO
-  , pattern RANGER_HERO
-  , pattern ESCAPIST_HERO
-  , pattern AMBUSHER_HERO
   , pattern BRAWLER_HERO
   , pattern SOLDIER_HERO
   , pattern CIVILIAN
   , pattern CAR
   , pattern COMPUTER
+  , pattern SERVER
   , pattern ADD_SIGHT
   , pattern ARMOR_RANGED
   , pattern ADD_NOCTO_1
-  , pattern WEAK_ARROW
   , pattern LIGHT_ATTENUATOR
   , pattern RING_OF_OPPORTUNITY_SNIPER
-  , pattern ANY_ARROW
   , pattern STARTING_ARMOR
   , pattern STARTING_WEAPON
   , actorsGN
@@ -43,27 +39,23 @@ import Content.ItemKindBlast
 
 actorsGNSingleton :: [GroupName ItemKind]
 actorsGNSingleton =
-       [S_WOODEN_TORCH, S_SANDSTONE_ROCK]
+       [S_WOODEN_TORCH, S_COMPUTER_MOUSE]
 
 actorsGN :: [GroupName ItemKind]
 actorsGN =
     [ HERO
     , SCOUT_HERO
-    , RANGER_HERO
-    , ESCAPIST_HERO
-    , AMBUSHER_HERO
     , BRAWLER_HERO
     , SOLDIER_HERO
     , CIVILIAN
     , CAR
     , COMPUTER
+    , SERVER
     , ADD_SIGHT
     , ARMOR_RANGED
     , ADD_NOCTO_1
-    , WEAK_ARROW
     , LIGHT_ATTENUATOR
     , RING_OF_OPPORTUNITY_SNIPER
-    , ANY_ARROW
     , STARTING_ARMOR
     , STARTING_WEAPON ]
 
@@ -71,12 +63,6 @@ pattern HERO :: GroupName c
 pattern HERO = GroupName "adventurer"
 pattern SCOUT_HERO :: GroupName c
 pattern SCOUT_HERO = GroupName "scout"
-pattern RANGER_HERO :: GroupName c
-pattern RANGER_HERO = GroupName "ranger"
-pattern ESCAPIST_HERO :: GroupName c
-pattern ESCAPIST_HERO = GroupName "escapist"
-pattern AMBUSHER_HERO :: GroupName c
-pattern AMBUSHER_HERO = GroupName "ambusher"
 pattern BRAWLER_HERO :: GroupName c
 pattern BRAWLER_HERO = GroupName "brawler"
 pattern SOLDIER_HERO :: GroupName c
@@ -87,11 +73,13 @@ pattern CAR :: GroupName c
 pattern CAR = GroupName "car"
 pattern COMPUTER :: GroupName c
 pattern COMPUTER = GroupName "computer"
+pattern SERVER :: GroupName c
+pattern SERVER = GroupName "server"
 
 pattern S_WOODEN_TORCH :: GroupName c
 pattern S_WOODEN_TORCH = GroupName "wooden torch"
-pattern S_SANDSTONE_ROCK :: GroupName c
-pattern S_SANDSTONE_ROCK = GroupName "sandstone rock"
+pattern S_COMPUTER_MOUSE :: GroupName c
+pattern S_COMPUTER_MOUSE = GroupName "computer mouse"
 
 pattern ADD_SIGHT :: GroupName c
 pattern ADD_SIGHT = GroupName "sight improvement"
@@ -99,14 +87,10 @@ pattern ARMOR_RANGED :: GroupName c
 pattern ARMOR_RANGED = GroupName "ranged armor"
 pattern ADD_NOCTO_1 :: GroupName c
 pattern ADD_NOCTO_1 = GroupName "noctovision improvement"
-pattern WEAK_ARROW :: GroupName c
-pattern WEAK_ARROW = GroupName "weak arrow"
 pattern LIGHT_ATTENUATOR :: GroupName c
 pattern LIGHT_ATTENUATOR = GroupName "light attenuator"
 pattern RING_OF_OPPORTUNITY_SNIPER :: GroupName c
 pattern RING_OF_OPPORTUNITY_SNIPER = GroupName "ring of sniper"
-pattern ANY_ARROW :: GroupName c
-pattern ANY_ARROW = GroupName "arrow"
 pattern STARTING_ARMOR :: GroupName c
 pattern STARTING_ARMOR = GroupName "starting armor"
 pattern STARTING_WEAPON :: GroupName c
@@ -122,9 +106,6 @@ actors =
   , warrior4
   , warrior5
   , scout
-  , ranger
-  , escapist
-  , ambusher
   , brawler
   , soldier
   , civilian
@@ -169,7 +150,7 @@ warrior = ItemKind
                , SetFlag Durable ]
   , ieffects = []
   , ikit     = humanOrgans
-               ++ [(S_SANDSTONE_ROCK, CStash)]
+               ++ [(S_COMPUTER_MOUSE, CStash)]
   , idesc    = ""  -- "A hardened veteran of combat."
   }
 warrior2 :: ItemKind
@@ -202,37 +183,6 @@ scout = warrior
                ++ [ (ADD_SIGHT, CEqp)
                   , (ARMOR_RANGED, CEqp)
                   , (ADD_NOCTO_1, CStash) ]
-  -- , idesc    = ""
-  }
-ranger :: ItemKind
-ranger = warrior
-  { ifreq    = [(RANGER_HERO, 100), (MOBILE, 1)]
-  , ikit     = humanOrgans
-               ++ [ (ARMOR_RANGED, CEqp)
-                  , (WEAK_ARROW, CStash) ]
-  -- , idesc    = ""
-  }
-escapist :: ItemKind
-escapist = warrior
-  { ifreq    = [(ESCAPIST_HERO, 100), (MOBILE, 1)]
-  , ikit     = humanOrgans
-               ++ [ (ADD_SIGHT, CEqp)
-                  , (STARTING_ARMOR, CEqp)
-                  , (WEAK_ARROW, CStash)  -- mostly for probing
-                  , (LIGHT_ATTENUATOR, CStash)
-                  , (S_WOODEN_TORCH, CStash) ]
-  -- , idesc    = ""
-  }
-ambusher :: ItemKind
-ambusher = warrior
-  { ifreq    = [(AMBUSHER_HERO, 100), (MOBILE, 1)]
-  , ikit     = humanOrgans  -- dark and numerous, so more kit without exploring
-               ++ [ (RING_OF_OPPORTUNITY_SNIPER, CEqp)
-                  , (ANY_ARROW, CStash), (ANY_ARROW, CStash)
-                  , (WEAK_ARROW, CStash)
-                  , (EXPLOSIVE, CStash)
-                  , (LIGHT_ATTENUATOR, CEqp)
-                  , (S_WOODEN_TORCH, CStash) ]
   -- , idesc    = ""
   }
 brawler :: ItemKind
@@ -343,7 +293,7 @@ tesla = car
                , AddSkill SkAggression 2
                , AddSkill SkAlter (-2)
                , SetFlag Durable ]
-  , ieffects = [ OnSmash $ Explode S_FIRECRACKER ] -- Batteries explode with colorful fire
+  , ieffects = [ OnSmash $ Explode S_LITHIUM_ION ] -- Batteries explode with colorful fire
   , idesc    = "New generation electric vehicle of questionable reputation"
   }
 
@@ -352,6 +302,7 @@ blackVolga = car
   { isymbol  = toContentSymbol 'V'
   , iname    = "black Volga"
   , iflavour = zipPlain [BrBlack]
+  , irarity  = [(1, 2), (10, 1)]
   , iweight  = 900000
   , iaspects = [ AddSkill SkMaxHP 50, AddSkill SkMaxCalm 60
                , AddSkill SkSpeed 20, AddSkill SkNocto 2
@@ -367,10 +318,10 @@ computer :: ItemKind
 computer = ItemKind
   { isymbol  = toContentSymbol '#'
   , iname    = "computer"
-  , ifreq    = [(COMPUTER, 100), (MOBILE, 1)]
+  , ifreq    = [(COMPUTER, 75), (SERVER, 25), (MOBILE, 1)]
   , iflavour = zipPlain [Blue]
   , icount   = 1
-  , irarity  = []
+  , irarity  = [(1, 4), (10, 2)]
   , iverbHit = "shhhhwuuuu"
   , iweight  = 5000
   , idamage  = 0
@@ -388,7 +339,6 @@ pc :: ItemKind
 pc = computer
   { isymbol  = toContentSymbol 'D'
   , iname    = "desktop computer"
-  , irarity  = [(0.5, 5), (10, 2)]
   , iflavour = zipPlain [BrBlack]
   , iweight  = 6000
   , idesc    = "An old school desktop computer, perfect for writing Haskell programs."
@@ -398,7 +348,6 @@ laptop :: ItemKind
 laptop = computer
   { isymbol  = toContentSymbol 'L'
   , iname    = "laptop"
-  , irarity  = [(0.5, 5), (10, 2)]
   , iflavour = zipPlain [BrRed]
   , iweight  = 2000
   , iaspects = [ AddSkill SkMaxHP 10, AddSkill SkMaxCalm 20
@@ -406,7 +355,7 @@ laptop = computer
                , AddSkill SkAggression 8
                , AddSkill SkAlter (-2)
                , SetFlag Durable ]
-  , ieffects = [ OnSmash $ Explode S_FIRECRACKER ] -- Batteries explode with colorful fire
+  , ieffects = [ OnSmash $ Explode S_LITHIUM_ION ] -- Batteries explode with colorful fire
   , idesc    = "A swift laptop, great for playing Minecraft during boring lectures."
   }
 
@@ -414,7 +363,6 @@ macbook :: ItemKind
 macbook = computer
   { isymbol  = toContentSymbol 'M'
   , iname    = "macbook"
-  , irarity  = [(0.5, 5), (10, 2)]
   , iflavour = zipPlain [White]
   , iweight  = 1500
   , iaspects = [ AddSkill SkMaxHP 8, AddSkill SkMaxCalm 20
@@ -422,7 +370,7 @@ macbook = computer
                , AddSkill SkAggression 20
                , AddSkill SkAlter (-2)
                , SetFlag Durable ]
-  , ieffects = [ OnSmash $ Explode S_FIRECRACKER ] -- Batteries explode with colorful fire
+  , ieffects = [ OnSmash $ Explode S_LITHIUM_ION ] -- Batteries explode with colorful fire
   , idesc    = "An ever thin and swift kind of laptop."
   }
 
@@ -430,9 +378,9 @@ server :: ItemKind
 server = computer
   { isymbol  = toContentSymbol '#'
   , iname    = "server"
-  , irarity  = [(0.5, 1), (10, 6)]
   , iflavour = zipPlain [Cyan]
   , iweight  = 2000
+  , ifreq    = [(COMPUTER, 25), (SERVER, 75), (MOBILE, 1)]
   , iaspects = [ AddSkill SkMaxHP 25, AddSkill SkMaxCalm 40
                , AddSkill SkSpeed 4, AddSkill SkNocto 1
                , AddSkill SkAggression 5

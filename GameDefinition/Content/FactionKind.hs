@@ -27,7 +27,6 @@ import Prelude ()
 import Game.LambdaHack.Core.Prelude
 
 import           Game.LambdaHack.Content.FactionKind
-import qualified Game.LambdaHack.Content.ItemKind as IK
 import           Game.LambdaHack.Definition.Ability
 import           Game.LambdaHack.Definition.Defs
 import           Game.LambdaHack.Definition.DefsInternal
@@ -141,7 +140,7 @@ factComputer = FactionKind
   { fname = "Batch of computers"
   , ffreq = [(COMPUTER_REPRESENTATIVE, 1), (REPRESENTATIVE, 1)]
   , fteam = teamComputers
-  , fgroups = [ (COMPUTER, 100) ]
+  , fgroups = [ (COMPUTER, 75), (SERVER, 25) ]
   , fskillsOther = zeroSkills
   , fcanEscape = False
   , fneverEmpty = False

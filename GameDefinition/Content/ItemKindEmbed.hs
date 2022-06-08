@@ -98,7 +98,7 @@ obscenePictogram = ItemKind
   , ieffects = [ VerbMsg "enter destructive rage at the sight of an obscene pictogram" "."
                , RefillCalm (-20)
                , OneOf [ toOrganGood S_STRENGTHENED (3 + 1 `d` 2)
-                       , CreateItem Nothing CGround S_SANDSTONE_ROCK timerNone ]
+                       , CreateItem Nothing CGround S_COMPUTER_MOUSE timerNone ]
                ]
   , idesc    = "It's not even anatomically possible."
   , ikit     = []
@@ -241,7 +241,6 @@ rubble = ItemKind
   , iaspects = [SetFlag Durable]
   , ieffects = [OneOf [ Explode S_FOCUSED_GLASS_HAIL
                       , toOrganNoTimer S_POISONED
-                      , CreateItem Nothing CGround ANY_ARROW timerNone
                       , CreateItem Nothing CGround STARTING_WEAPON timerNone
                       , reliefMsg, reliefMsg, reliefMsg
                       , reliefMsg, reliefMsg, reliefMsg ]]

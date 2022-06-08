@@ -2,6 +2,7 @@
 -- cave kind.
 module Content.CaveKind
   ( pattern CAVE_PARKING_LOT
+  , pattern CAVE_MINI_LABORATORY
   , pattern CAVE_ROGUE
   , pattern CAVE_ARENA
   , pattern CAVE_SMOKING
@@ -42,6 +43,7 @@ groupNamesSingleton = []
 groupNames :: [GroupName CaveKind]
 groupNames =
     [ CAVE_PARKING_LOT
+    , CAVE_MINI_LABORATORY
     , CAVE_ROGUE
     , CAVE_ARENA
     , CAVE_SMOKING
@@ -54,7 +56,9 @@ groupNames =
     , CAVE_RAID ]
 
 pattern CAVE_PARKING_LOT :: GroupName c
-pattern CAVE_PARKING_LOT = GroupName "caveMini"
+pattern CAVE_PARKING_LOT = GroupName "caveParkingLot"
+pattern CAVE_MINI_LABORATORY :: GroupName c
+pattern CAVE_MINI_LABORATORY = GroupName "caveMiniLaboratory"
 pattern CAVE_ROGUE :: GroupName c
 pattern CAVE_ROGUE = GroupName "caveRogue"
 pattern CAVE_ARENA :: GroupName c
@@ -81,6 +85,7 @@ pattern CAVE_RAID = GroupName "caveRaid"
 content :: [CaveKind]
 content =
     [ parkingLot
+    , miniLaboratory
     , rogue
     , arena
     , smoking
@@ -364,6 +369,31 @@ parkingLot = rogue
   , copenChance   = 0  -- make sure enemies not seen on turn 1
   , cactorCoeff   = 300  -- deep level with no kit, so slow spawning
   , cactorFreq    = [(CAR, 100)]
+  , citemNum      = 50
+  , citemFreq     = [ (IK.EXPLOSIVE, 30000), (IK.COMMON_ITEM, 20)
+                    , (STARTING_WEAPON, 30) ]
+  , cmaxStairsNum = 0
+  , cescapeFreq   = [(INDOOR_ESCAPE_UP, 1)]
+  , cstairFreq    = []
+  , cstairAllowed = []
+  }
+
+miniLaboratory :: CaveKind
+miniLaboratory = rogue
+  { cname = "MiNI laboratory"
+  , cfreq = [(CAVE_MINI_LABORATORY, 1)]
+  , cdesc = "A laboratory full of computers for writing useful programs" 
+  , cXminSize     = 50
+  , cYminSize     = 21
+  , ccellSize     = DiceXY (2 `d` 4 + 6) 6
+  , cminPlaceSize = DiceXY (2 `d` 2 + 4) 5
+  , cmaxPlaceSize = DiceXY 16 20
+  , cdarkOdds     = 0  -- all rooms lit, for a gentle start
+  , cmaxVoid      = 1%10
+  , cdoorChance   = 1  -- make sure enemies not seen on turn 1
+  , copenChance   = 0  -- make sure enemies not seen on turn 1
+  , cactorCoeff   = 300  -- deep level with no kit, so slow spawning
+  , cactorFreq    = [(COMPUTER, 500), (SERVER, 2000)]
   , citemNum      = 50
   , citemFreq     = [ (IK.EXPLOSIVE, 30000), (IK.COMMON_ITEM, 20)
                     , (STARTING_WEAPON, 30) ]

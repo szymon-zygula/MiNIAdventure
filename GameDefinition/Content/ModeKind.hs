@@ -5,7 +5,6 @@ module Content.ModeKind
   , content
 #ifdef EXPOSE_INTERNAL
   , pattern MINI
-  , pattern RAID
   , pattern LONG
   , pattern CRAWL
 #endif
@@ -32,15 +31,13 @@ import Content.ItemKindActor
 
 groupNamesSingleton :: [GroupName ModeKind]
 groupNamesSingleton =
-       [MINI, RAID, LONG, CRAWL]
+       [MINI, LONG, CRAWL]
 
 groupNames :: [GroupName ModeKind]
 groupNames = []
 
 pattern MINI :: GroupName c
 pattern MINI = GroupName "mini"
-pattern RAID :: GroupName c
-pattern RAID = GroupName "raid"
 pattern LONG :: GroupName c
 pattern LONG = GroupName "long crawl"
 pattern CRAWL :: GroupName c
@@ -51,9 +48,8 @@ pattern CRAWL = GroupName "crawl"
 content :: [ModeKind]
 content =
   [ mini
-  , raid
   , crawl
-  , screensaverRaid
+  , screensaverMini
   ]
 
 -- What other symmetric (two only-one-moves factions) and asymmetric vs crowd
@@ -69,28 +65,6 @@ content =
 -- crowd ranged: no, fish in a barrel, less predictable and more fun inside
 --   crawl, even without reaction fire
 
-raid :: ModeKind
-raid = ModeKind
-  { mname   = "raid (tutorial, 1)"
-  , mfreq   = [(RAID, 1), (CAMPAIGN_SCENARIO, 1)]
-  , mtutorial = True
-  , mattract = False
-  , mroster = rosterRaid
-  , mcaves  = cavesRaid
-  , mendMsg = [ (Killed, "This expedition has gone wrong. However, scientific mind does not despair, but analyzes and corrects. Did you perchance awake one animal too many? Did you remember to try using all consumables at your disposal for your immediate survival? Did you choose a challenge with difficulty level within your means? Answer honestly, ponder wisely, experiment methodically.")
-              , (Defeated, "Regrettably, the other team snatched the grant, while you were busy contemplating natural phenomena. Science is a competitive sport, as sad as it sounds. It's not enough to make a discovery, you have to get there first.")
-              , (Escape, "You've got hold of the machine! Think of the hours of fun taking it apart and putting it back together again! That's a great first step on your quest to solve the typing problems of the world.") ]
-  , mrules  = T.intercalate "\n"
-      [ "* One level only"
-      , "* Two heroes vs. Spawned enemies"
-      , "* Gather gold"
-      , "* Find a way out and escape ASAP"
-      ]
-  , mdesc   = "An incredibly advanced typing machine worth 100 gold is buried at the exit of this maze. Be the first to find it and fund a research team that makes typing accurate and dependable forever."
-  , mreason = "In addition to initiating the (loose) game plot, this adventure provides an introductory tutorial. Relax, explore, gather loot, find the way out and escape. With some luck, you won't even need to fight anything."
-  , mhint   = "You can't use gathered items in your next encounters, so trigger any consumables at will. Feel free to scout with only one of the heroes and keep the other one immobile, e.g., standing guard over the squad's shared inventory stash. If in grave danger, retreat with the scout to join forces with the guard. The more gold collected and the faster the victory, the higher your score in this encounter."
-  }
-
 mini :: ModeKind
 mini = ModeKind
   { mname = "mini"
@@ -99,7 +73,7 @@ mini = ModeKind
   , mattract = False
   , mroster = rosterMini
   , mcaves  = cavesMini
-  , mendMsg = [ (Killed, "You have died in the depths of the parking lot.")
+  , mendMsg = [ (Killed, "You have died in the depths of the faculty.")
               , (Defeated, "Regrettably, it looks like you have not acquired the necessary amount of ECTS points.")
               , (Escape, "You've got hold of the ELMiTA book!") ]
   , mrules  = T.intercalate "\n"
@@ -137,28 +111,19 @@ crawl = ModeKind
      , "Perhaps the gathered items should have been used for scientific experiments on the spot rather than hoarded as if of base covetousness? Or perhaps the challenge, chosen freely but without the foreknowledge of the grisly difficulty, was insurmountable and forlorn from the start, despite the enormous power of educated reason at out disposal?"
      ]
 
-screensaverRaid :: ModeKind
-screensaverRaid = raid
-  { mname   = "auto-raid (1)"
+screensaverMini :: ModeKind
+screensaverMini = mini
+  { mname   = "auto-mini (1)"
   , mfreq   = [(INSERT_COIN, 2)]
   , mattract = True
   }
 
 rosterMini :: [(GroupName c1, [(Int, Dice, GroupName c2)])]
 rosterMini =
-  [ ( CAR_REPRESENTATIVE  -- starting over escape
-    , [(-2, 2, CAR)] )
+  [ ( COMPUTER_REPRESENTATIVE
+    , [(-2, 2, COMPUTER)] )
   , ( EXPLORER_SHORT
-    , [(-2, 2, HERO)] )
-  , ( COMPETITOR_SHORT
-    , [(-2, 1, HERO)] ) ]
-
-rosterRaid :: [(GroupName c1, [(Int, Dice, GroupName c2)])]
-rosterRaid =
-  [ ( EXPLORER_SHORT
-    , [(-2, 2, HERO)] )
-  , ( COMPETITOR_SHORT
-    , [(-2, 1, HERO)] ) ]
+    , [(-2, 2, HERO)] ) ]
 
 rosterCrawl :: [(GroupName c1, [(Int, Dice, GroupName c2)])]
 rosterCrawl =
@@ -167,10 +132,7 @@ rosterCrawl =
   ]
 
 cavesMini :: [([Int], [GroupName c])]
-cavesMini = [([-2], [CAVE_PARKING_LOT])]
-
-cavesRaid :: [([Int], [GroupName c])]
-cavesRaid = [([-2], [CAVE_RAID])]
+cavesMini = [([-2], [CAVE_MINI_LABORATORY])]
 
 listCrawl :: [([Int], [GroupName CaveKind])]
 listCrawl =

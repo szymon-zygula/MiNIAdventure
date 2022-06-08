@@ -1,7 +1,6 @@
 -- | Definitions of basic items.
 module Content.ItemKind
-  ( pattern HARPOON
-  , pattern FOOD
+  ( pattern FOOD
   , pattern RING_OF_OPPORTUNITY_GRENADIER
   , pattern ARMOR_LOOSE
   , pattern CLOTHING_MISC
@@ -60,7 +59,6 @@ groupNames =
     , ANY_JEWELRY
     , VALUABLE
     , UNREPORTED_INVENTORY
-    , HARPOON
     , FOOD
     , RING_OF_OPPORTUNITY_GRENADIER
     , ARMOR_LOOSE
@@ -85,8 +83,6 @@ pattern HAMMER_UNKNOWN = GroupName "hammer unknown"
 pattern CURRENCY_UNKNOWN :: GroupName c
 pattern CURRENCY_UNKNOWN = GroupName "currency unknown"
 
-pattern HARPOON :: GroupName c
-pattern HARPOON = GroupName "harpoon"
 pattern FOOD :: GroupName c
 pattern FOOD = GroupName "edible plant"
 pattern RING_OF_OPPORTUNITY_GRENADIER :: GroupName c
@@ -108,20 +104,12 @@ otherItemContent = embeds ++ actors ++ organs ++ blasts ++ temporaries
 
 items :: [ItemKind]
 items =
-    [ sandstoneRock
-    , dart
-    , spike
-    , spike2
-    , slingStone
-    , slingBullet
+    [ computerMouse
     , paralizingProj
-    , harpoon
-    , harpoon2
-    , net
     , diablotekSupply
     , concussionBomb
     , flashBomb
-    , firecrackerBomb
+    , swollenLithiumIon
     , sodaTemplate
     , soda1
     , soda2
@@ -187,20 +175,6 @@ items =
     , currencyTemplate
     , currency ]
 
--- Keep the dice rolls and sides in aspects small so that not too many
--- distinct items are generated (for display in item lore and for narrative
--- impact ("oh, I found the more powerful of the two variants of the item!",
--- instead of "hmm, I found one of the countless variants, a decent one").
--- In particular, for unique items, unless they inherit aspects from
--- a standard item, permit only a couple possible variants.
--- This is especially important if an item kind has multiple random aspects.
--- Instead multiply dice results, e.g., (1 `d` 3) * 5 instead of 1 `d` 15.
---
--- Beware of non-periodic non-weapon durable items with beneficial effects
--- and low timeout -- AI will starve applying such an item incessantly.
-
--- * Item group symbols, partially from Nethack
-
 symbolProjectile :: ContentSymbol ItemKind
 symbolProjectile = rsymbolProjectile $ ritemSymbols standardRules
 _symbolLauncher :: ContentSymbol c
@@ -236,116 +210,23 @@ symbolFood       = rsymbolFood $ ritemSymbols standardRules
 
 -- ** Thrown weapons
 
-sandstoneRock :: ItemKind
-sandstoneRock = ItemKind
+computerMouse :: ItemKind
+computerMouse = ItemKind
   { isymbol  = symbolProjectile
-  , iname    = "sandstone rock"
-  , ifreq    = [ (S_SANDSTONE_ROCK, 1)
-               , (UNREPORTED_INVENTORY, 1) ]  -- too weak to spam
-  , iflavour = zipPlain [Green]
-  , icount   = 1 + 1 `d` 2  -- > 1, to let AI ignore sole pieces
-  , irarity  = [(1, 20), (10, 1)]  -- a few already in starting stash
+  , iname    = "computer mouse"
+  , ifreq    = [ (S_COMPUTER_MOUSE, 1)
+               , (UNREPORTED_INVENTORY, 1) ]
+  , iflavour = zipPlain [BrGreen]
+  , icount   = 1 + 1 `d` 2
+  , irarity  = [(1, 20), (10, 1)]
   , iverbHit = "hit"
-  , iweight  = 300
+  , iweight  = 200
   , idamage  = 1 `d` 1
   , iaspects = [ AddSkill SkHurtMelee $ -16 * 5
                , SetFlag Fragile
-               , toVelocity 70 ] -- not dense, irregular
+               , toVelocity 50 ]
   , ieffects = []
-  , idesc    = "A lump of brittle sandstone rock."
-  , ikit     = []
-  }
-dart :: ItemKind
-dart = ItemKind
-  { isymbol  = symbolProjectile
-  , iname    = "dart"
-  , ifreq    = [(COMMON_ITEM, 100), (ANY_ARROW, 50), (WEAK_ARROW, 50)]
-  , iflavour = zipPlain [BrRed]
-  , icount   = 1 + 4 `dL` 5
-  , irarity  = [(1, 15), (10, 5)]
-  , iverbHit = "prick"
-  , iweight  = 40
-  , idamage  = 1 `d` 1
-  , iaspects = [AddSkill SkHurtMelee $ (-15 + 1 `d` 2 + 1 `dL` 3) * 5]
-                 -- only good against leather
-  , ieffects = []
-  , idesc    = "A sharp delicate dart with fins."
-  , ikit     = []
-  }
-spike :: ItemKind
-spike = ItemKind
-  { isymbol  = symbolProjectile
-  , iname    = "spike"
-  , ifreq    = [(COMMON_ITEM, 100), (ANY_ARROW, 50), (WEAK_ARROW, 50)]
-  , iflavour = zipPlain [BrCyan]
-  , icount   = 1 + 4 `dL` 5
-  , irarity  = [(1, 10), (10, 8)]
-  , iverbHit = "nick"
-  , iweight  = 150
-  , idamage  = 2 `d` 1
-  , iaspects = [ AddSkill SkHurtMelee $ (-10 + 1 `d` 2 + 1 `dL` 3) * 5
-                   -- heavy vs armor
-               , SetFlag MinorEffects
-               , toVelocity 70 ]  -- hitting with tip costs speed
-  , ieffects = [ Explode S_SINGLE_SPARK  -- when hitting enemy
-               , OnSmash (Explode S_SINGLE_SPARK) ]  -- at wall hit
-      -- this results in a wordy item synopsis, but it's OK, the spark really
-      -- is useful in some situations, not just a flavour
-  , idesc    = "A cruel long nail with small head."  -- "Much inferior to arrows though, especially given the contravariance problems."  -- funny, but destroy the suspension of disbelief; this is supposed to be a Lovecraftian horror and any hilarity must ensue from the failures in making it so and not from actively trying to be funny; also, mundane objects are not supposed to be scary or transcendental; the scare is in horrors from the abstract dimension visiting our ordinary reality; without the contrast there's no horror and no wonder, so also the magical items must be contrasted with ordinary XIX century and antique items
-  , ikit     = []
-  }
-spike2 :: ItemKind
-spike2 = spike
-  { ifreq    = [(COMMON_ITEM, 2), (ANY_ARROW, 1), (WEAK_ARROW, 1)]
-  , iflavour = zipPlain [Cyan]
-  , iverbHit = "penetrate"
-  , iweight  = 200
-  , idamage  = 4 `d` 1
-  , iaspects = [ AddSkill SkHurtMelee $ (-10 + 1 `d` 2 + 1 `dL` 3) * 5
-               , SetFlag MinorEffects
-               , Odds (10 * 1 `dL` 10) [] [toVelocity 70] ]
-                   -- at deep levels sometimes even don't limit velocity
-  , idesc    = "A jagged skewer of rusty metal."
-  }
-slingStone :: ItemKind
-slingStone = ItemKind
-  { isymbol  = symbolProjectile
-  , iname    = "sling stone"
-  , ifreq    = [(COMMON_ITEM, 5), (ANY_ARROW, 100)]
-  , iflavour = zipPlain [Blue]
-  , icount   = 1 + 3 `dL` 4
-  , irarity  = [(1, 1), (10, 20)]
-  , iverbHit = "batter"
-  , iweight  = 200
-  , idamage  = 1 `d` 1
-  , iaspects = [ AddSkill SkHurtMelee $ (-10 + 1 `d` 2 + 1 `dL` 3) * 5
-                   -- heavy, to bludgeon through armor
-               , SetFlag MinorEffects
-               , toVelocity 150 ]
-  , ieffects = [ Explode S_SINGLE_SPARK  -- when hitting enemy
-               , OnSmash (Explode S_SINGLE_SPARK) ]  -- at wall hit
-  , idesc    = "A round stone, carefully sized and smoothed to fit the pouch of a standard string and cloth sling."
-  , ikit     = []
-  }
-slingBullet :: ItemKind
-slingBullet = ItemKind
-  { isymbol  = symbolProjectile
-  , iname    = "sling bullet"
-  , ifreq    = [(COMMON_ITEM, 5), (ANY_ARROW, 100)]
-  , iflavour = zipPlain [BrBlack]
-  , icount   = 1 + 6 `dL` 4
-  , irarity  = [(1, 1), (10, 15)]
-  , iverbHit = "slug"
-  , iweight  = 28
-  , idamage  = 1 `d` 1
-  , iaspects = [ AddSkill SkHurtMelee $ (-17 + 1 `d` 2 + 1 `dL` 3) * 5
-                   -- not too good against armor
-               , ToThrow $ ThrowMod 200 100 2  -- piercing
-               , SetFlag Fragile ]
-                   -- otherwise would rarely break and the player would have
-                   -- unlimited resource and would have to pick up constantly
-  , ieffects = []
-  , idesc    = "Small almond-shaped leaden projectile that weighs more than the sling used to tie the bag. It doesn't drop out of the sling's pouch when swung and doesn't snag when released. Known to pierce through flesh, at least at maximum speed."  -- we lie, it doesn't slow down in our model; but it stops piercing alright
+  , idesc    = "A computer mouse that someone left unattended."
   , ikit     = []
   }
 
@@ -371,53 +252,6 @@ paralizingProj = ItemKind
   , iaspects = [AddSkill SkHurtMelee $ -14 * 5]
   , ieffects = [Paralyze 15, Discharge 1 100]
   , idesc    = "Wood balls tied with hemp rope. The foe is unlikely to use its main weapon while fighting for balance."
-  , ikit     = []
-  }
-harpoon :: ItemKind
-harpoon = ItemKind
-  { isymbol  = symbolProjectile
-  , iname    = "harpoon"
-  , ifreq    = [(COMMON_ITEM, 100), (HARPOON, 100)]
-  , iflavour = zipPlain [Brown]
-  , icount   = 1 `dL` 5
-  , irarity  = [(10, 10)]
-  , iverbHit = "hook"
-  , iweight  = 750
-  , idamage  = 5 `d` 1
-  , iaspects = [AddSkill SkHurtMelee $ (-10 + 1 `d` 2 + 1 `dL` 3) * 5]
-  , ieffects = [ PullActor (ThrowMod 200 50 1)  -- 1 step, fast
-               , Yell ]  -- yell, because brutal
-  , idesc    = "The cruel, barbed head lodges in its victim so painfully that the weakest tug of the thin line sends the victim flying."
-  , ikit     = []
-  }
-harpoon2 :: ItemKind
-harpoon2 = harpoon
-  { iname    = "The whaling Harpoon"
-  , ifreq    = [(COMMON_ITEM, 10), (HARPOON, 2)]
-  , icount   = 2 `dL` 5
-  , iweight  = 1000
-  , idamage  = 21 `d` 1
-  , iaspects = SetFlag Unique : delete (SetFlag Durable) (iaspects harpoon)
-  , idesc    = "With a brittle, barbed head and thick cord, this ancient weapon is designed for formidable prey. The age has made the edge thinner and sharper, but brittle and splintering, so it won't last beyond a single hit. "
-  }
-net :: ItemKind
-net = ItemKind
-  { isymbol  = symbolProjectile
-  , iname    = "net"
-  , ifreq    = [(COMMON_ITEM, 100)]
-  , iflavour = zipPlain [BrGreen]
-  , icount   = 1 `dL` 3
-  , irarity  = [(5, 5), (10, 7)]
-  , iverbHit = "entangle"
-  , iweight  = 1000
-  , idamage  = 2 `d` 1
-  , iaspects = [AddSkill SkHurtMelee $ -14 * 5]
-  , ieffects = [ toOrganBad S_SLOWED (3 + 1 `d` 3)
-               , DropItem maxBound 1 CEqp ARMOR_LOOSE
-                   -- only one of each kind is dropped, because no rubbish
-                   -- in this group and so no risk of exploit
-               , SendFlying (ThrowMod 100 50 1) ]  -- 1 step; painful
-  , idesc    = "A wide net with weights along the edges. Entangles armor and restricts movement."
   , ikit     = []
   }
 
@@ -472,16 +306,16 @@ flashBomb = diablotekSupply
   , ieffects = [Explode S_FOCUSED_FLASH, OnSmash (Explode S_VIOLENT_FLASH)]
   , idesc    = "For dramatic entrances and urgent exits."
   }
-firecrackerBomb :: ItemKind
-firecrackerBomb = diablotekSupply
-  { iname = "roll"  -- not fireworks, as they require outdoors
+swollenLithiumIon :: ItemKind
+swollenLithiumIon = diablotekSupply
+  { iname = "battery"
   , iflavour = zipPlain [BrMagenta]
-  , irarity  = [(1, 5), (5, 6)]  -- a toy, if harmful
-  , iverbHit = "crack"  -- a pun, matches the verb from "ItemKindBlast"
+  , irarity  = [(1, 5), (5, 6)]
+  , iverbHit = "sizzle"
   , iweight  = 1000
   , iaspects = [SetFlag Lobable, SetFlag Fragile]
-  , ieffects = [Explode S_FIRECRACKER, OnSmash (Explode S_FIRECRACKER)]
-  , idesc    = "String and paper, concealing a deadly surprise."
+  , ieffects = [Explode S_LITHIUM_ION, OnSmash (Explode S_LITHIUM_ION)]
+  , idesc    = "Swollen battery, looks dangerous"
   }
 
 -- ** Exploding consumables.
@@ -648,7 +482,7 @@ paper11 = paperTemplate
   , irarity  = [(10, 20)]  -- at gameover a crucial item may be missing
   , iaspects = ELabel "of transmutation"
                : iaspects paperTemplate
-  , ieffects = [PolyItem `AndEffect` Explode S_FIRECRACKER]
+  , ieffects = [PolyItem `AndEffect` Explode S_LITHIUM_ION]
   }
 paper12 :: ItemKind
 paper12 = paperTemplate

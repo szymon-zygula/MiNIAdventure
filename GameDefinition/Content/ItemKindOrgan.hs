@@ -62,7 +62,6 @@ import Game.LambdaHack.Definition.Defs
 import Game.LambdaHack.Definition.DefsInternal
 import Game.LambdaHack.Definition.Flavour
 
-import Content.ItemKindBlast
 import Content.ItemKindTemporary
 import Content.RuleKind
 
