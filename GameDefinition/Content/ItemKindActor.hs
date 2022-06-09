@@ -5,7 +5,6 @@ module Content.ItemKindActor
   , pattern SCOUT_HERO
   , pattern BRAWLER_HERO
   , pattern SOLDIER_HERO
-  , pattern CIVILIAN
   , pattern CAR
   , pattern COMPUTER
   , pattern SERVER
@@ -30,19 +29,18 @@ import Game.LambdaHack.Definition.Flavour
 import Content.ItemKindOrgan
 import Content.ItemKindBlast
 
--- * Group name patterns
-
+-- |Group of actor singleton groups
 actorsGNSingleton :: [GroupName ItemKind]
 actorsGNSingleton =
        [S_COMPUTER_MOUSE]
 
+-- |Group of actor groups
 actorsGN :: [GroupName ItemKind]
 actorsGN =
     [ HERO
     , SCOUT_HERO
     , BRAWLER_HERO
     , SOLDIER_HERO
-    , CIVILIAN
     , CAR
     , COMPUTER
     , SERVER
@@ -50,35 +48,45 @@ actorsGN =
     , STARTING_ARMOR
     , STARTING_WEAPON ]
 
+-- |Group of generic heros (players)
 pattern HERO :: GroupName c
 pattern HERO = GroupName "adventurer"
+-- |Group of scout heros (players)
 pattern SCOUT_HERO :: GroupName c
 pattern SCOUT_HERO = GroupName "scout"
+-- |Group of brawler heros (players)
 pattern BRAWLER_HERO :: GroupName c
 pattern BRAWLER_HERO = GroupName "brawler"
+-- |Group of soldier heros (players)
 pattern SOLDIER_HERO :: GroupName c
 pattern SOLDIER_HERO = GroupName "soldier"
-pattern CIVILIAN :: GroupName c
-pattern CIVILIAN = GroupName "civilian"
+-- |Group of cars
 pattern CAR :: GroupName c
 pattern CAR = GroupName "car"
+-- |Group of computers (mostly PCs, some servers)
 pattern COMPUTER :: GroupName c
 pattern COMPUTER = GroupName "computer"
+-- |Group of computers (mostly servers, some PCs)
 pattern SERVER :: GroupName c
 pattern SERVER = GroupName "server"
 
+-- |Actor for swung computer mouse projectile
 pattern S_COMPUTER_MOUSE :: GroupName c
 pattern S_COMPUTER_MOUSE = GroupName "computer mouse"
 
+-- |Group of ranged armors
 pattern ARMOR_RANGED :: GroupName c
 pattern ARMOR_RANGED = GroupName "ranged armor"
+-- |Group of starting armors
 pattern STARTING_ARMOR :: GroupName c
 pattern STARTING_ARMOR = GroupName "starting armor"
+-- |Group of starting weapons
 pattern STARTING_WEAPON :: GroupName c
 pattern STARTING_WEAPON = GroupName "starting weapon"
 
 -- * Content
 
+-- |List of all actors
 actors :: [ItemKind]
 actors =
   [ warrior
@@ -89,11 +97,6 @@ actors =
   , scout
   , brawler
   , soldier
-  , civilian
-  , civilian2
-  , civilian3
-  , civilian4
-  , civilian5
   , toyota
   , skoda
   , tesla
@@ -177,34 +180,6 @@ soldier = brawler
   { ifreq    = [(SOLDIER_HERO, 100), (MOBILE, 1)]
   , ikit     = ikit brawler
                ++ [(EXPLOSIVE, CStash)]
-  -- , idesc    = ""
-  }
-
-civilian :: ItemKind
-civilian = warrior
-  { iname    = "clerk"
-  , ifreq    = [(CIVILIAN, 100), (MOBILE, 1)]
-  , iflavour = zipPlain [BrBlack]
-  -- , idesc    = ""
-  }
-civilian2 :: ItemKind
-civilian2 = civilian
-  { iname    = "hairdresser"
-  -- , idesc    = ""
-  }
-civilian3 :: ItemKind
-civilian3 = civilian
-  { iname    = "lawyer"
-  -- , idesc    = ""
-  }
-civilian4 :: ItemKind
-civilian4 = civilian
-  { iname    = "peddler"
-  -- , idesc    = ""
-  }
-civilian5 :: ItemKind
-civilian5 = civilian
-  { iname    = "tax collector"
   -- , idesc    = ""
   }
 

@@ -2,8 +2,6 @@
 module Content.ItemKind
   ( pattern FOOD
   , pattern ARMOR_LOOSE
-  , pattern CLOTHING_MISC
-  , pattern CHIC_GEAR
   , groupNamesSingleton
   , groupNames
   , content
@@ -33,6 +31,7 @@ import Content.RuleKind
 
 -- * Group name patterns
 
+-- |List of singleton item group names
 groupNamesSingleton :: [GroupName ItemKind]
 groupNamesSingleton =
     [ S_FRAGRANCE
@@ -46,6 +45,7 @@ groupNamesSingleton =
     ++ actorsGNSingleton ++ organsGNSingleton
     ++ blastsGNSingleton ++ temporariesGNSingleton
 
+-- |List of item group names
 groupNames :: [GroupName ItemKind]
 groupNames =
     [ TREASURE
@@ -56,9 +56,7 @@ groupNames =
     , VALUABLE
     , UNREPORTED_INVENTORY
     , FOOD
-    , ARMOR_LOOSE
-    , CLOTHING_MISC
-    , CHIC_GEAR]
+    , ARMOR_LOOSE ]
     ++ embedsGN ++ actorsGN ++ blastsGN
 
 -- The @UNKNOWN@ patterns don't need to be exported. Used internally.
@@ -74,23 +72,24 @@ pattern HAMMER_UNKNOWN = GroupName "hammer unknown"
 pattern CURRENCY_UNKNOWN :: GroupName c
 pattern CURRENCY_UNKNOWN = GroupName "currency unknown"
 
+-- |Group of edible items
 pattern FOOD :: GroupName c
-pattern FOOD = GroupName "edible plant"
+pattern FOOD = GroupName "edible thing"
+-- |Wearable clothes
 pattern ARMOR_LOOSE :: GroupName c
 pattern ARMOR_LOOSE = GroupName "loose armor"
-pattern CLOTHING_MISC :: GroupName c
-pattern CLOTHING_MISC = GroupName "miscellaneous clothing"
-pattern CHIC_GEAR :: GroupName c
-pattern CHIC_GEAR = GroupName "chic gear"
 
 -- * Content
 
+-- |List of all things that are represented as items (`items` ++ `otherItemContent`)
 content :: [ItemKind]
 content = items ++ otherItemContent
 
+-- |List of all things that are represented as items, but are not items (actors, organs...)
 otherItemContent :: [ItemKind]
 otherItemContent = embeds ++ actors ++ organs ++ blasts ++ temporaries
 
+-- |List of all items
 items :: [ItemKind]
 items =
     [ computerMouse
@@ -417,7 +416,7 @@ hatUshanka :: ItemKind
 hatUshanka = ItemKind
   { isymbol  = symbolMiscArmor
   , iname    = "ushanka hat"
-  , ifreq    = [ (COMMON_ITEM, 100), (ARMOR_MISC, 1), (CLOTHING_MISC, 1)
+  , ifreq    = [ (COMMON_ITEM, 100), (ARMOR_MISC, 1), (ARMOR_LOOSE, 1)
                , (STARTING_ARMOR, 50) ]
   , iflavour = zipPlain [Brown]
   , icount   = 1
@@ -459,7 +458,7 @@ miniJacket :: ItemKind
 miniJacket = ItemKind
   { isymbol  = symbolClothes
   , iname    = "mini jacket"
-  , ifreq    = [(COMMON_ITEM, 100), (CLOTHING_MISC, 1), (CHIC_GEAR, 100)]
+  , ifreq    = [(COMMON_ITEM, 100), (ARMOR_LOOSE, 1)]
   , iflavour = zipFancy [BrGreen]
   , icount   = 1
   , irarity  = [(1, 9), (10, 3)]

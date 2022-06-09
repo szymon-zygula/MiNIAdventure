@@ -4,6 +4,7 @@ module Content.CaveKind
   ( pattern CAVE_PARKING_LOT
   , pattern CAVE_MINI_LABORATORY
   , pattern CAVE_SERVER_ROOM
+  , pattern CAVE_ROGUE
   , groupNamesSingleton
   , groupNames
   , content
@@ -26,10 +27,11 @@ import Content.ItemKindActor
 import Content.PlaceKind hiding (content, groupNames, groupNamesSingleton)
 import Content.TileKind hiding (content, groupNames, groupNamesSingleton)
 
-
+-- |List of singleton cave group names. It is empty.
 groupNamesSingleton :: [GroupName CaveKind]
 groupNamesSingleton = []
 
+-- |List of all groups related to caves
 groupNames :: [GroupName CaveKind]
 groupNames =
     [ CAVE_PARKING_LOT
@@ -37,15 +39,20 @@ groupNames =
     , CAVE_MINI_LABORATORY
     , CAVE_ROGUE ]
 
+-- |Cave at the lowest level. Contains cars and escape route.
 pattern CAVE_PARKING_LOT :: GroupName c
 pattern CAVE_PARKING_LOT = GroupName "caveParkingLot"
+-- |Cave at the highest level. Contains personal computers and occasional servers.
 pattern CAVE_MINI_LABORATORY :: GroupName c
 pattern CAVE_MINI_LABORATORY = GroupName "caveMiniLaboratory"
+-- |Cave at the middle level. Contains servers and occasional personal computers.
 pattern CAVE_SERVER_ROOM :: GroupName c
 pattern CAVE_SERVER_ROOM = GroupName "caveServerRoom"
+-- |Cave template for all other caves.
 pattern CAVE_ROGUE :: GroupName c
 pattern CAVE_ROGUE = GroupName "caveRogue"
 
+-- |List of all caves
 content :: [CaveKind]
 content =
     [ parkingLot
