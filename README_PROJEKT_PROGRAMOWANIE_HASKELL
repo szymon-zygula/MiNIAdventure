@@ -1,0 +1,3 @@
+Kompilacja: cabal build
+Uruchamianie: make play
+Link do repozytorium: https://github.com/szymon-zygula/MiNIAdventure
