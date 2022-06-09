@@ -107,13 +107,6 @@ items =
     , paper1
     , paper2
     , paper3
-    , paper4
-    , paper5
-    , paper6
-    , paper7
-    , paper8
-    , paper9
-    , paper10
     , foodTemplate
     , food1
     , food2
@@ -324,91 +317,31 @@ paperTemplate = ItemKind
   }
 paper1 :: ItemKind
 paper1 = paperTemplate
-  { iname    = "the Paper"
-  , ifreq    = [(TREASURE, 100), (ANY_PAPER, 100)]
+  { ifreq    = [(TREASURE, 100), (ANY_PAPER, 100)]
   , icount   = 1
   , irarity  = [(5, 9), (10, 9)]  -- mixed blessing, so found early for a unique
-  , iaspects = [SetFlag Unique, ELabel "of Reckless Beacon"]
-               ++ iaspects paperTemplate
+  , iaspects = [ELabel "on monadic projects"]
   , ieffects = [Summon HERO 1]
-  , idesc    = "The bright flame and sweet-smelling smoke of this heavily infused paper should attract natural creatures inhabiting the area, including human survivors, if any."
+  , idesc    = "Reading this paper aloud may summon people interested in the topic."
   }
 paper2 :: ItemKind
 paper2 = paperTemplate
   { ifreq    = [(COMMON_ITEM, 100), (ANY_PAPER, 100)]
+  , iaspects = [ELabel "on anatomy"]
   , irarity  = [(1, 6), (10, 2)]
-  , ieffects = [Ascend False]
+  , ieffects = [RefillHP 20]
+  , idesc    = "Reading this paper may help you heal your wounds"
   }
 paper3 :: ItemKind
 paper3 = paperTemplate
-  -- needs to be common to show at least a portion of effects
   { ifreq    = [(COMMON_ITEM, 100), (ANY_PAPER, 100)]
+  , iaspects = [ELabel "about some nonsense"]
   , icount   = 3 `dL` 1
   , irarity  = [(1, 14)]
   , ieffects = [OneOf [ Teleport 5, Paralyze 10, InsertMove 30
                       , Detect DetectEmbed 12, Detect DetectHidden 20 ]]
+  , idesc    = "This paper looks like mostly nonsense. Who knows what might happen when you read it?"
   }
-paper4 :: ItemKind
-paper4 = paperTemplate
-  -- needs to be common to show at least a portion of effects
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_PAPER, 100)]
-  , icount   = 3 `dL` 1
-  , irarity  = [(10, 14)]
-  , ieffects = [ Impress
-               , OneOf [ Teleport 20, Ascend False, Ascend True
-                       , OneOf [Summon HERO 1]
-                           -- gaining a hero particularly uncommon
-                       , Detect DetectLoot 20  -- the most useful of detections
-                       , CreateItem Nothing CGround COMMON_ITEM timerNone ] ]
-  }
-paper5 :: ItemKind
-paper5 = paperTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_PAPER, 100)]
-  , irarity  = [(1, 6)]  -- powerful, but low counts at the depths it appears on
-  , ieffects = [InsertMove $ 20 + 1 `dL` 20]
-  }
-paper6 :: ItemKind
-paper6 = paperTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_PAPER, 100)]
-  , irarity  = [(10, 11)]
-  , ieffects = [PullActor (ThrowMod 800 75 1)]  -- 6 steps, 1.5 turns
-  }
-paper7 :: ItemKind
-paper7 = paperTemplate
-  { iname    = "the Paper"
-  , ifreq    = [(TREASURE, 100), (ANY_PAPER, 100)]
-  , icount   = 1
-  , irarity  = [(10, 12)]
-  , iaspects = [SetFlag Unique, ELabel "of Rescue Proclamation"]
-               ++ iaspects paperTemplate
-  , ieffects = [Summon HERO 1]
-  , idesc    = "A survivor of past exploration missions is found that enjoys, apparently, complete physiological integrity. We can pronounce him a comrade in arms and let him join our party."
-  }
-paper8 :: ItemKind
-paper8 = paperTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_PAPER, 100)]
-  , irarity  = [(10, 4)]  -- powerful, even if not ideal; scares newbies
-  , ieffects = [Detect DetectAll 20]
-  }
-paper9 :: ItemKind
-paper9 = paperTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_PAPER, 100)]
-  , iaspects = ELabel "of cue interpretation"
-               : iaspects paperTemplate
-  , ieffects = [Detect DetectActor 20]
-  }
-paper10 :: ItemKind
-paper10 = paperTemplate
-  { ifreq    = [(COMMON_ITEM, 100), (ANY_PAPER, 100)]
-  , icount   = 3 `dL` 1
-  , irarity  = [(1, 20)]  -- uncommon deep down, where all is known
-  , iaspects = ELabel "of scientific explanation"
-               : iaspects paperTemplate
-  , ieffects = [Identify `AndEffect` RefillCalm 10]
-  , idesc    = "The most pressing existential concerns are met with a deeply satisfying scientific answer."
-  }
-
--- Foods require only minimal apply skill to consume.
 
 foodTemplate :: ItemKind
 foodTemplate = ItemKind

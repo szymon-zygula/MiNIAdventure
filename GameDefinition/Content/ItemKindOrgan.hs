@@ -656,7 +656,7 @@ carComputer = armoredSkin
   , iverbHit = "blank"
   , iaspects = [AddSkill sk 1 | sk <- [SkMove .. SkApply]]
                ++ [AddSkill SkMove 4]
-               ++ [AddSkill SkAlter 2]
+               ++ [AddSkill SkAlter 1]
                ++ [AddSkill SkWait 2]
                ++ [AddSkill SkDisplace (-1)]
                ++ [AddSkill SkMoveItem (-1)]
@@ -671,7 +671,7 @@ cpu = armoredSkin
   , iverbHit = "blank"
   , iaspects = [AddSkill sk 1 | sk <- [SkMove .. SkApply]]
                ++ [AddSkill SkMove 4]
-               ++ [AddSkill SkAlter 2]
+               ++ [AddSkill SkAlter 1]
                ++ [AddSkill SkDisplace (-1)]
                ++ [AddSkill SkMoveItem (-1)]
                ++ [AddSkill SkProject (-1)]

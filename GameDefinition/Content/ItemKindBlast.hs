@@ -126,7 +126,7 @@ blastsGN =
 pattern ARMOR_MISC :: GroupName ItemKind
 
 pattern S_LITHIUM_ION :: GroupName c
-pattern S_LITHIUM_ION = GroupName "lithiumIon"
+pattern S_LITHIUM_ION = GroupName "lithium ion"
 pattern S_VIOLENT_FRAGMENTATION :: GroupName c
 pattern S_VIOLENT_FRAGMENTATION = GroupName "violent fragmentation"
 pattern S_FRAGMENTATION :: GroupName c
@@ -217,7 +217,7 @@ pattern S_FOCUSED_BURNING_OIL_4 :: GroupName c
 pattern S_FOCUSED_BURNING_OIL_4 = GroupName "focused burning oil 4"
 
 lithiumIonAt :: Int -> GroupName ItemKind
-lithiumIonAt n = GroupName $ "lithiumIon" <+> tshow n
+lithiumIonAt n = GroupName $ "lithium ion" <+> tshow n
 
 blastNoStatOf :: GroupName ItemKind -> GroupName ItemKind
 blastNoStatOf grp = GroupName $ fromGroupName grp <+> "mist"

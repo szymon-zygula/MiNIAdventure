@@ -4,16 +4,6 @@ module Content.CaveKind
   ( pattern CAVE_PARKING_LOT
   , pattern CAVE_MINI_LABORATORY
   , pattern CAVE_SERVER_ROOM
-  , pattern CAVE_ROGUE
-  , pattern CAVE_ARENA
-  , pattern CAVE_SMOKING
-  , pattern CAVE_LABORATORY
-  , pattern CAVE_NOISE
-  , pattern CAVE_MINE
-  , pattern CAVE_EMPTY
-  , pattern CAVE_SHALLOW_ROGUE
-  , pattern CAVE_OUTERMOST
-  , pattern CAVE_RAID
   , groupNamesSingleton
   , groupNames
   , content
@@ -36,7 +26,6 @@ import Content.ItemKindActor
 import Content.PlaceKind hiding (content, groupNames, groupNamesSingleton)
 import Content.TileKind hiding (content, groupNames, groupNamesSingleton)
 
--- * Group name patterns
 
 groupNamesSingleton :: [GroupName CaveKind]
 groupNamesSingleton = []
@@ -46,16 +35,7 @@ groupNames =
     [ CAVE_PARKING_LOT
     , CAVE_SERVER_ROOM
     , CAVE_MINI_LABORATORY
-    , CAVE_ROGUE
-    , CAVE_ARENA
-    , CAVE_SMOKING
-    , CAVE_LABORATORY
-    , CAVE_NOISE
-    , CAVE_MINE
-    , CAVE_EMPTY
-    , CAVE_SHALLOW_ROGUE
-    , CAVE_OUTERMOST
-    , CAVE_RAID ]
+    , CAVE_ROGUE ]
 
 pattern CAVE_PARKING_LOT :: GroupName c
 pattern CAVE_PARKING_LOT = GroupName "caveParkingLot"
@@ -65,42 +45,13 @@ pattern CAVE_SERVER_ROOM :: GroupName c
 pattern CAVE_SERVER_ROOM = GroupName "caveServerRoom"
 pattern CAVE_ROGUE :: GroupName c
 pattern CAVE_ROGUE = GroupName "caveRogue"
-pattern CAVE_ARENA :: GroupName c
-pattern CAVE_ARENA = GroupName "caveArena"
-pattern CAVE_SMOKING :: GroupName c
-pattern CAVE_SMOKING = GroupName "caveSmoking"
-pattern CAVE_LABORATORY :: GroupName c
-pattern CAVE_LABORATORY = GroupName "caveLaboratory"
-pattern CAVE_NOISE :: GroupName c
-pattern CAVE_NOISE = GroupName "caveNoise"
-pattern CAVE_MINE :: GroupName c
-pattern CAVE_MINE = GroupName "caveMine"
-pattern CAVE_EMPTY :: GroupName c
-pattern CAVE_EMPTY = GroupName "caveEmpty"
-pattern CAVE_SHALLOW_ROGUE :: GroupName c
-pattern CAVE_SHALLOW_ROGUE = GroupName "caveShallowRogue"
-pattern CAVE_OUTERMOST :: GroupName c
-pattern CAVE_OUTERMOST = GroupName "caveOutermost"
-pattern CAVE_RAID :: GroupName c
-pattern CAVE_RAID = GroupName "caveRaid"
-
--- * Content
 
 content :: [CaveKind]
 content =
     [ parkingLot
     , miniLaboratory
     , serverRoom
-    , rogue
-    , arena
-    , smoking
-    , laboratory
-    , noise
-    , mine
-    , empty
-    , outermost
-    , shallowRogue
-    , raid ]
+    , rogue ]
 
 -- * Underground caves; most of mediocre height and size
 
@@ -149,213 +100,6 @@ rogue = CaveKind
   , cskip         = []
   , cinitSleep    = InitSleepPermitted
   , cdesc         = "Winding tunnels stretch into the dark."
-  }  -- no lit corridors cave alternative, since both lit # and . look bad here
-arena :: CaveKind
-arena = rogue
-  { cname         = "Dusty underground library"
-  , cfreq         = [(DEFAULT_RANDOM, 60), (CAVE_ARENA, 1)]
-  , cXminSize     = 50
-  , cYminSize     = 21
-  , ccellSize     = DiceXY (3 `d` 3 + 17) (1 `d` 3 + 4)
-  , cminPlaceSize = DiceXY (2 `d` 2 + 4) 6
-  , cmaxPlaceSize = DiceXY 16 12
-  , cdarkOdds     = 49 + 1 `d` 10  -- almost all rooms dark (1 in 10 lit)
-  -- Light is not too deadly, because not many obstructions and so
-  -- foes visible from far away and few foes have ranged combat
-  -- at shallow depth.
-  , cnightOdds    = 0  -- always day
-  , cauxConnects  = 1
-  , cmaxVoid      = 1%8
-  , chidden       = 0
-  , cactorCoeff   = 70  -- small open level, don't rush the player
-  , cactorFreq    = []
-  , citemNum      = 4 `d` 5  -- few rooms
-  , citemFreq     = [ (IK.COMMON_ITEM, 20), (IK.TREASURE, 40)
-                    , (IK.ANY_PAPER, 40) ]
-  , cplaceFreq    = [(ARENA, 1)]
-  , cpassable     = True
-  , cdefTile      = ARENA_SET_LIT
-  , cdarkCorTile  = TRAIL_LIT  -- let trails give off light
-  , clitCorTile   = TRAIL_LIT  -- may be rolled different than the above
-  , cminStairDist = 15
-  , cmaxStairsNum = 1 `d` 2
-  , cstairFreq    = [ (WALLED_STAIRCASE, 20), (CLOSED_STAIRCASE, 80)
-                    , (TINY_STAIRCASE, 1) ]
-  , cinitSleep    = InitSleepAlways
-  , cdesc         = "The shelves groan with dusty books and tattered scrolls. Subtle snoring can be heard from a distance."
-  }
-smoking :: CaveKind
-smoking = arena
-  { cname         = "Smoking rooms"
-  , cfreq         = [(CAVE_SMOKING, 1)]
-  , cdarkOdds     = 41 + 1 `d` 10  -- almost all rooms lit (1 in 10 dark)
-  -- Trails provide enough light for fun stealth.
-  , cnightOdds    = 51  -- always night
-  , citemNum      = 6 `d` 5  -- rare, so make it exciting
-  , citemFreq     = [(IK.COMMON_ITEM, 20), (IK.TREASURE, 40), (IK.ANY_GLASS, 40)]
-  , cdefTile      = ARENA_SET_DARK
-  , cdesc         = "Velvet couches exude the strong smell of tobacco."
-  }
-laboratory :: CaveKind
-laboratory = rogue
-  { cname         = "Burnt laboratory"
-  , cfreq         = [(CAVE_LABORATORY, 1)]
-  , cXminSize     = 60
-  , cYminSize     = 21
-  , ccellSize     = DiceXY (1 `d` 2 + 5) 6
-  , cminPlaceSize = DiceXY 7 5
-  , cmaxPlaceSize = DiceXY 10 40
-  , cnightOdds    = 0  -- always day so that the corridor smoke is lit
-  , cauxConnects  = 1%5
-  , cmaxVoid      = 1%10
-  , cdoorChance   = 1
-  , copenChance   = 1%2
-  , cactorFreq    = []
-  , citemNum      = 6 `d` 5  -- reward difficulty
-  , citemFreq     = [ (IK.COMMON_ITEM, 20), (IK.TREASURE, 40)
-                    , (IK.EXPLOSIVE, 40) ]
-  , cplaceFreq    = [(LABORATORY, 1)]
-  , cdarkCorTile  = LAB_TRAIL_LIT  -- let lab smoke give off light always
-  , clitCorTile   = LAB_TRAIL_LIT
-  , cmaxStairsNum = 2
-  , cstairFreq    = [ (WALLED_STAIRCASE, 50), (OPEN_STAIRCASE, 50)
-                    , (TINY_STAIRCASE, 1) ]
-  , cdesc         = "Shattered glassware and the sharp scent of spilt chemicals show that something terrible happened here."
-  }
-noise :: CaveKind
-noise = rogue
-  { cname         = "Leaky burrowed sediment"
-  , cfreq         = [(DEFAULT_RANDOM, 30), (CAVE_NOISE, 1)]
-  , cXminSize     = 50
-  , cYminSize     = 21
-  , ccellSize     = DiceXY (3 `d` 5 + 12) 6
-  , cminPlaceSize = DiceXY 8 5
-  , cmaxPlaceSize = DiceXY 20 20
-  , cdarkOdds     = 51
-  -- Light is deadly, because nowhere to hide and pillars enable spawning
-  -- very close to heroes.
-  , cnightOdds    = 0  -- harder variant, but looks cheerful
-  , cauxConnects  = 1%10
-  , cmaxVoid      = 1%100
-  , cdoorChance   = 1  -- to avoid lit quasi-door tiles
-  , chidden       = 0
-  , cactorCoeff   = 100  -- the maze requires time to explore; also, small
-  , cactorFreq    = []
-  , citemNum      = 6 `d` 5  -- an incentive to explore the labyrinth
-  , cpassable     = True
-  , cplaceFreq    = [(NOISE, 1)]
-  , clabyrinth    = True
-  , cdefTile      = NOISE_SET_LIT
-  , cfenceApart   = True  -- ensures no cut-off parts from collapsed
-  , cdarkCorTile  = DAMP_FLOOR_DARK
-  , clitCorTile   = DAMP_FLOOR_LIT
-  , cminStairDist = 15
-  , cstairFreq    = [ (CLOSED_STAIRCASE, 50), (OPEN_STAIRCASE, 50)
-                    , (TINY_STAIRCASE, 1) ]
-  , cinitSleep    = InitSleepBanned
-  , cdesc         = "Soon, these passages will be swallowed up by the mud."
-  }
-mine :: CaveKind
-mine = noise
-  { cname         = "Frozen derelict mine"
-  , cfreq         = [(CAVE_MINE, 1)]
-  , cnightOdds    = 51  -- easier variant, but looks sinister
-  , citemNum      = 10 `d` 4  -- an incentive to explore the final labyrinth
-  , citemFreq     = [(IK.COMMON_ITEM, 20)]
-                      -- can't be "valuable" or template items generated
-  , cplaceFreq    = [(NOISE, 1), (MINE, 99)]
-  , clabyrinth    = True
-  , cdefTile      = POWER_SET_DARK
-  , cstairFreq    = [ (GATED_CLOSED_STAIRCASE, 50)
-                    , (GATED_OPEN_STAIRCASE, 50)
-                    , (GATED_TINY_STAIRCASE, 1) ]
-  , cinitSleep    = InitSleepBanned
-  , cdesc         = "Pillars of shining ice create a frozen labyrinth."
-  }
-empty :: CaveKind
-empty = rogue
-  { cname         = "Tall cavern"
-  , cfreq         = [(CAVE_EMPTY, 1)]
-  , ccellSize     = DiceXY (2 `d` 2 + 11) (1 `d` 2 + 8)
-  , cminPlaceSize = DiceXY 13 11
-  , cmaxPlaceSize = DiceXY 37 31  -- favour large rooms
-  , cdarkOdds     = 1 `d` 100 + 1 `dL` 100
-  , cnightOdds    = 0  -- always day
-  , cauxConnects  = 3%2
-  , cmaxVoid      = 0  -- too few rooms to have void and fog common anyway
-  , cdoorChance   = 0
-  , copenChance   = 0
-  , chidden       = 0
-  , cactorCoeff   = 8
-  , cactorFreq    = []
-      -- The healing geysers on lvl 3 act like HP resets. Needed to avoid
-      -- cascading failure, if the particular starting conditions were
-      -- very hard. Items are not reset, even if they are bad, which provides
-      -- enough of a continuity. Gyesers on lvl 3 are not OP and can't be
-      -- abused, because they spawn less and less often and also HP doesn't
-      -- effectively accumulate over max.
-  , citemNum      = 4 `d` 5  -- few rooms and geysers are the boon
-  , cplaceFreq    = [(EMPTY, 1)]
-  , cpassable     = True
-  , cdefTile      = EMPTY_SET_LIT
-  , cdarkCorTile  = FLOOR_ARENA_DARK
-  , clitCorTile   = FLOOR_ARENA_LIT
-  , cminStairDist = 30
-  , cmaxStairsNum = 1
-  , cstairFreq    = [ (WALLED_STAIRCASE, 20), (CLOSED_STAIRCASE, 80)
-                    , (TINY_STAIRCASE, 1) ]
-  , cdesc         = "Swirls of warm fog fill the air, the hiss of geysers sounding all around."
-  }
-outermost :: CaveKind
-outermost = shallowRogue
-  { cname         = "Cave entrance"
-  , cfreq         = [(CAVE_OUTERMOST, 100)]
-  , cXminSize     = 40
-  , cYminSize     = 21
-  , cdarkOdds     = 0  -- all rooms lit, for a gentle start
-  , cactorCoeff   = 100  -- already animals start there; also, pity on the noob
-  , cactorFreq    = cactorFreq rogue
-  , citemNum      = 12 `d` 2  -- lure them in with loot; relatively consisten
-  , citemFreq     = filter ((/= IK.TREASURE) . fst) $ citemFreq rogue
-  , cminStairDist = 10  -- distance from the escape
-  , cmaxStairsNum = 1  -- simplify at the start
-  , cescapeFreq   = [(INDOOR_ESCAPE_UP, 1)]
-  , cdesc         = "This close to the surface, the sunlight still illuminates the dungeon."
-  }
-shallowRogue :: CaveKind
-shallowRogue = rogue
-  { cfreq         = [(CAVE_SHALLOW_ROGUE, 100)]
-  , cXminSize     = 60
-  , cYminSize     = 21
-  , cmaxStairsNum = 1  -- simplify at the start
-  , cdesc         = "The snorts and grunts of savage beasts can be clearly heard."
-  }
-
--- * Overground "caves"; no story-wise limits wrt height and size
-
-raid :: CaveKind
-raid = rogue
-  { cname         = "Typing den"
-  , cfreq         = [(CAVE_RAID, 1)]
-  , cXminSize     = 50
-  , cYminSize     = 21
-  , ccellSize     = DiceXY (2 `d` 4 + 6) 6
-  , cminPlaceSize = DiceXY (2 `d` 2 + 4) 5
-  , cmaxPlaceSize = DiceXY 16 20
-  , cdarkOdds     = 0  -- all rooms lit, for a gentle start
-  , cmaxVoid      = 1%10
-  , cdoorChance   = 1  -- make sure enemies not seen on turn 1
-  , copenChance   = 0  -- make sure enemies not seen on turn 1
-  , cactorCoeff   = 300  -- deep level with no kit, so slow spawning
-  , cactorFreq    = []
-  , citemNum      = 18  -- first tutorial mode, so make it consistent
-  , citemFreq     = [ (IK.COMMON_ITEM, 100), (IK.S_CURRENCY, 500)
-                    , (STARTING_WEAPON, 100) ]
-  , cmaxStairsNum = 0
-  , cescapeFreq   = [(INDOOR_ESCAPE_UP, 1)]
-  , cstairFreq    = []
-  , cstairAllowed = []
-  , cdesc         = "Mold spreads across the walls and scuttling sounds can be heard in the distance."
   }
 
 parkingLot :: CaveKind
@@ -376,9 +120,12 @@ parkingLot = rogue
   , cactorFreq    = [(CAR, 100)]
   , citemNum      = 50
   , citemFreq     = [ (IK.EXPLOSIVE, 2000), (IK.COMMON_ITEM, 5), (STARTING_WEAPON, 5), (IK.VALUABLE, 5) ]
-  , cmaxStairsNum = 0
+  , cmaxStairsNum = 2
   , cescapeFreq   = [(INDOOR_ESCAPE_UP, 1)]
-  , cstairFreq    = []
+  , cstairFreq    = [ (GATED_CLOSED_STAIRCASE, 50)
+                    , (GATED_OPEN_STAIRCASE, 50)
+                    , (GATED_TINY_STAIRCASE, 1) ]
+  , cminStairDist = 15
   , cstairAllowed = []
   }
 
@@ -400,9 +147,10 @@ miniLaboratory = rogue
   , cactorFreq    = [(COMPUTER, 200), (SERVER, 25)]
   , citemNum      = 50
   , citemFreq     = [ (IK.EXPLOSIVE, 1), (IK.COMMON_ITEM, 1), (STARTING_WEAPON, 1), (IK.VALUABLE, 1) ]
-  , cmaxStairsNum = 0
-  , cescapeFreq   = [(INDOOR_ESCAPE_UP, 1)]
-  , cstairFreq    = []
+  , cmaxStairsNum = 1
+  , cescapeFreq   = []
+  , cminStairDist = 15
+  , cstairFreq    = [ (GATED_TINY_STAIRCASE, 100) ]
   , cstairAllowed = []
   }
 
@@ -424,8 +172,11 @@ serverRoom = rogue
   , cactorFreq    = [(COMPUTER, 20), (SERVER, 500)]
   , citemNum      = 50
   , citemFreq     = [ (IK.EXPLOSIVE, 5), (IK.COMMON_ITEM, 2), (STARTING_WEAPON, 2), (IK.VALUABLE, 2) ]
-  , cmaxStairsNum = 0
-  , cescapeFreq   = [(INDOOR_ESCAPE_UP, 1)]
-  , cstairFreq    = []
+  , cmaxStairsNum = 2
+  , cescapeFreq   = []
+  , cminStairDist = 15
+  , cstairFreq    = [ (GATED_CLOSED_STAIRCASE, 50)
+                    , (GATED_OPEN_STAIRCASE, 50)
+                    , (GATED_TINY_STAIRCASE, 1) ]
   , cstairAllowed = []
   }
