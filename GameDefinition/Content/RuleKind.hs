@@ -22,6 +22,7 @@ import Game.LambdaHack.Content.ItemKind (ItemSymbolsUsedInEngine (..))
 import Game.LambdaHack.Content.RuleKind
 import Game.LambdaHack.Definition.DefsInternal
 
+-- |The standard rules
 standardRules :: RuleContent
 standardRules = RuleContent
   { rtitle = "LambdaHack"

@@ -22,18 +22,20 @@ import Content.CaveKind hiding (content, groupNames, groupNamesSingleton)
 import Content.FactionKind hiding (content, groupNames, groupNamesSingleton)
 import Content.ItemKindActor
 
--- * Group name patterns
-
+-- |Group name patterns
 groupNamesSingleton :: [GroupName ModeKind]
 groupNamesSingleton =
        [MINI]
 
+-- |Mode kind group names. It is empty.
 groupNames :: [GroupName ModeKind]
 groupNames = []
 
+-- |Pattern of the main game mode
 pattern MINI :: GroupName c
 pattern MINI = GroupName "mini"
 
+-- |List of all game modes (so just the main mode and screensaver)
 content :: [ModeKind]
 content =
   [ mini
